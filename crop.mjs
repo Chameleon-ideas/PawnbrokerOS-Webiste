@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+const [,, out, sel, w] = process.argv;
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: Number(w||1440), height: 1000 }, deviceScaleFactor: 3 });
+await p.goto('http://localhost:4321/', { waitUntil: 'networkidle' });
+await p.addStyleTag({ content: '[data-reveal]{opacity:1!important;transform:none!important}' });
+await p.waitForTimeout(600);
+const el = await p.locator(sel).first();
+await el.scrollIntoViewIfNeeded();
+await p.waitForTimeout(400);
+await el.screenshot({ path: out });
+await b.close();
+console.log('ok', out);

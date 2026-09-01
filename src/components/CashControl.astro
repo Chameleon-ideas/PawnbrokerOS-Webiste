@@ -1,0 +1,336 @@
+---
+import Scaler from './mockups/Scaler.astro';
+import BrowserBar from './mockups/BrowserBar.astro';
+import AppNav from './mockups/AppNav.astro';
+
+const movements = [
+  { t: 'Pawn Payment', m: 'Cash',  c: 'green', v: '+$240.00', neg: false },
+  { t: 'POS Sale',     m: 'Debit', c: 'blue',  v: '+$960.50', neg: false },
+  { t: 'Safe Drop',    m: 'Cash',  c: 'amber', v: '-$500.00', neg: true },
+];
+
+const saleInfo = [
+  ['Receipt #', 'SL-2024-001'],
+  ['Date', 'March 15, 2024 at 2:34 PM'],
+  ['Cashier', 'Jessica Martinez'],
+];
+
+const activity = [
+  ['Sale created', 'Mar 15, 2024 2:30 PM • Jessica M.'],
+  ['Payment collected', 'Mar 15, 2024 2:34 PM • Jessica M.'],
+  ['Receipt printed', 'Mar 15, 2024 2:35 PM • Jessica M.'],
+];
+
+const till = [
+  ['Cash in', '$2,450.00'],
+  ['Card in', '$960.50'],
+  ['Safe drops', '-$1,000.00'],
+];
+---
+
+<section class="section cash">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow eyebrow--bordered">Cash Under Control</span>
+      <h2 class="h-section">No More End-of-Day Mysteries.</h2>
+      <p class="lede" style="color:var(--muted-2)">
+        Every dollar that moves through your shop loans paid out, payments received, counter sales,
+        and refunds is logged against the till automatically. Open with a float, track through the
+        shift, and close with a count that tells you exactly where you stand.
+      </p>
+    </div>
+
+    <div class="cash__row">
+      <div class="cash__steps" data-reveal-group="100">
+        <!-- 01 -->
+        <article class="ccard" data-reveal>
+          <span class="ccard__eyebrow"><i>01</i>OPEN</span>
+          <h3 class="display">Set the Float and Start Clean.</h3>
+          <p>
+            Enter the opening cash balance at the start of each shift. That number becomes the
+            baseline every transaction that follows is measured against it. No assumptions. No
+            carryover confusion.
+          </p>
+          <div class="ccard__pills">
+            <span class="cp cp--green">Till Open · $500.00 Float · 08:30 AM</span>
+            <span class="cp cp--violet">08:30 AM</span>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="ccard" data-reveal>
+          <span class="ccard__eyebrow"><i>02</i>TRACK</span>
+          <h3 class="display">Every Movement, Logged as It Happens.</h3>
+          <p>
+            Cash and card transactions are recorded automatically throughout the day pawn payouts,
+            customer payments, counter sales, layaway installments, and refunds. Staff don't have to
+            enter anything separately. The till keeps its own running record.
+          </p>
+          <div class="mv">
+            <div class="mv__hd"><span>TYPE</span><span>METHOD</span><span>AMOUNT</span></div>
+            {movements.map((m, i) => (
+              <div class="mv__tr" style={i === 1 ? 'background:var(--row-alt)' : ''}>
+                <span class="t">{m.t}</span>
+                <span><i class={`mtag mtag--${m.c}`}>{m.m}</i></span>
+                <span class:list={['v', m.neg && 'v--neg']}>{m.v}</span>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="ccard" data-reveal>
+          <span class="ccard__eyebrow"><i>03</i>CLOSE</span>
+          <h3 class="display">Count the Drawer. Spot the Difference.</h3>
+          <p>
+            At the end of the shift, staff count what's in the drawer and enter the total. PawnDesk
+            compares the physical count against what the system expected and flags any overage,
+            shortage, or discrepancy before checkout is complete.
+          </p>
+          <div class="recon">
+            <div><span>Expected until</span><b>$1,241.50</b></div>
+            <div><span>Physical count</span><b>$1,238.00</b></div>
+            <hr />
+            <div><span class="strong">Variance</span><b class="neg">-$3.50</b></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="cash__visual" data-reveal>
+        <Scaler width={780}>
+          <div class="mock cash__win" style="width:780px">
+            <BrowserBar url="pawndesk.app / pos / SL-2024-001" padding="10px 14px" dot={9} urlWidth={280} font={10} />
+            <AppNav
+              tabs={['Customer', 'Pawn/Loan', 'POS', 'Inventory', 'Till']}
+              active="POS" height={44} padding="0 16px" gap={16}
+            />
+
+            <div class="cash__ph">
+              <div class="cash__phl">
+                <span class="backpill">‹ Back</span>
+                <b>POS #SL-2024-001</b>
+                <span class="chip chip--green" style="font-size:11px;padding:2px 8px">COMPLETE</span>
+                <em>• Completed on 03/15/2024</em>
+              </div>
+              <div class="cash__pha">
+                <span class="pill-btn" style="padding:7px 12px">Print Receipt</span>
+                <span class="pill-btn" style="padding:7px 12px;border-color:var(--red);color:var(--red);font-weight:600">Process Refund</span>
+              </div>
+            </div>
+
+            <div class="ws">
+              <div class="ws__l">
+                <div class="wc">
+                  <h4>SALE INFORMATION</h4><hr />
+                  <div class="wc__rows">
+                    {saleInfo.map(([k, v]) => (<div><span>{k}</span><b>{v}</b></div>))}
+                  </div>
+                </div>
+
+                <div class="wc">
+                  <h4>ITEMS SOLD</h4><hr />
+                  <div class="items">
+                    <div class="items__hd"><span>ITEM</span><span>SKU</span><span>DISC.</span><span class="r">PRICE</span></div>
+                    <div class="items__tr">
+                      <span class="nm">Vintage Watch</span><span>SKU-4521</span><span>10%</span><span class="r nm">$1,080.00</span>
+                    </div>
+                    <div class="items__ft">
+                      <div><span>Subtotal</span><b>$1,080.00</b></div>
+                      <div><span>HST (13%)</span><b>$140.40</b></div>
+                      <hr />
+                      <div><b class="tot">Total</b><b class="grand">$1,220.40</b></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wc">
+                  <h4>PAYMENT DETAILS</h4><hr />
+                  <div class="wc__rows">
+                    <div><span>Payment Method</span><i class="chip chip--green" style="font-size:11px;padding:2px 8px">Cash</i></div>
+                    <div><span>Amount Tendered</span><b>$1,300.00</b></div>
+                    <div><span>Change Given</span><b style="font-weight:700">$79.60</b></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ws__r">
+                <div class="wc">
+                  <h4>CUSTOMER</h4><hr />
+                  <div class="cust">
+                    <b>Acevedo, Maria</b>
+                    <span>Phone: (416) 555-0199</span>
+                    <span>maria.acevedo@email.com</span>
+                  </div>
+                  <hr />
+                  <a class="link" href="#">View customer profile →</a>
+                </div>
+
+                <div class="wc">
+                  <h4>ACTIVITY LOG</h4><hr />
+                  <div class="log">
+                    {activity.map(([t, m]) => (
+                      <div><i></i><span><b>{t}</b><em>{m}</em></span></div>
+                    ))}
+                  </div>
+                </div>
+
+                <div class="wc wc--dark">
+                  <h4>TILL SUMMARY - TODAY</h4><hr />
+                  <div class="wc__rows">
+                    {till.map(([k, v]) => (<div><span>{k}</span><b>{v}</b></div>))}
+                    <hr />
+                    <div><b class="net">Net in till</b><b class="net net--big">$2,410.50</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Scaler>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cash { background: #fff; border-bottom: 1px solid var(--border); }
+  .cash .sec-head { margin-bottom: 64px; }
+  .cash__row { display: flex; gap: 40px; align-items: flex-start; }
+  .cash__steps { width: 460px; flex: none; display: flex; flex-direction: column; gap: 16px; }
+  .cash__visual { flex: 1; min-width: 0; }
+
+  /* --- step cards --- */
+  .ccard {
+    display: flex; flex-direction: column; gap: 14px;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-16);
+    box-shadow: var(--sh-md);
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .ccard:hover { transform: translateY(-4px); box-shadow: var(--sh-xl); }
+  .ccard__eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--primary);
+  }
+  .ccard__eyebrow i {
+    display: grid; place-items: center;
+    width: 36px; height: 36px; border-radius: 99px;
+    background: var(--lilac-50); border: 1px solid var(--border-violet);
+    font-size: 13px; font-weight: 800; font-style: normal;
+  }
+  .ccard h3 { font-size: 30px; line-height: 1.35; color: var(--ink-800); }
+  .ccard p { font-size: 14px; line-height: 23px; color: var(--muted-2); }
+
+  .ccard__pills { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cp { padding: 3px 10px; border-radius: var(--r-pill); font-size: 11px; font-weight: 700; }
+  .cp--green { background: var(--green-bg); border: 1px solid #a7f3d0; color: var(--green-fg); }
+  .cp--violet { background: var(--lilac-50); border: 1px solid var(--border-violet); color: var(--primary); }
+
+  /* movements table */
+  .mv { border: 1px solid var(--border); border-radius: var(--r-8); overflow: hidden; background: var(--grey-50); }
+  .mv__hd, .mv__tr { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+  .mv__hd { padding: 7px 12px; background: var(--primary); color: #fff; font-size: 10px; font-weight: 700; }
+  .mv__hd span:last-child, .mv__tr span:last-child { text-align: right; }
+  .mv__hd span:nth-child(2), .mv__tr span:nth-child(2) { text-align: center; }
+  .mv__tr { padding: 8px 12px; background: #fff; border-bottom: 1px solid var(--border-soft); font-size: 11px; }
+  .mv__tr:last-child { border-bottom: 0; }
+  .mv__tr .t { color: var(--muted-2); }
+  .mv__tr .v { font-weight: 600; color: var(--ink-700); }
+  .mv__tr .v--neg { color: var(--red); }
+  .mtag { padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; font-style: normal; }
+  .mtag--green { background: var(--green-bg); color: var(--green-fg); }
+  .mtag--blue { background: var(--blue-bg); color: var(--blue-fg); }
+  .mtag--amber { background: var(--amber-bg); color: var(--amber-fg); }
+
+  /* reconciliation */
+  .recon {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 16px; background: var(--grey-50);
+    border: 1px solid var(--border); border-radius: var(--r-10);
+  }
+  .recon > div { display: flex; align-items: center; justify-content: space-between; }
+  .recon span { font-size: 13px; color: var(--muted-2); }
+  .recon .strong { font-weight: 700; color: var(--ink-800); }
+  .recon b { font-size: 13px; font-weight: 600; color: var(--ink-800); }
+  .recon b.neg { font-weight: 700; color: var(--red); }
+  .recon hr { border: 0; border-top: 1px solid var(--border); margin: 0; }
+
+  /* --- POS receipt mockup --- */
+  .cash__win { border-radius: var(--r-16); }
+  .cash__ph {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; background: #fff; border-bottom: 1px solid var(--border);
+  }
+  .cash__phl { display: flex; align-items: center; gap: 10px; }
+  .cash__phl b { font-size: 18px; font-weight: 800; color: var(--ink-700); }
+  .cash__phl em { font-size: 12px; font-weight: 500; font-style: normal; color: var(--muted-2); }
+  .backpill {
+    padding: 6px 12px; border-radius: var(--r-pill);
+    background: var(--surface-2); border: 1px solid var(--border-violet);
+    font-size: 12px; font-weight: 600; color: var(--muted-2);
+  }
+  .cash__pha { display: flex; align-items: center; gap: 6px; }
+
+  .ws { display: flex; gap: 16px; padding: 16px; background: var(--grey-150); }
+  .ws__l { flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .ws__r { width: 240px; flex: none; display: flex; flex-direction: column; gap: 14px; }
+
+  .wc {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 16px; background: #fff;
+    border: 1px solid var(--border); border-radius: var(--r-10);
+  }
+  .wc h4 { font-size: 11px; font-weight: 800; letter-spacing: .5px; color: var(--ink-700); }
+  .wc hr { border: 0; border-top: 1px solid var(--border); margin: 0; }
+  .wc__rows { display: flex; flex-direction: column; gap: 8px; }
+  .wc__rows > div { display: flex; align-items: center; justify-content: space-between; }
+  .wc__rows span { font-size: 12px; color: var(--muted-2); }
+  .wc__rows b { font-size: 12px; font-weight: 600; color: var(--ink-700); }
+
+  .wc--dark { background: var(--primary); border-color: var(--primary); box-shadow: var(--sh-sm); }
+  .wc--dark h4 { color: var(--indigo-100); }
+  .wc--dark hr { border-color: rgb(255 255 255 / .2); }
+  .wc--dark .wc__rows span { color: var(--indigo-100); }
+  .wc--dark .wc__rows b { color: #fff; font-weight: 700; }
+  .wc--dark .net { color: #fff; font-size: 13px; font-weight: 700; }
+  .wc--dark .net--big { font-size: 14px; font-weight: 800; }
+
+  .items { border: 1px solid var(--border); border-radius: var(--r-8); overflow: hidden; }
+  .items__hd, .items__tr { display: grid; grid-template-columns: 1fr 70px 60px 70px; }
+  .items__hd { padding: 8px 10px; background: var(--surface-2); font-size: 10px; font-weight: 700; color: var(--muted-2); }
+  .items__tr { padding: 10px; background: #fff; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted-2); }
+  .items .r { text-align: right; }
+  .items .nm { font-weight: 600; color: var(--ink-700); }
+  .items__ft { display: flex; flex-direction: column; gap: 6px; padding: 10px; background: var(--surface-2); }
+  .items__ft > div { display: flex; align-items: center; justify-content: space-between; }
+  .items__ft span { font-size: 12px; color: var(--muted-2); }
+  .items__ft b { font-size: 12px; font-weight: 600; color: var(--ink-700); }
+  .items__ft hr { border: 0; border-top: 1px solid var(--border); margin: 0; }
+  .items__ft .tot { font-weight: 700; }
+  .items__ft .grand { font-size: 13px; font-weight: 800; color: var(--primary); }
+
+  .cust { display: flex; flex-direction: column; gap: 6px; }
+  .cust b { font-size: 14px; font-weight: 700; color: var(--ink-700); }
+  .cust span { font-size: 12px; color: var(--muted-2); }
+  .link { font-size: 12px; font-weight: 600; color: var(--primary); transition: gap .2s var(--ease); }
+  .link:hover { text-decoration: underline; }
+
+  .log { display: flex; flex-direction: column; gap: 14px; }
+  .log > div { display: flex; gap: 10px; }
+  .log i { width: 8px; height: 8px; margin-top: 4px; border-radius: 99px; background: var(--primary); flex: none; }
+  .log span { display: flex; flex-direction: column; gap: 2px; }
+  .log b { font-size: 12px; font-weight: 600; color: var(--ink-700); }
+  .log em { font-size: 10px; font-style: normal; color: var(--muted-2); }
+
+  @media (max-width: 1100px) {
+    .cash__row { flex-direction: column; }
+    .cash__steps { width: 100%; }
+  }
+  @media (max-width: 760px) {
+    .cash .sec-head { margin-bottom: 40px; }
+    .ccard { padding: 20px; }
+    .ccard h3 { font-size: 24px; }
+  }
+</style>

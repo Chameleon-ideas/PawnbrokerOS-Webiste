@@ -1,0 +1,29 @@
+---
+interface Props {
+  url: string;
+  padding?: string;
+  dot?: number;
+  urlWidth?: number;
+  font?: number;
+  bg?: string;
+}
+const {
+  url,
+  padding = '12px 16px',
+  dot = 10,
+  urlWidth = 360,
+  font = 11,
+  bg = 'var(--grey-100)',
+} = Astro.props;
+---
+<div class="mock__bar" style={`padding:${padding};background:${bg}`}>
+  <div class="mock__dots" style={`gap:${Math.round(dot * 0.6)}px`}>
+    <i style={`width:${dot}px;height:${dot}px`}></i>
+    <i style={`width:${dot}px;height:${dot}px`}></i>
+    <i style={`width:${dot}px;height:${dot}px`}></i>
+  </div>
+  <div class="mock__url" style={`width:${urlWidth}px;font-size:${font}px`}>{url}</div>
+  <div class="mock__win">
+    <i></i><i></i>
+  </div>
+</div>

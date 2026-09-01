@@ -1,0 +1,198 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'PawnDesk — Every Loan, Every Item, Every Dollar All in One Place.',
+  description = 'PawnDesk replaces paper tickets, scattered spreadsheets, and generic software. Customers, pawn loans, payments, inventory, sales, layaway, forfeiture, and your cash till — all connected in one desktop application.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#605dec" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23605dec'/%3E%3Ctext x='16' y='21' font-family='Inter,sans-serif' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle'%3EGP%3C/text%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      /* ---------------------------------------------------------------
+         1. Scroll reveal
+         --------------------------------------------------------------- */
+      const revealables = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-in');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+        revealables.forEach((el) => io.observe(el));
+      } else {
+        revealables.forEach((el) => el.classList.add('is-in'));
+      }
+
+      /* Stagger children of [data-reveal-group] */
+      document.querySelectorAll<HTMLElement>('[data-reveal-group]').forEach((group) => {
+        const step = Number(group.dataset.revealGroup) || 70;
+        group.querySelectorAll<HTMLElement>(':scope > [data-reveal]').forEach((child, i) => {
+          child.style.setProperty('--d', `${i * step}ms`);
+        });
+      });
+
+      /* ---------------------------------------------------------------
+         2. Mockup auto-scaling — keeps the pixel-exact Figma mockups
+            intact and scales them like the Figma mobile frame does.
+         --------------------------------------------------------------- */
+      const scalers = Array.from(document.querySelectorAll<HTMLElement>('.scaler'));
+      function fitScalers() {
+        for (const s of scalers) {
+          const inner = s.firstElementChild as HTMLElement | null;
+          if (!inner) continue;
+          const iw = Number(s.dataset.iw) || inner.offsetWidth || 1;
+          const max = Number(s.dataset.max) || 1;
+          const scale = Math.min(max, s.clientWidth / iw);
+          inner.style.setProperty('--scale', String(scale));
+          inner.style.setProperty('--iw', `${iw}px`);
+          s.style.height = `${inner.offsetHeight * scale}px`;
+        }
+      }
+      fitScalers();
+      window.addEventListener('resize', fitScalers, { passive: true });
+      window.addEventListener('load', fitScalers);
+      if ('ResizeObserver' in window) {
+        const ro = new ResizeObserver(fitScalers);
+        scalers.forEach((s) => ro.observe(s));
+      }
+      if ('fonts' in document) (document as any).fonts.ready.then(fitScalers);
+
+      /* ---------------------------------------------------------------
+         3. Count-up numbers
+         --------------------------------------------------------------- */
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+      if (counters.length && 'IntersectionObserver' in window && !reduce) {
+        const fmt = (n: number, dec: number) =>
+          n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+        const co = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (!e.isIntersecting) continue;
+              const el = e.target as HTMLElement;
+              co.unobserve(el);
+              const target = Number(el.dataset.count);
+              const dec = Number(el.dataset.decimals || 0);
+              const pre = el.dataset.prefix || '';
+              const suf = el.dataset.suffix || '';
+              const dur = 1100;
+              const t0 = performance.now();
+              const tick = (t: number) => {
+                const p = Math.min(1, (t - t0) / dur);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = pre + fmt(target * eased, dec) + suf;
+                if (p < 1) requestAnimationFrame(tick);
+              };
+              requestAnimationFrame(tick);
+            }
+          },
+          { threshold: 0.5 }
+        );
+        counters.forEach((c) => co.observe(c));
+      }
+
+      /* ---------------------------------------------------------------
+         4. Accordions (FAQ + feature lists)
+         --------------------------------------------------------------- */
+      document.querySelectorAll<HTMLElement>('[data-accordion]').forEach((root) => {
+        const single = root.dataset.accordion === 'single';
+        const btns = root.querySelectorAll<HTMLButtonElement>('[data-acc-trigger]');
+        btns.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const item = btn.closest('[data-acc-item]') as HTMLElement;
+            const open = item.classList.contains('is-open');
+            if (single) {
+              root.querySelectorAll('[data-acc-item].is-open').forEach((o) => {
+                o.classList.remove('is-open');
+                o.querySelector('[data-acc-trigger]')?.setAttribute('aria-expanded', 'false');
+              });
+            }
+            item.classList.toggle('is-open', !open);
+            btn.setAttribute('aria-expanded', String(!open));
+          });
+        });
+      });
+
+      /* ---------------------------------------------------------------
+         5. Mobile nav
+         --------------------------------------------------------------- */
+      const navToggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+      const navDrawer = document.querySelector<HTMLElement>('[data-nav-drawer]');
+      if (navToggle && navDrawer) {
+        const setOpen = (open: boolean) => {
+          navDrawer.classList.toggle('is-open', open);
+          navToggle.classList.toggle('is-open', open);
+          navToggle.setAttribute('aria-expanded', String(open));
+          document.body.style.overflow = open ? 'hidden' : '';
+        };
+        navToggle.addEventListener('click', () =>
+          setOpen(!navDrawer.classList.contains('is-open'))
+        );
+        navDrawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+        window.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
+      }
+
+      /* ---------------------------------------------------------------
+         6. Navbar shadow on scroll + hero parallax
+         --------------------------------------------------------------- */
+      const nav = document.querySelector<HTMLElement>('[data-navbar]');
+      const floaters = Array.from(document.querySelectorAll<HTMLElement>('[data-float]'));
+      let ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          nav?.classList.toggle('is-stuck', y > 8);
+          if (!reduce) {
+            for (const f of floaters) {
+              const k = Number(f.dataset.float) || 0;
+              f.style.setProperty('--py', `${Math.max(-60, Math.min(60, -y * k))}px`);
+            }
+          }
+          ticking = false;
+        });
+      }
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+---
+import Icon from './Icon.astro';
+
+const features = [
+  'Full pawn loan management',
+  'Customer records & ID tracking',
+  'Inventory & pricing control',
+  'Sales, layaway & POS',
+  'Two-till cash reconciliation',
+  'Reports & police compliance',
+  '4 user seats included',
+  '100 GB cloud storage',
+  'Offline sync + backup & restore',
+];
+
+// Figma order: Monthly, Annual (featured), Quarterly
+const plans = [
+  { name: 'Monthly',   price: '$99', unit: '/month',         note: 'Maximum flexibility',            featured: false, badge: null },
+  { name: 'Annual',    price: '$79', unit: '/mo equivalent', note: 'Billed annually as $949',        featured: true,  badge: 'Best Value' },
+  { name: 'Quarterly', price: '$89', unit: '/mo equivalent', note: 'Billed as $269 every three months', featured: false, badge: null },
+];
+
+const addons = [
+  ['Extra User Seat', '$12/mo'],
+  ['Unlimited Sites + Tills', '$59/mo'],
+  ['AI Assistant', '$29/mo'],
+  ['SMS/WhatsApp Reminders', '$25/mo'],
+  ['Additional Location', '$69/mo'],
+  ['Group Dashboard', '$49/mo'],
+  ['White-label Branding', '$99/mo'],
+  ['Priority Support', '$49/mo'],
+];
+---
+
+<section class="section pr" id="pricing">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow" style="letter-spacing:1.5px">Simple, Transparent Pricing</span>
+      <h2 class="h-section">Choose The Plan That Works For Your Shop.</h2>
+      <p class="lede" style="color:var(--body)">
+        Simple, transparent pricing for pawn shops. Choose monthly, quarterly or annual billing, with
+        the same core PawnDesk platform included.
+      </p>
+      <p class="pr__nogates">No feature gates. Everything a single shop needs to operate.</p>
+    </div>
+
+    <div class="pr__cards" data-reveal-group="110">
+      {
+        plans.map((p) => (
+          <article class:list={['plan', p.featured && 'plan--featured']} data-reveal>
+            <div class="plan__head">
+              <div class="plan__badges">
+                <span class="plan__name">{p.name}</span>
+                {p.badge && <span class="plan__tag">{p.badge}</span>}
+              </div>
+              <div class="plan__price">
+                <b class="display">{p.price}</b>
+                <span>{p.unit}</span>
+              </div>
+              <p class="plan__note">{p.note}</p>
+            </div>
+
+            <hr />
+
+            <ul class="plan__features">
+              {features.map((f) => (
+                <li><Icon name="check" size={16} />{f}</li>
+              ))}
+            </ul>
+
+            <div class="plan__btnwrap">
+              <a class="plan__btn" href="#">Get Started</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="pr__addons" data-reveal>
+      <div class="pr__addonshead">
+        <h3 class="display">Optional Power-Ups &amp; Integrations</h3>
+        <p>Enhance your plan with powerful add-ons tailored to your shop's needs.</p>
+      </div>
+      <div class="pr__addongrid">
+        {addons.map(([n, v]) => (<div class="addon"><span>{n}</span><b>{v}</b></div>))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pr { background: var(--surface); border-bottom: 1px solid var(--border); }
+  .pr .sec-head { margin-bottom: 64px; }
+  .pr__nogates {
+    font-size: 14px; line-height: 22px; font-weight: 700;
+    color: var(--primary); text-align: center;
+  }
+
+  .pr__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: center; }
+
+  .plan {
+    display: flex; flex-direction: column; gap: 28px;
+    padding: 36px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-20);
+    box-shadow: var(--sh-md);
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .plan:hover { transform: translateY(-8px); box-shadow: var(--sh-xl); }
+  .plan hr { border: 0; border-top: 1px solid #f0edfb; margin: 0; }
+
+  .plan--featured {
+    background: var(--primary);
+    border: 2px solid var(--primary-deep);
+    box-shadow: var(--sh-xl);
+    z-index: 1;
+  }
+  .plan--featured:hover { box-shadow: 0 28px 50px -22px rgb(79 70 229 / .75); }
+  .plan--featured hr { border-color: rgb(255 255 255 / .2); }
+
+  .plan__head { display: flex; flex-direction: column; gap: 16px; }
+  .plan__badges { display: flex; align-items: center; justify-content: space-between; }
+  .plan__name {
+    font-size: 13px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--primary);
+  }
+  .plan--featured .plan__name { color: var(--indigo-100); }
+  .plan__tag {
+    padding: 5px 12px; border-radius: var(--r-pill);
+    background: #fff; color: var(--primary);
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+  }
+
+  .plan__price { display: flex; align-items: baseline; gap: 6px; }
+  .plan__price b { font-size: 64px; line-height: 64px; font-weight: 400; color: var(--ink-800); }
+  .plan__price span { font-size: 16px; color: var(--muted-2); }
+  .plan--featured .plan__price b { color: #fff; }
+  .plan--featured .plan__price span { color: var(--indigo-200); }
+
+  .plan__note { font-size: 14px; line-height: 22px; color: var(--muted-2); }
+  .plan--featured .plan__note { color: var(--indigo-200); }
+
+  .plan__features { display: flex; flex-direction: column; gap: 14px; }
+  .plan__features li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; line-height: 22px; color: var(--grey-700);
+  }
+  .plan__features :global(.ico) { color: var(--primary); }
+  .plan--featured .plan__features li { color: #fff; }
+  .plan--featured .plan__features :global(.ico) { color: #fff; }
+
+  .plan__btnwrap { padding-top: 4px; margin-top: auto; }
+  .plan__btn {
+    display: flex; align-items: center; justify-content: center;
+    padding: 14px 24px;
+    border-radius: var(--r-10);
+    background: var(--lilac-50);
+    color: var(--primary);
+    font-size: 15px; font-weight: 700;
+    transition: background-color .25s var(--ease), color .25s var(--ease),
+                transform .25s var(--ease), box-shadow .25s var(--ease);
+  }
+  .plan__btn:hover { background: var(--primary); color: #fff; transform: translateY(-2px); box-shadow: var(--sh-btn); }
+  .plan--featured .plan__btn { background: #fff; box-shadow: var(--sh-sm); }
+  .plan--featured .plan__btn:hover { background: var(--ink-800); color: #fff; }
+
+  /* add-ons */
+  .pr__addons { margin-top: 64px; display: flex; flex-direction: column; gap: 32px; align-items: center; }
+  .pr__addonshead { text-align: center; }
+  .pr__addonshead h3 { font-size: 36px; line-height: 1.35; color: var(--ink-800); }
+  .pr__addonshead p { margin-top: 8px; font-size: 15px; line-height: 24px; color: var(--muted-2); }
+
+  .pr__addongrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; }
+  .addon {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-12);
+    transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+  }
+  .addon:hover { transform: translateY(-3px); border-color: var(--border-violet); box-shadow: var(--sh-md); }
+  .addon span { font-size: 14px; font-weight: 600; color: var(--ink-800); }
+  .addon b { font-size: 14px; font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+  @media (max-width: 1100px) {
+    .pr__cards { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+    .pr__addongrid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .pr .sec-head { margin-bottom: 40px; }
+    .plan { padding: 26px; gap: 22px; }
+    .plan__price b { font-size: 48px; line-height: 48px; }
+    .pr__addons { margin-top: 40px; gap: 24px; }
+    .pr__addonshead h3 { font-size: 26px; }
+    .pr__addongrid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="section dp">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow" style="letter-spacing:1.5px">Protect What You've Built</span>
+      <h2 class="h-section">Your Records. Your Backup. Your Decision When to Restore.</h2>
+      <p class="lede">
+        Every customer record, every loan, every transaction protected with built-in backup and
+        restore. One click saves everything. Two-step confirmation makes sure nothing is overwritten
+        by accident. And if you ever need your data outside PawnDesk, export it in a portable format
+        anytime.
+      </p>
+    </div>
+
+    <div class="dp__card" data-reveal>
+      <span class="dp__ico"><Icon name="shield" size={40} stroke={3} /></span>
+      <div class="dp__txt">
+        <h3>Built-In Backup &amp; Restore</h3>
+        <p>
+          Create a full backup of all store data with one click customers, loans, inventory,
+          transactions, and settings. Restore from any previous backup with two-step confirmation so
+          a misclick never costs you your records. Your data can be exported in a portable format
+          whenever you need it.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dp { background: #fff; border-bottom: 1px solid var(--border); }
+  .dp .sec-head { margin-bottom: 64px; }
+
+  .dp__card {
+    display: flex; align-items: center; gap: 32px;
+    max-width: 860px; margin-inline: auto;
+    padding: 40px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-20);
+    box-shadow: var(--sh-lg);
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .dp__card:hover { transform: translateY(-4px); box-shadow: var(--sh-xl); }
+
+  .dp__ico {
+    display: grid; place-items: center; flex: none;
+    width: 80px; height: 80px;
+    border-radius: var(--r-16);
+    background: var(--lilac-50);
+    color: var(--primary);
+    transition: transform .5s var(--ease);
+  }
+  .dp__card:hover .dp__ico { transform: scale(1.06) rotate(-5deg); }
+
+  .dp__txt { display: flex; flex-direction: column; gap: 10px; }
+  .dp__txt h3 { font-size: 20px; font-weight: 700; color: var(--ink-800); }
+  .dp__txt p { font-size: 15px; line-height: 24px; color: var(--body); }
+
+  @media (max-width: 760px) {
+    .dp .sec-head { margin-bottom: 40px; }
+    .dp__card { flex-direction: column; align-items: flex-start; gap: 20px; padding: 24px; }
+    .dp__ico { width: 64px; height: 64px; }
+    .dp__txt h3 { font-size: 18px; }
+    .dp__txt p { font-size: 14px; line-height: 23px; }
+  }
+</style>

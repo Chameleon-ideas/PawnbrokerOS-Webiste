@@ -1,0 +1,294 @@
+---
+import Icon from './Icon.astro';
+import Scaler from './mockups/Scaler.astro';
+import BrowserBar from './mockups/BrowserBar.astro';
+import AppNav from './mockups/AppNav.astro';
+
+const tabs = [
+  'Customer', 'Pawn/Loan', 'Purchase', 'Layaways', 'Sale',
+  'Inventory', 'Transactions', 'Till', 'Reports', 'Settings',
+];
+
+const rows = [
+  { id: '08104372', name: 'Acevedo, Maria',   phone: '(786) 555-8142', loans: '3', visit: '02/14/24', flag: { t: 'VIP', c: 'amber' } },
+  { id: '08104221', name: 'Brennan, Tom',     phone: '(786) 555-8271', loans: '3', visit: '02/14/24', flag: null },
+  { id: '08102999', name: 'Caldwell, Jasmine',phone: '(404) 555-3398', loans: '-', visit: '02/14/24', flag: null },
+  { id: '08103031', name: 'Daniels, Frank',   phone: '(786) 555-1289', loans: '4', visit: '02/23/24', flag: { t: 'Active', c: 'green' } },
+  { id: '08103762', name: 'Esposito, Rosa',   phone: '(786) 555-9965', loans: '-', visit: '02/14/24', flag: null },
+  { id: '08102545', name: 'Fairchild, Henry', phone: '(470) 555-8181', loans: '-', visit: '02/14/24', flag: null },
+  { id: '08103379', name: 'Hatfield, Beverly',phone: '(786) 555-7962', loans: '-', visit: '12/04/18', flag: { t: 'DO NOT LOAN', c: 'red' } },
+];
+---
+
+<section class="hero" id="top">
+  <div class="hero__text" data-reveal-group="90">
+    <span class="eyebrow eyebrow--bordered hero__eyebrow" data-reveal>
+      <i class="dot"></i>✦ One System. One Counter. Zero Guesswork.
+    </span>
+
+    <h1 class="hero__h1 display" data-reveal>
+      Every Loan, Every Item, Every Dollar All in One Place.
+    </h1>
+
+    <p class="hero__lede" data-reveal>
+      PawnDesk replaces the paper tickets, scattered spreadsheets, and generic software that slow
+      your counter down. Manage customers, pawn loans, payments, inventory, sales, layaway,
+      forfeiture, and your cash till all connected, all in one desktop application.
+    </p>
+
+    <div class="hero__actions" data-reveal>
+      <a class="btn btn--primary" href="#pricing">Get Started →<Icon name="arrow-right" size={16} /></a>
+      <a class="btn btn--secondary" href="#how-it-works">See How It Works</a>
+    </div>
+  </div>
+
+  <div class="hero__visual" data-reveal>
+    <Scaler width={1280} class="hero__scaler">
+      <div class="hero__stage">
+        <!-- ---------------- app window ---------------- -->
+        <div class="mock hero__win">
+          <BrowserBar url="pawndesk.app / customers" padding="12px 16px" dot={11} urlWidth={400} font={12} bg="var(--surface-3)" />
+
+          <AppNav tabs={tabs} active="Customer" height={52} padding="0 24px" gap={28} markSize={26} wordSize={13} tabSize={12} userName />
+
+          <div class="hp">
+            <div>
+              <h3>Customers</h3>
+              <p>All customers · 4,288 records</p>
+            </div>
+            <div class="hp__actions">
+              <span class="pill-btn">Import</span>
+              <span class="pill-btn">Export</span>
+              <span class="pill-btn"><Icon name="scan" size={13} />Scan ID</span>
+              <span class="pill-btn pill-btn--solid"><Icon name="plus" size={13} />New Customer</span>
+            </div>
+          </div>
+
+          <div class="hc">
+            <div class="hc__stats">
+              <div class="stat">
+                <span class="stat__k">Customers</span>
+                <div><div class="stat__v" data-count="4288">4,288</div><div class="stat__u">total</div></div>
+              </div>
+              <div class="stat">
+                <span class="stat__k">With Active Loan</span>
+                <div><div class="stat__v" data-count="938">938</div><div class="stat__u">customers</div></div>
+              </div>
+              <div class="stat">
+                <span class="stat__k">Banned / Locked</span>
+                <div><div class="stat__v" data-count="77">77</div><div class="stat__u">do-not-loan flag</div></div>
+              </div>
+            </div>
+
+            <div class="hc__filters">
+              <div class="fld" style="flex:1">
+                <span class="fld__l">Search customers</span>
+                <span class="fld__c"><Icon name="search" size={14} /><span class="ph">Name, phone, ID #, email...</span></span>
+              </div>
+              <div class="fld" style="width:160px">
+                <span class="fld__l">Has Active Loan</span>
+                <span class="fld__c">Any<Icon name="chevron-down" size={13} class="sp" /></span>
+              </div>
+              <div class="fld" style="width:160px">
+                <span class="fld__l">Banned / Locked</span>
+                <span class="fld__c">Any<Icon name="chevron-down" size={13} class="sp" /></span>
+              </div>
+              <div class="fld" style="width:160px">
+                <span class="fld__l">Last Visit</span>
+                <span class="fld__c">Any time<Icon name="chevron-down" size={13} class="sp" /></span>
+              </div>
+              <div class="fld" style="width:180px">
+                <span class="fld__l">ID Expiring</span>
+                <span class="fld__c"><span class="ph">Select range...</span><Icon name="calendar" size={13} class="sp" /></span>
+              </div>
+            </div>
+
+            <div class="hc__table">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th style="width:44px"><span class="cbx"></span></th>
+                    <th style="width:120px">CUSTOMER #</th>
+                    <th>NAME</th>
+                    <th style="width:160px">PHONE</th>
+                    <th style="width:120px" class="num">ACTIVE LOANS</th>
+                    <th style="width:110px">LAST VISIT</th>
+                    <th style="width:160px">FLAGS</th>
+                    <th style="width:90px" class="num">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r) => (
+                    <tr>
+                      <td><span class="cbx"></span></td>
+                      <td class="dim">{r.id}</td>
+                      <td class="name">{r.name}</td>
+                      <td>{r.phone}</td>
+                      <td class="num"><b>{r.loans}</b></td>
+                      <td>{r.visit}</td>
+                      <td>{r.flag ? <span class={`chip chip--${r.flag.c}`}>{r.flag.t}</span> : <span class="dim">-</span>}</td>
+                      <td class="num"><span class="open">Open<Icon name="chevron-right" size={11} /></span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div class="pager">
+                <span>Showing 7 of 4,288 records</span>
+                <span>Page 1 of 12</span>
+                <span class="pager__btns"><span>Prev</span><span>Next</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------- floating stat cards ---------------- -->
+        <div class="flt flt--a" data-float="0.045">
+          <span class="flt__k"><i style="background:var(--primary)"></i>Customers</span>
+          <b class="flt__v" style="color:var(--ink-700)">4,288</b>
+          <span class="flt__u">total records</span>
+        </div>
+        <div class="flt flt--b" data-float="0.07">
+          <span class="flt__k"><i style="background:var(--green)"></i>Active Loans</span>
+          <b class="flt__v" style="color:var(--green-fg)">938</b>
+          <span class="flt__u">active pawn tickets</span>
+        </div>
+        <div class="flt flt--c" data-float="0.03">
+          <span class="flt__k"><i style="background:var(--red)"></i>Banned / Locked</span>
+          <b class="flt__v" style="color:var(--red)">77</b>
+          <span class="flt__u">do-not-loan flags</span>
+        </div>
+      </div>
+    </Scaler>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+    padding: 120px var(--gutter);
+    background: linear-gradient(160deg, #f5f3ff 0%, #ede9fe 45%, #f8f7ff 100%);
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    text-align: center;
+    max-width: 680px;
+  }
+  .hero__eyebrow { color: var(--primary-700); letter-spacing: 1.2px; }
+
+  .hero__h1 {
+    font-size: 80px;
+    line-height: 84px;
+    letter-spacing: -2px;
+    max-width: 860px;
+    margin-inline: -90px;      /* Figma: headline is wider than the text column */
+  }
+
+  .hero__lede { font-size: 18px; line-height: 30px; color: var(--muted); }
+
+  .hero__actions { display: flex; gap: 14px; }
+
+  /* --- visual --- */
+  .hero__visual { width: 100%; max-width: var(--content); }
+  .hero__stage { position: relative; width: 1280px; }
+  .hero__win { border-color: #e2dcf7; }
+
+  /* page header */
+  .hp {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .hp h3 { font-size: 22px; font-weight: 700; color: var(--ink-700); }
+  .hp p { font-size: 13px; color: var(--muted-2); margin-top: 3px; }
+  .hp__actions { display: flex; align-items: center; gap: 8px; }
+
+  /* content */
+  .hc { display: flex; flex-direction: column; gap: 22px; padding: 22px; background: #fff; border-top: 1px solid var(--border); }
+  .hc__stats { display: flex; gap: 14px; }
+  .hc__filters {
+    display: flex; align-items: flex-end; gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    border-radius: var(--r-8);
+  }
+  .hc__table {
+    border: 1px solid var(--border);
+    border-radius: var(--r-10);
+    box-shadow: var(--sh-sm);
+    overflow: hidden;
+  }
+  .hc__table :global(.tbl th) { padding: 10px 14px; }
+  .hc__table :global(.tbl td) { padding: 11px 14px; font-size: 12px; }
+  .hc__table :global(.tbl thead th:first-child) { padding: 10px; }
+  .hc__table :global(.tbl tbody td:first-child) { padding: 11px 10px; }
+
+  .cbx {
+    display: inline-block;
+    width: 14px; height: 14px;
+    background: #fff;
+    border: 1px solid var(--border-violet);
+    border-radius: 3px;
+  }
+  .open {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 700; color: var(--grey-700);
+    transition: color .2s var(--ease), gap .2s var(--ease);
+  }
+  tr:hover .open { color: var(--primary); gap: 7px; }
+
+  /* floaters */
+  .flt {
+    position: absolute;
+    width: 196px;
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 16px;
+    background: #fff;
+    border: 1px solid var(--lilac-50);
+    border-radius: var(--r-12);
+    box-shadow: var(--sh-lg);
+    transform: translateY(var(--py, 0));
+    transition: box-shadow .35s var(--ease);
+  }
+  .flt:hover { box-shadow: 0 22px 40px -18px rgb(76 29 149 / .45); }
+  .flt--a { left: -40px; top: 220px; animation: bob 7s ease-in-out infinite; }
+  .flt--b { left: 1100px; top: 160px; animation: bob 8s ease-in-out .8s infinite; }
+  .flt--c { left: 1090px; top: 370px; animation: bob 6.5s ease-in-out .4s infinite; }
+
+  .flt__k {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 8px;
+    font-size: 10px; font-weight: 600; letter-spacing: .5px;
+    text-transform: uppercase; color: var(--muted-2);
+  }
+  .flt__k i { width: 7px; height: 7px; border-radius: 99px; flex: none; }
+  .flt__v { font-size: 28px; line-height: 32px; font-weight: 700; }
+  .flt__u { font-size: 12px; color: var(--muted-3); }
+
+  @keyframes bob {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -10px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .flt { animation: none; } }
+
+  /* --- responsive --- */
+  @media (max-width: 1100px) {
+    .hero { gap: 56px; padding: 96px var(--gutter); }
+    .hero__h1 { font-size: 58px; line-height: 62px; margin-inline: 0; }
+  }
+  @media (max-width: 760px) {
+    .hero { gap: 40px; padding: 60px var(--gutter); }
+    .hero__text { gap: 24px; }
+    .hero__h1 { font-size: 38px; line-height: 42px; letter-spacing: -1px; }
+    .hero__lede { font-size: 15px; line-height: 24px; }
+    .hero__actions { flex-direction: column; width: 100%; gap: 12px; }
+  }
+</style>

@@ -1,0 +1,11 @@
+---
+// Wraps a fixed-width, pixel-exact app mockup and scales it to fit its column,
+// mirroring how the Figma mobile frame scales the same mockups down.
+interface Props { width: number; max?: number; class?: string }
+const { width, max = 1, class: cls = '' } = Astro.props;
+---
+<div class={`scaler ${cls}`} data-iw={width} data-max={max} style={`--iw:${width}px`}>
+  <div class="scaler__inner" style={`--iw:${width}px`}>
+    <slot />
+  </div>
+</div>

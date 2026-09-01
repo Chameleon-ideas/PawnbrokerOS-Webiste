@@ -1,0 +1,568 @@
+---
+import Icon from './Icon.astro';
+import Scaler from './mockups/Scaler.astro';
+import BrowserBar from './mockups/BrowserBar.astro';
+
+const step1Links = [
+  {
+    t: 'Customer Details',
+    d: 'Full name, date of birth, and personal information - entered once at intake and carried forward.',
+  },
+  {
+    t: 'ID Document',
+    d: 'Licence type, number, and expiry - recorded for verification. Document data is informational, not stored.',
+  },
+  {
+    t: 'Contact & Address',
+    d: 'Phone, email, street address, city, province, and postal code - everything needed to reach the customer.',
+  },
+];
+
+const step2Acc = [
+  {
+    t: 'Pawn Details & Ticket',
+    d: 'The customer, principal, due date, interest accrued, fees, and current payoff amount visible at a glance, updated as payments come in.',
+  },
+  {
+    t: 'Secured Items & Bin Location',
+    d: "What the customer pledged, where it's stored in the shop, and its current status so staff can find it the moment the customer walks in to redeem.",
+  },
+  {
+    t: 'Activity History & Notes',
+    d: 'A complete timeline of every event on the loan when it was opened, when interest was charged, when payments were received, and any staff notes added along the way.',
+  },
+];
+
+const pawnRows = [
+  ['Customer', 'Acevedo, Maria'],
+  ['Date in', '2024-02-14'],
+  ['Due', '2024-05-14'],
+  ['Principal', '$1,200.00'],
+  ['Interest accrued', '$240.00'],
+  ['Fees', '$0.00'],
+];
+
+const activity = [
+  { d: '2024-02-14', a: 'Pawn opened', v: '$1,200.00', c: '' },
+  { d: '2024-03-14', a: 'Interest charged', v: '$240.00', c: '' },
+  { d: '2024-03-20', a: 'Payment received', v: '-$100.00', c: 'green' },
+  { d: '2024-04-14', a: 'Interest charged', v: '$240.00', c: '' },
+];
+
+const step3Feats = [
+  {
+    icon: 'shopping-cart',
+    bg: 'var(--lilac-50)',
+    fg: 'var(--primary)',
+    t: 'Point of Sale — Search inventory, add items to a sale, apply discounts, calculate tax, and accept cash or card all from one screen.',
+    s: 'Sell inventory, apply discounts and taxes',
+    badge: 'Live',
+    primary: true,
+  },
+  {
+    icon: 'layers',
+    bg: '#f0fdf4',
+    fg: 'var(--green)',
+    t: "Inventory & Layaways — See what's in stock, where it came from, and where it sits. Set items aside on layaway and track installment payments until the balance is cleared.",
+    s: 'Track items, holds and stock locations',
+    badge: 'Secondary',
+    primary: false,
+  },
+  {
+    icon: 'banknote',
+    bg: '#fef9e7',
+    fg: 'var(--amber-fg)',
+    t: 'Till & Close of Day — Open with a float, track every cash and card movement through the shift, and close out with a full reconciliation expected vs. actual, any over or short flagged instantly.',
+    s: 'Reconcile cash, transfers and daily totals',
+    badge: 'Secondary',
+    primary: false,
+  },
+];
+---
+
+<section class="section hiw" id="how-it-works">
+  <div class="container">
+    <div class="sec-head" data-reveal-group="90" data-reveal>
+      <span class="eyebrow" style="letter-spacing:2px">How PawnDesk Works</span>
+      <h2 class="h-section" style="max-width:780px">
+        From Profile to Payment Nothing Falls Between the Cracks.
+      </h2>
+      <p class="lede" style="max-width:580px">
+        Three steps. Fully connected. Every loan, payment, and sale traces back to the same customer
+        profile, the same inventory, and the same till.
+      </p>
+    </div>
+
+    <div class="hiw__steps">
+      <!-- ============================ STEP 01 ============================ -->
+      <div class="step">
+        <div class="step__visual" data-reveal>
+          <Scaler width={640}>
+            <div class="stage" style="width:640px;height:460px">
+              <div class="accent" style="left:0;top:20px;width:620px;height:420px;background:var(--lilac-50);opacity:.55"></div>
+              <div class="mock m1" style="left:0;top:0;width:620px">
+                <BrowserBar url="pawndesk.app / new-customer" padding="10px 14px" dot={9} urlWidth={320} font={10} />
+                <div class="m1__top">
+                  <span class="m1__brand"><i>GP</i>PAWN DESK</span>
+                  <span class="m1__tabs">
+                    <b>Customer</b><em>Pawn/Loan</em><em>Sale</em><em>Inventory</em>
+                  </span>
+                  <span class="m1__av">RI</span>
+                </div>
+                <div class="m1__sub">
+                  <span class="m1__l"><i class="tag">&lt; Back</i><b>New customer</b></span>
+                  <span class="m1__l"><i class="tag">Cancel</i><i class="tag tag--solid">Save &amp; continue to pawn</i></span>
+                </div>
+                <div class="m1__body">
+                  <div class="m1__card">
+                    <h4>CUSTOMER DETAILS</h4>
+                    <div class="m1__row">
+                      <span class="mf"><i>LEGAL FIRST NAME</i><b class="ph">First Name</b></span>
+                      <span class="mf"><i>MIDDLE</i><b class="ph">Middle Name (Optional)</b></span>
+                    </div>
+                    <div class="m1__row">
+                      <span class="mf"><i>LAST NAME</i><b class="ph">Last Name</b></span>
+                      <span class="mf"><i>DATE OF BIRTH</i><b>05/20/1988</b></span>
+                    </div>
+                  </div>
+                  <div class="m1__card">
+                    <div class="m1__hd"><h4>ID DOCUMENT</h4><i>NOT STORED - INFORMATIONAL</i></div>
+                    <div class="m1__row">
+                      <span class="mf"><i>ID TYPE</i><b>Driver's licence</b></span>
+                      <span class="mf"><i>ID NUMBER</i><b class="ph">D0000-00000-00000</b></span>
+                      <span class="mf"><i>PROVINCE</i><b>ON</b></span>
+                    </div>
+                  </div>
+                  <div class="m1__card">
+                    <h4>CONTACT &amp; ADDRESS</h4>
+                    <div class="m1__row">
+                      <span class="mf"><i>PHONE</i><b class="ph">(___) ___-____</b></span>
+                      <span class="mf"><i>EMAIL (OPTIONAL)</i><b class="ph">email@example.com</b></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Scaler>
+        </div>
+
+        <div class="step__text" data-reveal>
+          <span class="step__eyebrow"><i>01</i>START WITH THE CUSTOMER</span>
+          <h3 class="h-step">Build the Profile Once. Use It for Every Transaction After.</h3>
+          <p class="step__body">
+            Before a loan, a buy, or a sale - there's a customer. PawnDesk captures their identity,
+            contact details, and documentation upfront so staff never have to ask twice. Every
+            transaction that follows is automatically linked to this profile.
+          </p>
+          <div class="linklist">
+            {step1Links.map((l) => (
+              <a class="linklist__item" href="#">
+                <span>
+                  <b>{l.t}</b>
+                  <em>{l.d}</em>
+                </span>
+                <Icon name="chevron-right" size={16} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="connector" aria-hidden="true">
+        <i></i>
+        <span><Icon name="arrow-down" size={14} /></span>
+        <i></i>
+      </div>
+
+      <!-- ============================ STEP 02 ============================ -->
+      <div class="step step--reverse">
+        <div class="step__visual" data-reveal>
+          <Scaler width={640}>
+            <div class="stage" style="width:640px;height:500px">
+              <div class="accent" style="left:40px;top:40px;width:560px;height:420px;background:var(--primary);opacity:.07"></div>
+
+              <div class="pcard" style="left:0;top:0;width:460px">
+                <div class="pcard__hd">
+                  <span><b>PAWN DETAILS</b><i class="chip chip--green">ACTIVE</i></span>
+                  <em>TICKET #TK-2024-001</em>
+                </div>
+                <hr />
+                <div class="pcard__rows">
+                  {pawnRows.map(([k, v]) => (<div><span>{k}</span><b>{v}</b></div>))}
+                </div>
+                <hr />
+                <div class="pcard__payoff"><b>Payoff now:</b><em>$1,440.00</em></div>
+                <div class="pcard__acts">
+                  <span class="pa pa--danger">Void pawn</span>
+                  <span class="pa">Print label</span>
+                  <span class="pa pa--primary">Collect payment</span>
+                </div>
+              </div>
+
+              <div class="acard" style="left:140px;top:220px;width:470px" data-float="0.02">
+                <div class="acard__hd">
+                  <b>ACTIVITY HISTORY</b>
+                  <i>7 EVENTS</i>
+                </div>
+                <div class="acard__th"><span>DATE</span><span>ACTIVITY</span><span>AMOUNT</span></div>
+                {activity.map((a, i) => (
+                  <div class="acard__tr" style={i % 2 ? 'background:var(--row-alt)' : ''}>
+                    <span class="d">{a.d}</span>
+                    <span class="a">{a.a}</span>
+                    <span class:list={['v', a.c === 'green' && 'v--green']}>{a.v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Scaler>
+        </div>
+
+        <div class="step__text" data-reveal>
+          <span class="step__eyebrow"><i>02</i>CREATE &amp; MANAGE THE TRANSACTION</span>
+          <h3 class="h-step">The Full Loan on One Screen From Day One to Final Payment.</h3>
+          <p class="step__body">
+            Open a pawn ticket with the item details, loan amount, due date, and interest terms. From
+            that moment, every payment, every interest charge, every note and bin assignment lives
+            under the same ticket. Staff never have to piece the story together from separate records.
+          </p>
+          <div class="acc" data-accordion="single">
+            {step2Acc.map((a, i) => (
+              <div class="acc__item" data-acc-item class:list={[i === 0 && 'is-open']}>
+                <button class="acc__btn" data-acc-trigger aria-expanded={i === 0 ? 'true' : 'false'}>
+                  <span>{a.t}</span>
+                  <Icon name="chevron-down" size={16} />
+                </button>
+                <div class="acc__panel"><p>{a.d}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="connector" aria-hidden="true">
+        <i></i>
+        <span><Icon name="arrow-down" size={14} /></span>
+        <i></i>
+      </div>
+
+      <!-- ============================ STEP 03 ============================ -->
+      <div class="step">
+        <div class="step__visual" data-reveal>
+          <Scaler width={640}>
+            <div class="stage stage--pos" style="width:640px;height:480px">
+              <div class="poswin" style="left:20px;top:16px;width:600px">
+                <div class="poswin__bar">
+                  <i style="background:#f04545"></i><i style="background:#f59e0a"></i><i style="background:#0fba82"></i>
+                </div>
+                <img src="/images/pos-sale.png" width="600" height="420" alt="PawnDesk point-of-sale screen showing a new sale with cart, tender options and totals" loading="lazy" decoding="async" />
+              </div>
+            </div>
+          </Scaler>
+        </div>
+
+        <div class="step__text" data-reveal>
+          <span class="step__eyebrow"><i>03</i>MANAGE THE DAY</span>
+          <h3 class="h-step">Sales, Inventory, Layaways &amp; Cash Handled as the Day Moves.</h3>
+          <p class="step__body">
+            Ring up sales, reserve items on layaway, track what's on the shelves and what's in the
+            back, and reconcile the cash drawer before you lock up. Everything that happens during the
+            shift is recorded against the same customers and the same inventory nothing gets entered
+            twice.
+          </p>
+          <div class="featlist">
+            {step3Feats.map((f) => (
+              <div class="featlist__item">
+                <span class="featlist__ico" style={`background:${f.bg};color:${f.fg}`}>
+                  <Icon name={f.icon} size={16} />
+                </span>
+                <span class="featlist__txt">
+                  <b>{f.t}</b>
+                  <em>{f.s}</em>
+                </span>
+                <span class={f.primary ? 'badge-pri' : 'badge-sec'}>{f.badge}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hiw { background: var(--surface); }
+  .hiw .sec-head { margin-bottom: 64px; }
+
+  .hiw__steps { display: flex; flex-direction: column; }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding-bottom: 48px;
+  }
+  .step--reverse { flex-direction: row-reverse; }
+  .step__visual { width: 640px; flex: none; }
+  .step__text { flex: 1; display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+
+  .step__eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--primary);
+    font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+  }
+  .step__eyebrow i {
+    display: grid; place-items: center;
+    width: 40px; height: 40px; border-radius: 20px;
+    background: var(--lilac-50);
+    border: 1px solid var(--border-violet);
+    font-size: 15px; font-weight: 800; font-style: normal;
+  }
+  .step__body { font-size: 16px; line-height: 28px; color: var(--muted); }
+
+  /* absolute stage for overlapping mockup parts */
+  .stage { position: relative; }
+  .stage > * { position: absolute; }
+  .accent { border-radius: var(--r-24); }
+  .stage--pos { background: #f7f7fc; }
+
+  /* ---------- step 1 mockup ---------- */
+  .m1 { border-radius: var(--r-14); box-shadow: var(--sh-lg); }
+  .m1__top {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 40px; padding: 0 16px;
+    background: var(--surface-2); border-bottom: 1px solid var(--border);
+  }
+  .m1__brand { display: flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 800; letter-spacing: .5px; color: var(--ink-700); }
+  .m1__brand i {
+    display: grid; place-items: center; width: 20px; height: 20px;
+    border-radius: 4px; background: var(--primary); color: #fff;
+    font-size: 9px; font-weight: 700; font-style: normal;
+  }
+  .m1__tabs { display: flex; align-items: center; gap: 4px; }
+  .m1__tabs b, .m1__tabs em {
+    padding: 4px 8px; border-radius: 4px;
+    font-size: 9px; font-style: normal;
+  }
+  .m1__tabs b { background: var(--lilac-50); border-bottom: 2px solid #dfdff3; color: var(--primary); font-weight: 700; }
+  .m1__tabs em { color: var(--muted-2); font-weight: 500; }
+  .m1__av {
+    display: grid; place-items: center; width: 22px; height: 22px;
+    border-radius: 11px; background: var(--primary); color: #fff; font-size: 8px; font-weight: 700;
+  }
+
+  .m1__sub {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 40px; padding: 0 16px;
+    background: #fff; border-bottom: 1px solid var(--border);
+  }
+  .m1__l { display: flex; align-items: center; gap: 10px; }
+  .m1__l b { font-size: 13px; font-weight: 700; color: var(--ink-700); }
+  .tag {
+    padding: 4px 8px; border-radius: 4px;
+    background: #fff; border: 1px solid var(--border);
+    font-size: 10px; font-style: normal; font-weight: 500; color: var(--ink-700);
+  }
+  .tag--solid { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
+
+  .m1__body { display: flex; flex-direction: column; gap: 10px; padding: 16px; background: #f7f7f7; }
+  .m1__card {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 16px; background: #fff;
+    border: 1px solid var(--border); border-radius: var(--r-10);
+    box-shadow: var(--sh-card-violet);
+  }
+  .m1__card h4 { font-size: 11px; font-weight: 700; color: var(--ink-700); }
+  .m1__hd { display: flex; align-items: center; justify-content: space-between; }
+  .m1__hd i { font-size: 8px; font-weight: 600; font-style: normal; color: var(--muted-2); }
+  .m1__row { display: flex; gap: 10px; }
+  .mf { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .mf i { font-size: 8px; font-weight: 600; font-style: normal; color: var(--muted-2); }
+  .mf b {
+    height: 24px; padding: 5px 8px;
+    background: #fff; border: 1px solid var(--border-violet); border-radius: 4px;
+    font-size: 10px; font-weight: 400; color: var(--ink-700);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .mf b.ph { color: var(--muted-3); }
+
+  /* ---------- step 2 cards ---------- */
+  .pcard {
+    display: flex; flex-direction: column; gap: 16px;
+    padding: 24px; background: #fff;
+    border: 1px solid var(--border); border-radius: var(--r-16);
+    box-shadow: var(--sh-xl);
+    z-index: 2;
+  }
+  .pcard hr { border: 0; border-top: 1px solid var(--border); margin: 0; }
+  .pcard__hd { display: flex; align-items: center; justify-content: space-between; }
+  .pcard__hd > span { display: flex; align-items: center; gap: 10px; }
+  .pcard__hd b { font-size: 13px; font-weight: 800; letter-spacing: .5px; color: var(--ink-700); }
+  .pcard__hd .chip { font-size: 9px; padding: 2px 8px; }
+  .pcard__hd em { font-size: 10px; font-weight: 700; font-style: normal; color: var(--primary); }
+  .pcard__rows { display: flex; flex-direction: column; gap: 10px; }
+  .pcard__rows > div { display: flex; align-items: center; justify-content: space-between; }
+  .pcard__rows span { font-size: 12px; color: var(--muted-2); }
+  .pcard__rows b { font-size: 12px; font-weight: 600; color: var(--ink-700); }
+  .pcard__payoff { display: flex; align-items: center; justify-content: space-between; }
+  .pcard__payoff b { font-size: 13px; font-weight: 700; color: var(--ink-700); }
+  .pcard__payoff em { font-size: 15px; font-weight: 800; font-style: normal; color: var(--primary); }
+  .pcard__acts { display: flex; align-items: center; gap: 8px; }
+  .pa {
+    padding: 7px 12px; border-radius: var(--r-6);
+    background: #fff; border: 1px solid var(--border-violet);
+    font-size: 11px; font-weight: 500; color: var(--grey-700);
+    transition: transform .2s var(--ease);
+  }
+  .pa:hover { transform: translateY(-1px); }
+  .pa--danger { border-color: var(--red); color: var(--red); font-weight: 600; }
+  .pa--primary {
+    flex: 1; text-align: center;
+    background: var(--primary); border-color: var(--primary);
+    color: #fff; font-weight: 700;
+    box-shadow: var(--sh-btn);
+  }
+
+  .acard {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 16px; background: #fff;
+    border: 1px solid var(--border); border-radius: var(--r-12);
+    box-shadow: var(--sh-lg);
+    z-index: 3;
+    transform: translateY(var(--py, 0));
+  }
+  .acard__hd { display: flex; align-items: center; justify-content: space-between; }
+  .acard__hd b { font-size: 11px; font-weight: 800; letter-spacing: .5px; color: var(--ink-700); }
+  .acard__hd i {
+    padding: 2px 8px; border-radius: var(--r-pill);
+    background: var(--lilac-50); color: var(--primary);
+    font-size: 9px; font-weight: 700; font-style: normal;
+  }
+  .acard__th, .acard__tr { display: grid; grid-template-columns: 110px 140px 1fr; }
+  .acard__th {
+    padding: 8px 12px; border-radius: var(--r-6);
+    background: var(--primary); color: #fff;
+    font-size: 9px; font-weight: 700; letter-spacing: .5px;
+  }
+  .acard__tr { padding: 8px 12px; font-size: 10px; }
+  .acard__tr .d { color: var(--muted-2); }
+  .acard__tr .a, .acard__tr .v { font-weight: 600; color: var(--ink-700); }
+  .acard__tr .v--green { color: var(--green); }
+
+  /* ---------- step 3 POS ---------- */
+  .poswin { border-radius: var(--r-12); box-shadow: 0 4px 20px rgb(0 0 0 / .10); overflow: hidden; background: #fff; }
+  .poswin__bar { display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; background: #f5f5fa; }
+  .poswin__bar i { width: 8px; height: 8px; border-radius: 99px; display: block; }
+  .poswin img { width: 100%; height: auto; display: block; }
+
+  /* ---------- link list (step 1) ---------- */
+  .linklist {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-12);
+    box-shadow: var(--sh-sm);
+    overflow: hidden;
+  }
+  .linklist__item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-line);
+    transition: background-color .25s var(--ease);
+  }
+  .linklist__item:last-child { border-bottom: 0; }
+  .linklist__item:hover { background: var(--surface); }
+  .linklist__item > span { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .linklist__item b { font-size: 14px; font-weight: 500; color: #0a0a0a; }
+  .linklist__item em { font-size: 14px; font-style: normal; color: #737373; }
+  .linklist__item :global(.ico) { color: #0a0a0a; transition: transform .25s var(--ease); }
+  .linklist__item:hover :global(.ico) { transform: translateX(4px); color: var(--primary); }
+
+  /* ---------- accordion (step 2) ---------- */
+  .acc { border-top: 0; }
+  .acc__item { border-bottom: 1px solid var(--border-grey); }
+  .acc__btn {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    width: 100%; padding: 16px 0;
+    text-align: left;
+    font-size: 14px; font-weight: 500; color: #0a0a0a;
+    transition: color .2s var(--ease);
+  }
+  .acc__btn:hover { color: var(--primary); }
+  .acc__btn :global(.ico) { transition: transform .3s var(--ease); }
+  .acc__item.is-open .acc__btn { color: var(--primary); }
+  .acc__item.is-open .acc__btn :global(.ico) { transform: rotate(180deg); }
+  .acc__panel {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .38s var(--ease);
+  }
+  .acc__item.is-open .acc__panel { grid-template-rows: 1fr; }
+  .acc__panel p {
+    overflow: hidden;
+    min-height: 0;
+    font-size: 14px; line-height: 24px; color: var(--muted);
+  }
+  .acc__item.is-open .acc__panel p { padding-bottom: 16px; }
+
+  /* ---------- feature list (step 3) ---------- */
+  .featlist {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-12);
+    box-shadow: var(--sh-sm);
+    overflow: hidden;
+  }
+  .featlist__item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    transition: background-color .25s var(--ease);
+  }
+  .featlist__item:last-child { border-bottom: 0; }
+  .featlist__item:hover { background: var(--surface); }
+  .featlist__ico {
+    display: grid; place-items: center;
+    width: 32px; height: 32px; flex: none;
+    border-radius: var(--r-8);
+  }
+  .featlist__txt { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .featlist__txt b { font-size: 14px; font-weight: 500; color: var(--ink-700); }
+  .featlist__txt em { font-size: 12px; font-style: normal; color: var(--muted); }
+
+  /* ---------- connector ---------- */
+  .connector {
+    display: flex; flex-direction: column; align-items: center;
+    padding-bottom: 24px;
+  }
+  .connector i { width: 2px; height: 40px; background: var(--border-violet); display: block; }
+  .connector span {
+    display: grid; place-items: center;
+    width: 36px; height: 36px; border-radius: 18px;
+    background: var(--lilac-50);
+    border: 1px solid var(--border-violet);
+    color: var(--primary);
+    animation: nudge 2.4s ease-in-out infinite;
+  }
+  @keyframes nudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+  @media (prefers-reduced-motion: reduce) { .connector span { animation: none; } }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1220px) {
+    .step { gap: 48px; }
+    .step__visual { width: 45%; min-width: 0; }
+  }
+  @media (max-width: 900px) {
+    .step, .step--reverse { flex-direction: column; align-items: stretch; gap: 32px; padding-bottom: 32px; }
+    .step__visual { width: 100%; }
+    .step__text { gap: 20px; }
+    .connector { padding-bottom: 16px; }
+    .connector i { height: 26px; }
+  }
+  @media (max-width: 760px) {
+    .hiw .sec-head { margin-bottom: 40px; }
+    .step__body { font-size: 15px; line-height: 25px; }
+    .step__eyebrow { font-size: 11px; letter-spacing: 1px; }
+    .step__eyebrow i { width: 34px; height: 34px; font-size: 13px; }
+  }
+</style>

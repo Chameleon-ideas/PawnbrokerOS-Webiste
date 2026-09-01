@@ -1,0 +1,252 @@
+---
+import Icon from './Icon.astro';
+import Scaler from './mockups/Scaler.astro';
+import BrowserBar from './mockups/BrowserBar.astro';
+import AppNav from './mockups/AppNav.astro';
+
+const bullets = [
+  'Open new pawn loans and record pledged items',
+  'Set loan amount, due date, and interest terms',
+  'Track every payment, renewal, and redemption',
+  'Filter by status: active, overdue, or redeemed',
+  'Search loans by ticket number, customer name, or item',
+  'Print pawn tickets directly from the screen',
+];
+
+const rows = [
+  { tk: 'TK-2024-001', c: 'Acevedo, Maria',   i: '14K Gold Diamond Ring',   due: '05/14/24', over: false, p: '$1,200.00', s: { t: 'Active', c: 'green' } },
+  { tk: 'TK-2024-002', c: 'Brennan, Tom',     i: 'Fender Stratocaster',     due: '04/10/24', over: false, p: '$450.00',   s: null },
+  { tk: 'TK-2024-003', c: 'Caldwell, Jasmine',i: 'iPad Pro 12.9 256GB',     due: '02/12/24', over: true,  p: '$350.00',   s: { t: 'Overdue', c: 'red' } },
+  { tk: 'TK-2024-004', c: 'Daniels, Frank',   i: 'Sony Alpha a7 III Camera',due: '05/23/24', over: false, p: '$1,500.00', s: null },
+  { tk: 'TK-2024-005', c: 'Esposito, Rosa',   i: 'Vintage Rolex Oyster',    due: '01/05/24', over: false, p: '$3,000.00', s: { t: 'Redeemed', c: 'blue' } },
+  { tk: 'TK-2024-006', c: 'Fairchild, Henry', i: 'Milwaukee Tool Set',      due: '06/01/24', over: false, p: '$300.00',   s: null },
+];
+
+const stats = [
+  { k: 'ACTIVE PAWNS',  v: '8',      u: 'open loans',         red: false },
+  { k: 'PRINCIPAL OUT', v: '$4,250', u: 'across active pawns',red: false },
+  { k: 'OVERDUE',       v: '2',      u: '$650 past due',      red: true },
+  { k: 'REDEEMED',      v: '45',     u: 'all-time total',     red: false },
+];
+---
+
+<section class="section pls" id="product">
+  <div class="container pls__row">
+    <div class="pls__text" data-reveal>
+      <span class="eyebrow">Where Every Loan Lives</span>
+      <h2 class="h-section" style="max-width:460px">See Every Pawn Ticket Open, Overdue, and Redeemed.</h2>
+      <p class="pls__body">
+        Open new loans, record what was pledged, set the amount and terms, and track every payment
+        that follows. Active, overdue, and redeemed every loan is searchable, sortable, and one click
+        from the full ticket detail.
+      </p>
+
+      <ul class="pls__bullets">
+        {bullets.map((b) => (
+          <li><span class="tick"><Icon name="check" size={14} /></span>{b}</li>
+        ))}
+      </ul>
+
+      <div class="pls__stats">
+        <div class="pls__stat"><b>8</b><span>active loans</span></div>
+        <div class="pls__stat"><b>$4,250</b><span>principal out</span></div>
+        <div class="pls__stat"><b class="red">2</b><span>overdue</span></div>
+      </div>
+    </div>
+
+    <div class="pls__visual" data-reveal>
+      <Scaler width={740}>
+        <div class="mock pls__win" style="width:740px">
+          <BrowserBar url="pawndesk.app / pawns" padding="12px 16px" dot={10} urlWidth={320} font={11} />
+          <AppNav
+            tabs={['Customer', 'Pawn/Loan', 'Purchase', 'Sale', 'Reports']}
+            active="Pawn/Loan" height={44} padding="0 16px" gap={16}
+          />
+
+          <div class="ph">
+            <div>
+              <h3>Pawn</h3>
+              <p>Showing 6 active or recently updated records</p>
+            </div>
+            <div class="ph__a">
+              <span class="pill-btn" style="padding:6px 10px;font-size:11px">Forfeiture review</span>
+              <span class="pill-btn pill-btn--solid" style="padding:6px 10px;font-size:11px">New pawn F3</span>
+            </div>
+          </div>
+
+          <div class="pc">
+            <div class="pc__range">
+              <span class="rg rg--on">All time</span>
+              <span class="rg">Day</span><span class="rg">Week</span><span class="rg">Month</span>
+            </div>
+
+            <div class="pc__stats">
+              {stats.map((s) => (
+                <div class="pc__stat">
+                  <span class="k">{s.k}</span>
+                  <b class:list={[s.red && 'red']}>{s.v}</b>
+                  <span class="u">{s.u}</span>
+                </div>
+              ))}
+            </div>
+
+            <div class="pc__filters">
+              <div class="fld" style="flex:1">
+                <span class="fld__l">Search Pawns</span>
+                <span class="fld__c" style="height:28px;font-size:11px"><Icon name="search" size={12} /><span class="ph">Ticket #, customer name...</span></span>
+              </div>
+              <div class="fld" style="width:150px">
+                <span class="fld__l">Status</span>
+                <span class="fld__c" style="height:28px;font-size:11px">Open (active + overdue)<Icon name="chevron-down" size={10} class="sp" /></span>
+              </div>
+              <div class="fld" style="width:90px">
+                <span class="fld__l">Category</span>
+                <span class="fld__c" style="height:28px;font-size:11px">All<Icon name="chevron-down" size={10} class="sp" /></span>
+              </div>
+              <div class="fld" style="width:90px">
+                <span class="fld__l">Sort</span>
+                <span class="fld__c" style="height:28px;font-size:11px">Newest<Icon name="chevron-down" size={10} class="sp" /></span>
+              </div>
+            </div>
+
+            <div class="pc__table">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th style="width:40px"><span class="cbx"></span></th>
+                    <th style="width:110px">TICKET #</th>
+                    <th style="width:160px">CUSTOMER</th>
+                    <th>ITEMS</th>
+                    <th style="width:60px">DUE DATE</th>
+                    <th style="width:90px" class="num">PRINCIPAL</th>
+                    <th style="width:90px">STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r) => (
+                    <tr>
+                      <td><span class="cbx"></span></td>
+                      <td class="dim">{r.tk}</td>
+                      <td class="name">{r.c}</td>
+                      <td>{r.i}</td>
+                      <td style={r.over ? 'color:var(--red-fg)' : ''}>{r.due}</td>
+                      <td class="num" style="color:var(--ink-700);font-weight:500">{r.p}</td>
+                      <td>{r.s ? <span class={`chip chip--${r.s.c}`}>{r.s.t}</span> : <span class="dim">-</span>}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div class="pager" style="padding:8px 12px;font-size:10px;border-top:1px solid var(--border)">
+                <span>Showing 6 of 6 records</span>
+                <span class="pager__btns"><span style="padding:4px 8px;font-size:10px">Prev</span><span style="padding:4px 8px;font-size:10px">Next</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Scaler>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pls { background: var(--surface); }
+  .pls__row { display: flex; align-items: center; gap: 72px; }
+
+  .pls__text { width: 460px; flex: none; display: flex; flex-direction: column; gap: 28px; }
+  .pls__body { font-size: 16px; line-height: 27px; color: var(--body); }
+
+  .pls__bullets { display: flex; flex-direction: column; gap: 14px; }
+  .pls__bullets li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 15px; font-weight: 500; color: var(--ink-800);
+  }
+  .tick {
+    display: grid; place-items: center; flex: none;
+    width: 22px; height: 22px; border-radius: 11px;
+    background: var(--lilac-50); color: var(--primary);
+    transition: background-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
+  }
+  .pls__bullets li:hover .tick { background: var(--primary); color: #fff; transform: scale(1.1); }
+
+  .pls__stats { display: flex; gap: 12px; }
+  .pls__stat {
+    flex: 1;
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-12);
+    box-shadow: var(--sh-sm);
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .pls__stat:hover { transform: translateY(-4px); box-shadow: var(--sh-lg); }
+  .pls__stat b { font-size: 28px; font-weight: 700; color: var(--primary); line-height: 1.2; }
+  .pls__stat b.red { color: var(--red); }
+  .pls__stat span { font-size: 12px; line-height: 18px; color: var(--muted-2); }
+
+  .pls__visual { flex: 1; min-width: 0; }
+  .pls__win { border-radius: var(--r-16); }
+
+  /* page header */
+  .ph {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; background: #fff; border-bottom: 1px solid var(--border);
+  }
+  .ph h3 { font-size: 16px; font-weight: 700; color: var(--ink-700); }
+  .ph p { font-size: 11px; color: var(--muted-2); margin-top: 2px; }
+  .ph__a { display: flex; align-items: center; gap: 6px; }
+
+  .pc { display: flex; flex-direction: column; gap: 12px; padding: 16px; background: #fff; }
+  .pc__range { display: flex; align-items: center; gap: 6px; }
+  .rg {
+    padding: 4px 8px; border-radius: 4px;
+    background: #fff; border: 1px solid var(--border-violet);
+    font-size: 10px; font-weight: 500; color: var(--muted);
+  }
+  .rg--on { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 600; }
+
+  .pc__stats { display: flex; gap: 8px; }
+  .pc__stat {
+    flex: 1; display: flex; flex-direction: column; gap: 4px;
+    padding: 10px; background: #fff;
+    border: 1px solid var(--border); border-radius: var(--r-8);
+  }
+  .pc__stat .k { font-size: 9px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); }
+  .pc__stat b { font-size: 18px; font-weight: 700; color: var(--slate-900); }
+  .pc__stat b.red { color: var(--red); }
+  .pc__stat .u { font-size: 10px; color: var(--muted); }
+
+  .pc__filters {
+    display: flex; align-items: flex-end; gap: 8px;
+    padding: 10px 12px;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .pc__filters :global(.fld__l) { font-size: 9px; }
+
+  .pc__table {
+    border: 1px solid var(--border);
+    border-radius: var(--r-8);
+    box-shadow: var(--sh-sm);
+    overflow: hidden;
+  }
+  .pc__table :global(.tbl th) { padding: 8px 10px; }
+  .pc__table :global(.tbl td) { padding: 8px 10px; }
+  .cbx {
+    display: inline-block; width: 12px; height: 12px;
+    background: #fff; border: 1px solid var(--border-violet); border-radius: 3px;
+  }
+
+  @media (max-width: 1100px) {
+    .pls__row { flex-direction: column; align-items: stretch; gap: 40px; }
+    .pls__text { width: 100%; }
+  }
+  @media (max-width: 760px) {
+    .pls__row { gap: 32px; }
+    .pls__text { gap: 20px; }
+    .pls__body { font-size: 15px; line-height: 25px; }
+    .pls__bullets li { font-size: 14px; }
+    .pls__stats { flex-wrap: wrap; }
+    .pls__stat { padding: 16px; min-width: 30%; }
+    .pls__stat b { font-size: 22px; }
+  }
+</style>

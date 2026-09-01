@@ -1,0 +1,60 @@
+---
+interface Props {
+  tabs: string[];
+  active: string;
+  height?: number;
+  padding?: string;
+  gap?: number;
+  showUser?: boolean;
+  userName?: boolean;
+  markSize?: number;
+  wordSize?: number;
+  tabSize?: number;
+}
+const {
+  tabs,
+  active,
+  height = 44,
+  padding = '0 20px',
+  gap = 24,
+  showUser = true,
+  userName = false,
+  markSize = 20,
+  wordSize = 11,
+  tabSize = 11,
+} = Astro.props;
+---
+<div class="appnav" style={`height:${height}px;padding:${padding}`}>
+  <div style={`display:flex;align-items:center;gap:${gap}px`}>
+    <div class="appnav__brand">
+      <span
+        class="appnav__mark"
+        style={`width:${markSize}px;height:${markSize}px;font-size:${Math.round(markSize * 0.45)}px;border-radius:${markSize > 22 ? 6 : 4}px`}
+        >GP</span
+      >
+      <span class="appnav__word" style={`font-size:${wordSize}px`}>PAWN DESK</span>
+    </div>
+    <div class="appnav__tabs">
+      {
+        tabs.map((t) => (
+          <span class:list={['appnav__tab', t === active && 'is-active']} style={`font-size:${tabSize}px`}>
+            {t}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+  {
+    showUser && (
+      <div class="appnav__user">
+        <span class="appnav__avatar" style={userName ? 'width:30px;height:30px;font-size:10px' : ''}>RI</span>
+        {userName && (
+          <span style="display:flex;flex-direction:column;gap:1px;line-height:1.25">
+            <b style="font-size:12px;font-weight:600;color:var(--ink-700)">Rod Id</b>
+            <em style="font-size:10px;font-style:normal;color:var(--muted-2)">Manager</em>
+          </span>
+        )}
+      </div>
+    )
+  }
+</div>

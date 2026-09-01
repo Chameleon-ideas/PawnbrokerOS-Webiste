@@ -1,0 +1,70 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="section cta">
+  <div class="container cta__inner" data-reveal>
+    <div class="cta__content">
+      <span class="eyebrow eyebrow--bordered cta__eyebrow">The Pawn Shop Software That Gets It</span>
+      <h2 class="cta__h display">Less Time Fixing Problems. More Time Running Your Shop.</h2>
+      <p class="cta__p">
+        Customers, loans, payments, inventory, sales, till, and reports connected in one desktop
+        application built for the way pawn shops actually work. See what your day looks like on
+        PawnDesk.
+      </p>
+    </div>
+
+    <div class="cta__actions">
+      <a class="btn cta__primary" href="#pricing">Get Started →<Icon name="arrow-right" size={18} /></a>
+      <a class="btn cta__secondary" href="#how-it-works">See PawnDesk in Action</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { padding: 140px var(--gutter); background: #fff; }
+  .cta__inner { display: flex; flex-direction: column; align-items: center; gap: 48px; }
+  .cta__content { display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; max-width: 860px; }
+  .cta__eyebrow { background: var(--lilac-100); letter-spacing: 2px; }
+
+  .cta__h {
+    font-size: 64px;
+    line-height: 68px;
+    letter-spacing: -1px;
+    color: var(--ink-800);
+    max-width: 760px;
+  }
+  .cta__p { font-size: 18px; line-height: 30px; color: var(--body-alt); max-width: 640px; }
+
+  .cta__actions { display: flex; align-items: center; gap: 16px; }
+
+  .cta__primary {
+    padding: 16px 28px 16px 32px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 16px; font-weight: 700;
+    box-shadow: var(--sh-lg);
+  }
+  .cta__primary:hover { box-shadow: 0 16px 32px -10px rgb(96 93 236 / .7); }
+
+  .cta__secondary {
+    padding: 16px 32px;
+    border: 1px solid #d1d5db;
+    color: var(--ink-800);
+    font-size: 16px; font-weight: 700;
+  }
+  .cta__secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+  @media (max-width: 1000px) {
+    .cta { padding: 100px var(--gutter); }
+    .cta__h { font-size: 46px; line-height: 52px; }
+  }
+  @media (max-width: 760px) {
+    .cta { padding: 64px var(--gutter); }
+    .cta__inner { gap: 32px; }
+    .cta__h { font-size: 32px; line-height: 38px; }
+    .cta__p { font-size: 15px; line-height: 25px; }
+    .cta__actions { flex-direction: column; width: 100%; gap: 12px; }
+    .cta__primary, .cta__secondary { width: 100%; font-size: 15px; padding: 15px 24px; }
+  }
+</style>

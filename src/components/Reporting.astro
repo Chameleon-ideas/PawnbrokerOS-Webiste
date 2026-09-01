@@ -1,0 +1,108 @@
+---
+import Icon from './Icon.astro';
+
+const reports = [
+  {
+    icon: 'file-text',
+    t: 'Daily Summary',
+    d: "A single-page overview of the day's financial activity, inventory movement, and till status. One report, every morning or every close so the owner always knows where things stand.",
+    b: 'Daily',
+  },
+  {
+    icon: 'archive',
+    t: 'Till Report',
+    d: 'A full breakdown of every cash and card movement during the shift payments in, loans out, sales, and refunds. Run it before closing the drawer to confirm the numbers add up.',
+    b: 'Per Shift',
+  },
+  {
+    icon: 'shopping-cart',
+    t: 'Sales Report',
+    d: "What sold, how much it sold for, which payment methods were used, and where the revenue came from. Review it weekly to see what's moving and what's sitting.",
+    b: 'Weekly',
+  },
+  {
+    icon: 'package',
+    t: 'Inventory Report',
+    d: 'Current stock levels, item origins, categories, and the status of items tied to active pledged loans. A clear snapshot of everything the shop is holding.',
+    b: 'Monthly',
+  },
+  {
+    icon: 'file-text',
+    t: 'Police Report',
+    d: "A formatted list of purchased items with transaction details and customer information ready to export for local compliance audits whenever they're needed.",
+    b: 'On-Demand',
+  },
+  {
+    icon: 'file-text',
+    t: 'Outstanding Loans (Planned)',
+    d: 'Track loans that need attention including overdue tickets and those approaching their due date. Helps staff stay ahead of forfeitures before they pile up.',
+    b: 'Real-Time',
+  },
+];
+---
+
+<section class="section rep">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow eyebrow--bordered">Reports That Matter</span>
+      <h2 class="h-section">Daily Reports That Answer the Owner's Questions.</h2>
+      <p class="lede" style="color:var(--muted-2)">
+        Practical reports that answer the questions a pawn shop owner asks every day what came in,
+        what went out, what sold, what's still on the shelf, and what needs attention. No dashboards
+        built for someone else's business.
+      </p>
+    </div>
+
+    <div class="rep__grid" data-reveal-group="70">
+      {
+        reports.map((r) => (
+          <article class="rc" data-reveal>
+            <span class="rc__ico"><Icon name={r.icon} size={20} /></span>
+            <h3>{r.t}</h3>
+            <p>{r.d}</p>
+            <span class="badge-sec">{r.b}</span>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .rep { background: var(--surface); border-bottom: 1px solid var(--border); }
+  .rep .sec-head { margin-bottom: 64px; }
+
+  .rep__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+  .rc {
+    display: flex; flex-direction: column; gap: 16px;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-16);
+    box-shadow: var(--sh-sm);
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  }
+  .rc:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-violet);
+    box-shadow: 0 18px 34px -20px rgb(76 29 149 / .45);
+  }
+  .rc__ico {
+    display: grid; place-items: center;
+    width: 44px; height: 44px; border-radius: var(--r-10);
+    background: var(--lilac-50); color: var(--primary);
+    transition: background-color .35s var(--ease), color .35s var(--ease), transform .35s var(--ease);
+  }
+  .rc:hover .rc__ico { background: var(--primary); color: #fff; transform: scale(1.06) rotate(-4deg); }
+  .rc h3 { font-size: 16px; font-weight: 700; color: var(--ink-800); }
+  .rc p { font-size: 13px; line-height: 21px; color: var(--muted-2); flex: 1; }
+  .rc .badge-sec { align-self: flex-start; }
+
+  @media (max-width: 1000px) { .rep__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+  @media (max-width: 700px) {
+    .rep .sec-head { margin-bottom: 40px; }
+    .rep__grid { grid-template-columns: 1fr; }
+    .rc { padding: 22px; }
+  }
+</style>
