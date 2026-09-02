@@ -1,27 +1,44 @@
 ---
-import Icon from './Icon.astro';
+import Icon from "./Icon.astro";
 
 const columns = [
-  { t: 'Product',   links: ['Features', 'Pricing', 'How It Works', 'Barcoding'] },
-  { t: 'Company',   links: ['About Us', 'Contact', 'Press Kit', 'Affiliates'] },
-  { t: 'Resources', links: ['Help Center', 'Documentation', 'Compliance Guides', 'Release Notes'] },
-  { t: 'Legal',     links: ['Privacy Policy', 'Terms of Use', 'EULA License', 'E-Sign Consent'] },
+  { t: "Product", links: ["Features", "Pricing", "How It Works", "Barcoding"] },
+  { t: "Company", links: ["About Us", "Contact", "Press Kit", "Affiliates"] },
+  {
+    t: "Resources",
+    links: [
+      "Help Center",
+      "Documentation",
+      "Compliance Guides",
+      "Release Notes",
+    ],
+  },
+  {
+    t: "Legal",
+    links: ["Privacy Policy", "Terms of Use", "EULA License", "E-Sign Consent"],
+  },
 ];
 
-const socials = ['twitter', 'facebook', 'linkedin', 'github'];
+const socials = ["twitter", "facebook", "linkedin", "github"];
 ---
 
 <footer class="ft">
   <div class="container">
     <div class="ft__top">
       <div class="ft__brand">
-        <a class="ft__logo" href="#top">
-          <span class="ft__mark">GP</span>
-          <span class="ft__word">Pawn Desk</span>
+        <a class="ft__logo" href="#top" aria-label="PawnDesk home">
+          <img
+            src="/images/PawnDesk-Logo.png"
+            alt="PawnDesk"
+            class="ft__logo-img"
+            width="146"
+            height="36"
+          />
         </a>
         <p>
-          The modern pawn shop management platform for independent, high-growth shops. Track
-          everything, reconcile in seconds, and trade with absolute confidence.
+          The modern pawn shop management platform for independent, high-growth
+          shops. Track everything, reconcile in seconds, and trade with absolute
+          confidence.
         </p>
         <a class="ft__doc" href="#resources">
           Read the Documentation
@@ -34,7 +51,9 @@ const socials = ['twitter', 'facebook', 'linkedin', 'github'];
           columns.map((c) => (
             <div class="ft__col">
               <h4>{c.t}</h4>
-              {c.links.map((l) => (<a href="#">{l}</a>))}
+              {c.links.map((l) => (
+                <a href="#">{l}</a>
+              ))}
             </div>
           ))
         }
@@ -46,7 +65,9 @@ const socials = ['twitter', 'facebook', 'linkedin', 'github'];
       <div class="ft__social">
         {
           socials.map((s) => (
-            <a href="#" aria-label={s}><Icon name={s} size={18} stroke={1} /></a>
+            <a href="#" aria-label={s}>
+              <Icon name={s} size={18} stroke={1} />
+            </a>
           ))
         }
       </div>
@@ -55,64 +76,151 @@ const socials = ['twitter', 'facebook', 'linkedin', 'github'];
 </footer>
 
 <style>
-  .ft { padding: 80px var(--gutter) 48px; background: var(--primary); color: #fff; }
-
-  .ft__top { display: flex; justify-content: space-between; gap: 64px; }
-
-  .ft__brand { width: 340px; flex: none; display: flex; flex-direction: column; gap: 28px; }
-  .ft__logo { display: flex; align-items: center; gap: 10px; }
-  .ft__mark {
-    display: grid; place-items: center;
-    width: 36px; height: 36px; border-radius: var(--r-10);
-    background: #fff; color: var(--primary);
-    font-size: 14px; font-weight: 800;
-    transition: transform .4s var(--ease);
+  .ft {
+    padding: 80px var(--gutter) 48px;
+    background: var(--primary);
+    color: #fff;
   }
-  .ft__logo:hover .ft__mark { transform: rotate(-8deg) scale(1.06); }
-  .ft__word { font-size: 17px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; }
-  .ft__brand p { font-size: 14px; line-height: 24px; color: rgb(255 255 255 / .92); }
+
+  .ft__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 64px;
+  }
+
+  .ft__logo {
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: var(--r-10);
+    width: fit-content;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    transition:
+      transform 0.25s var(--ease),
+      box-shadow 0.25s var(--ease);
+  }
+  .ft__logo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  }
+  .ft__logo-img {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+  .ft__brand p {
+    font-size: 14px;
+    line-height: 24px;
+    color: rgb(255 255 255 / 0.92);
+  }
 
   .ft__doc {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 13px; font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
     align-self: flex-start;
   }
   .ft__doc i {
-    display: grid; place-items: center;
-    width: 14px; height: 14px; border-radius: 99px;
-    background: #fff; color: var(--primary);
-    transition: transform .3s var(--ease);
+    display: grid;
+    place-items: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 99px;
+    background: #fff;
+    color: var(--primary);
+    transition: transform 0.3s var(--ease);
   }
-  .ft__doc:hover i { transform: translateX(4px); }
+  .ft__doc:hover i {
+    transform: translateX(4px);
+  }
 
-  .ft__cols { display: flex; gap: 72px; }
-  .ft__col { display: flex; flex-direction: column; gap: 16px; }
-  .ft__col h4 { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-  .ft__col a {
-    font-size: 14px; color: rgb(255 255 255 / .9); width: max-content;
-    transition: color .2s var(--ease), transform .2s var(--ease);
+  .ft__cols {
+    display: flex;
+    gap: 72px;
   }
-  .ft__col a:hover { color: #fff; transform: translateX(3px); }
+  .ft__col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .ft__col h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .ft__col a {
+    font-size: 14px;
+    color: rgb(255 255 255 / 0.9);
+    width: max-content;
+    transition:
+      color 0.2s var(--ease),
+      transform 0.2s var(--ease);
+  }
+  .ft__col a:hover {
+    color: #fff;
+    transform: translateX(3px);
+  }
 
   .ft__bottom {
-    display: flex; align-items: center; justify-content: space-between; gap: 20px;
-    margin-top: 64px; padding-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 64px;
+    padding-top: 28px;
     border-top: 1px solid #9380ff;
     font-size: 13px;
   }
-  .ft__social { display: flex; align-items: center; gap: 20px; }
-  .ft__social a { transition: transform .25s var(--ease), opacity .25s var(--ease); opacity: .9; }
-  .ft__social a:hover { transform: translateY(-3px); opacity: 1; }
+  .ft__social {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .ft__social a {
+    transition:
+      transform 0.25s var(--ease),
+      opacity 0.25s var(--ease);
+    opacity: 0.9;
+  }
+  .ft__social a:hover {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
 
   @media (max-width: 1100px) {
-    .ft__top { flex-direction: column; gap: 48px; }
-    .ft__brand { width: 100%; max-width: 420px; }
-    .ft__cols { flex-wrap: wrap; gap: 40px 56px; }
+    .ft__top {
+      flex-direction: column;
+      gap: 48px;
+    }
+    .ft__brand {
+      width: 100%;
+      max-width: 420px;
+    }
+    .ft__cols {
+      flex-wrap: wrap;
+      gap: 40px 56px;
+    }
   }
   @media (max-width: 760px) {
-    .ft { padding: 56px var(--gutter) 40px; }
-    .ft__cols { gap: 32px; }
-    .ft__col { width: calc(50% - 16px); }
-    .ft__bottom { flex-direction: column; align-items: flex-start; margin-top: 40px; }
+    .ft {
+      padding: 56px var(--gutter) 40px;
+    }
+    .ft__cols {
+      gap: 32px;
+    }
+    .ft__col {
+      width: calc(50% - 16px);
+    }
+    .ft__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 40px;
+    }
   }
 </style>

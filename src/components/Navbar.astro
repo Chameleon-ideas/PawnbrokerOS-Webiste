@@ -12,8 +12,7 @@ const links = [
 
 <header class="nav" data-navbar>
   <a class="nav__logo" href="#top" aria-label="PawnDesk home">
-    <span class="nav__mark">GP</span>
-    <span class="nav__word">Pawn Desk</span>
+    <img src="/images/PawnDesk-Logo.png" alt="PawnDesk" class="nav__logo-img" width="146" height="36" />
   </a>
 
   <nav class="nav__links" aria-label="Primary">
@@ -45,35 +44,28 @@ const links = [
     align-items: center;
     justify-content: space-between;
     height: 64px;
+    margin-bottom: -64px;
     padding: 0 var(--gutter);
-    background: rgb(255 255 255 / .88);
-    backdrop-filter: saturate(180%) blur(14px);
-    border-bottom: 1px solid var(--border);
-    transition: box-shadow .3s var(--ease), background-color .3s var(--ease);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background-color .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
   }
-  .nav.is-stuck {
-    background: rgb(255 255 255 / .96);
-    box-shadow: 0 6px 24px -14px rgb(30 27 75 / .35);
+  .nav.is-stuck,
+  .nav:has(.nav__drawer.is-open) {
+    background: #ffffff !important;
+    border-bottom: 1px solid var(--border) !important;
+    box-shadow: 0 4px 20px -8px rgb(30 27 75 / .12) !important;
   }
 
-  .nav__logo { display: flex; align-items: center; gap: 10px; }
-  .nav__mark {
-    display: grid; place-items: center;
-    width: 34px; height: 34px;
-    border-radius: 9px;
-    background: var(--primary);
-    color: #fff;
-    font-size: 13px; font-weight: 700;
-    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+  .nav__logo { display: flex; align-items: center; }
+  .nav__logo-img {
+    height: 34px;
+    width: auto;
+    object-fit: contain;
+    transition: transform .25s var(--ease);
   }
-  .nav__logo:hover .nav__mark {
-    transform: rotate(-8deg) scale(1.06);
-    box-shadow: 0 8px 18px -6px rgb(96 93 236 / .7);
-  }
-  .nav__word {
-    font-size: 15px; font-weight: 800;
-    letter-spacing: .6px; text-transform: uppercase;
-    color: var(--ink-700);
+  .nav__logo:hover .nav__logo-img {
+    transform: scale(1.02);
   }
 
   .nav__links { display: flex; align-items: center; gap: 36px; }
@@ -176,3 +168,21 @@ const links = [
     .nav__signin { display: none; }
   }
 </style>
+
+<script is:inline>
+  function initNavScroll() {
+    const nav = document.querySelector('[data-navbar]');
+    if (!nav) return;
+    function updateNav() {
+      nav.classList.toggle('is-stuck', window.scrollY > 10);
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavScroll);
+  } else {
+    initNavScroll();
+  }
+  document.addEventListener('astro:page-load', initNavScroll);
+</script>

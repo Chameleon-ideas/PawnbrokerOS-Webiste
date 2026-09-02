@@ -1,47 +1,140 @@
 ---
 import Icon from './Icon.astro';
 
-const features = [
-  'Full pawn loan management',
-  'Customer records & ID tracking',
-  'Inventory & pricing control',
-  'Sales, layaway & POS',
-  'Two-till cash reconciliation',
-  'Reports & police compliance',
-  '4 user seats included',
-  '100 GB cloud storage',
-  'Offline sync + backup & restore',
-];
+interface Plan {
+  id: string;
+  name: string;
+  tagline: string;
+  badge?: string;
+  featured?: boolean;
+  prices: {
+    monthly: { amount: string; unit: string };
+    quarterly: { amount: string; unit: string };
+    annual: { amount: string; unit: string };
+  };
+  note: string;
+  featureLabel: string;
+  features: string[];
+  cta: {
+    text: string;
+    href: string;
+  };
+}
 
-// Figma order: Monthly, Annual (featured), Quarterly
-const plans = [
-  { name: 'Monthly',   price: '$99', unit: '/month',         note: 'Maximum flexibility',            featured: false, badge: null },
-  { name: 'Annual',    price: '$79', unit: '/mo equivalent', note: 'Billed annually as $949',        featured: true,  badge: 'Best Value' },
-  { name: 'Quarterly', price: '$89', unit: '/mo equivalent', note: 'Billed as $269 every three months', featured: false, badge: null },
-];
-
-const addons = [
-  ['Extra User Seat', '$12/mo'],
-  ['Unlimited Sites + Tills', '$59/mo'],
-  ['AI Assistant', '$29/mo'],
-  ['SMS/WhatsApp Reminders', '$25/mo'],
-  ['Additional Location', '$69/mo'],
-  ['Group Dashboard', '$49/mo'],
-  ['White-label Branding', '$99/mo'],
-  ['Priority Support', '$49/mo'],
+const plans: Plan[] = [
+  {
+    id: 'daily-desk',
+    name: 'DAILY DESK',
+    tagline: 'Get your shop running',
+    featured: false,
+    badge: undefined,
+    prices: {
+      monthly: { amount: '$69', unit: '/mo' },
+      quarterly: { amount: '$55', unit: '/mo' },
+      annual: { amount: '$47', unit: '/mo' },
+    },
+    note: 'Monthly (was $79 - 10% off) • Quarterly: $165/qtr ($55/mo - 30% off) • Annual: $564/yr ($47/mo - 40% off)',
+    featureLabel: 'FEATURE HIGHLIGHTS',
+    features: [
+      'Pawn loans - open, renew, part-pay, redeem',
+      'Buy outright',
+      'Retail sales with discounts + HST',
+      'Layaway with installments',
+      'Forfeiture management',
+      'Cash + card payments (Stripe)',
+      'Tickets, receipts, and labels',
+      'Customer records with ID',
+      'Inventory search + categories',
+      '1 till - open, close, reconcile',
+      'Daily Summary + Till + Sales reports',
+      'Police report',
+      'Backup + restore',
+      '1 user • 1 till',
+      'Email support (48h)',
+    ],
+    cta: {
+      text: 'Get Started',
+      href: '#contact',
+    },
+  },
+  {
+    id: 'shop-pro',
+    name: 'SHOP PRO',
+    tagline: 'The complete shop',
+    featured: true,
+    badge: 'RECOMMENDED',
+    prices: {
+      monthly: { amount: '$129', unit: '/mo' },
+      quarterly: { amount: '$99', unit: '/mo' },
+      annual: { amount: '$59', unit: '/mo' },
+    },
+    note: 'Monthly (was $149 - 15% off) • Quarterly: $297/qtr ($99/mo - 35% off) • Annual: $708/yr ($59/mo - 60% off)',
+    featureLabel: 'EVERYTHING IN DAILY DESK, PLUS:',
+    features: [
+      'Pay off all customer loans at once',
+      'Bulk edit inventory',
+      'Barcode price labels',
+      'Outstanding Loans report',
+      'Top Sellers report',
+      'Inventory report (detailed)',
+      'Export to PDF, CSV, and Excel',
+      'Free migration from your old system',
+      '3 users • 2 tills with transfers',
+      'Email support (24h)',
+    ],
+    cta: {
+      text: 'Get Started',
+      href: '#contact',
+    },
+  },
+  {
+    id: 'diamond-desk',
+    name: 'DIAMOND DESK',
+    tagline: 'Built for your scale',
+    featured: false,
+    badge: undefined,
+    prices: {
+      monthly: { amount: 'Custom', unit: '' },
+      quarterly: { amount: 'Custom', unit: '' },
+      annual: { amount: 'Custom', unit: '' },
+    },
+    note: 'No dollar amount shown. Contact us for a tailored quote.',
+    featureLabel: 'EVERYTHING IN SHOP PRO, PLUS:',
+    features: [
+      'Unlimited users + tills',
+      'Additional locations',
+      'Cross-store dashboard',
+      'White-label branding',
+      'Priority support (4h SLA)',
+      'Dedicated onboarding + training',
+      'Custom report scheduling',
+      'API access',
+      'Account manager',
+    ],
+    cta: {
+      text: 'Get a Quote',
+      href: '#contact',
+    },
+  },
 ];
 ---
 
 <section class="section pr" id="pricing">
   <div class="container">
     <div class="sec-head" data-reveal>
-      <span class="eyebrow" style="letter-spacing:1.5px">Simple, Transparent Pricing</span>
+      <span class="eyebrow">Simple, Transparent Pricing</span>
       <h2 class="h-section">Choose The Plan That Works For Your Shop.</h2>
       <p class="lede" style="color:var(--body)">
-        Simple, transparent pricing for pawn shops. Choose monthly, quarterly or annual billing, with
-        the same core PawnDesk platform included.
+        Three packages designed for every stage of your shop. Pick a billing term and start today.
       </p>
-      <p class="pr__nogates">No feature gates. Everything a single shop needs to operate.</p>
+
+      <div class="billing-toggle-wrap">
+        <div class="billing-toggle" role="tablist" aria-label="Billing frequency">
+          <button type="button" class="billing-btn active" data-period="monthly" role="tab" aria-selected="true">Monthly</button>
+          <button type="button" class="billing-btn" data-period="quarterly" role="tab" aria-selected="false">Quarterly</button>
+          <button type="button" class="billing-btn" data-period="annual" role="tab" aria-selected="false">Annual</button>
+        </div>
+      </div>
     </div>
 
     <div class="pr__cards" data-reveal-group="110">
@@ -49,66 +142,165 @@ const addons = [
         plans.map((p) => (
           <article class:list={['plan', p.featured && 'plan--featured']} data-reveal>
             <div class="plan__head">
-              <div class="plan__badges">
+              <div class="plan__top-row">
                 <span class="plan__name">{p.name}</span>
                 {p.badge && <span class="plan__tag">{p.badge}</span>}
               </div>
+              <p class="plan__tagline">{p.tagline}</p>
               <div class="plan__price">
-                <b class="display">{p.price}</b>
-                <span>{p.unit}</span>
+                <b
+                  class="display plan__price-num"
+                  data-plan-price
+                  data-monthly={p.prices.monthly.amount}
+                  data-quarterly={p.prices.quarterly.amount}
+                  data-annual={p.prices.annual.amount}
+                >
+                  {p.prices.monthly.amount}
+                </b>
+                <span
+                  class="plan__price-unit"
+                  data-plan-unit
+                  data-unit-monthly={p.prices.monthly.unit}
+                  data-unit-quarterly={p.prices.quarterly.unit}
+                  data-unit-annual={p.prices.annual.unit}
+                >
+                  {p.prices.monthly.unit}
+                </span>
               </div>
               <p class="plan__note">{p.note}</p>
             </div>
 
-            <hr />
-
-            <ul class="plan__features">
-              {features.map((f) => (
-                <li><Icon name="check" size={16} />{f}</li>
-              ))}
-            </ul>
+            <div class="plan__features-block">
+              <span class="plan__feature-label">{p.featureLabel}</span>
+              <ul class="plan__features">
+                {p.features.map((f) => (
+                  <li>
+                    <Icon name="check" size={16} stroke={2.5} />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div class="plan__btnwrap">
-              <a class="plan__btn" href="#">Get Started</a>
+              <a class="plan__btn" href={p.cta.href}>{p.cta.text}</a>
             </div>
           </article>
         ))
       }
     </div>
-
-    <div class="pr__addons" data-reveal>
-      <div class="pr__addonshead">
-        <h3 class="display">Optional Power-Ups &amp; Integrations</h3>
-        <p>Enhance your plan with powerful add-ons tailored to your shop's needs.</p>
-      </div>
-      <div class="pr__addongrid">
-        {addons.map(([n, v]) => (<div class="addon"><span>{n}</span><b>{v}</b></div>))}
-      </div>
-    </div>
   </div>
 </section>
 
-<style>
-  .pr { background: var(--surface); border-bottom: 1px solid var(--border); }
-  .pr .sec-head { margin-bottom: 64px; }
-  .pr__nogates {
-    font-size: 14px; line-height: 22px; font-weight: 700;
-    color: var(--primary); text-align: center;
+<script is:inline>
+  function initBillingToggle() {
+    const btns = document.querySelectorAll('.billing-btn');
+    if (!btns.length) return;
+
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const period = btn.getAttribute('data-period');
+        if (!period) return;
+
+        btns.forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        const priceEls = document.querySelectorAll('[data-plan-price]');
+        priceEls.forEach((el) => {
+          const val = el.getAttribute('data-' + period);
+          if (val !== null) el.textContent = val;
+        });
+
+        const unitEls = document.querySelectorAll('[data-plan-unit]');
+        unitEls.forEach((el) => {
+          const val = el.getAttribute('data-unit-' + period);
+          if (val !== null) el.textContent = val;
+        });
+      });
+    });
   }
 
-  .pr__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: center; }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBillingToggle);
+  } else {
+    initBillingToggle();
+  }
+  document.addEventListener('astro:page-load', initBillingToggle);
+</script>
+
+<style>
+  .pr { background: var(--surface); border-bottom: 1px solid var(--border); }
+  .pr .sec-head { margin-bottom: 48px; }
+
+  /* Billing frequency toggle */
+  .billing-toggle-wrap {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .billing-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    background: #ffffff !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 999px !important;
+    padding: 4px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+    gap: 4px !important;
+  }
+  .billing-btn {
+    border: none !important;
+    background: transparent !important;
+    padding: 8px 24px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--ink-800) !important;
+    border-radius: 999px !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    font-family: inherit !important;
+    line-height: 1.2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .billing-btn:hover:not(.active) {
+    color: var(--primary) !important;
+  }
+  .billing-btn.active {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(96, 93, 236, 0.35) !important;
+  }
+
+  /* Cards layout */
+  .pr__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
 
   .plan {
-    display: flex; flex-direction: column; gap: 28px;
-    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    padding: 36px 32px;
     background: #fff;
     border: 1px solid var(--border);
     border-radius: var(--r-20);
     box-shadow: var(--sh-md);
     transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+    height: 100%;
   }
-  .plan:hover { transform: translateY(-8px); box-shadow: var(--sh-xl); }
-  .plan hr { border: 0; border-top: 1px solid #f0edfb; margin: 0; }
+  .plan:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--sh-xl);
+  }
 
   .plan--featured {
     background: var(--primary);
@@ -116,84 +308,182 @@ const addons = [
     box-shadow: var(--sh-xl);
     z-index: 1;
   }
-  .plan--featured:hover { box-shadow: 0 28px 50px -22px rgb(79 70 229 / .75); }
-  .plan--featured hr { border-color: rgb(255 255 255 / .2); }
+  .plan--featured:hover {
+    box-shadow: 0 28px 50px -22px rgb(79 70 229 / .75);
+  }
 
-  .plan__head { display: flex; flex-direction: column; gap: 16px; }
-  .plan__badges { display: flex; align-items: center; justify-content: space-between; }
+  .plan__head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 20px;
+  }
+  .plan__top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 26px;
+  }
   .plan__name {
-    font-size: 13px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--primary);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--primary);
   }
-  .plan--featured .plan__name { color: var(--indigo-100); }
+  .plan--featured .plan__name {
+    color: #fff;
+  }
   .plan__tag {
-    padding: 5px 12px; border-radius: var(--r-pill);
-    background: #fff; color: var(--primary);
-    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    background: #fff;
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
-  .plan__price { display: flex; align-items: baseline; gap: 6px; }
-  .plan__price b { font-size: 64px; line-height: 64px; font-weight: 400; color: var(--ink-800); }
-  .plan__price span { font-size: 16px; color: var(--muted-2); }
-  .plan--featured .plan__price b { color: #fff; }
-  .plan--featured .plan__price span { color: var(--indigo-200); }
+  .plan__tagline {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--muted-2);
+  }
+  .plan--featured .plan__tagline {
+    color: rgba(255, 255, 255, 0.85);
+  }
 
-  .plan__note { font-size: 14px; line-height: 22px; color: var(--muted-2); }
-  .plan--featured .plan__note { color: var(--indigo-200); }
+  .plan__price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .plan__price-num {
+    font-size: 54px;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--ink-800);
+    font-family: var(--serif);
+  }
+  .plan__price-unit {
+    font-size: 15px;
+    color: var(--muted-2);
+    font-weight: 400;
+  }
+  .plan--featured .plan__price-num {
+    color: #fff;
+  }
+  .plan--featured .plan__price-unit {
+    color: rgba(255, 255, 255, 0.8);
+  }
 
-  .plan__features { display: flex; flex-direction: column; gap: 14px; }
+  .plan__note {
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--muted-2);
+    margin-top: 4px;
+    min-height: 38px;
+  }
+  .plan--featured .plan__note {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  /* Features section */
+  .plan__features-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 8px;
+  }
+  .plan__feature-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .plan--featured .plan__feature-label {
+    color: #fff;
+  }
+
+  .plan__features {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
   .plan__features li {
-    display: flex; align-items: center; gap: 12px;
-    font-size: 14px; line-height: 22px; color: var(--grey-700);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 20px;
+    color: var(--grey-700);
   }
-  .plan__features :global(.ico) { color: var(--primary); }
-  .plan--featured .plan__features li { color: #fff; }
-  .plan--featured .plan__features :global(.ico) { color: #fff; }
+  .plan__features :global(.ico) {
+    color: var(--primary);
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .plan--featured .plan__features li {
+    color: #fff;
+  }
+  .plan--featured .plan__features :global(.ico) {
+    color: #fff;
+  }
 
-  .plan__btnwrap { padding-top: 4px; margin-top: auto; }
+  /* Button wrap */
+  .plan__btnwrap {
+    padding-top: 24px;
+    margin-top: auto;
+  }
   .plan__btn {
-    display: flex; align-items: center; justify-content: center;
-    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px 24px;
     border-radius: var(--r-10);
     background: var(--lilac-50);
     color: var(--primary);
-    font-size: 15px; font-weight: 700;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
     transition: background-color .25s var(--ease), color .25s var(--ease),
                 transform .25s var(--ease), box-shadow .25s var(--ease);
   }
-  .plan__btn:hover { background: var(--primary); color: #fff; transform: translateY(-2px); box-shadow: var(--sh-btn); }
-  .plan--featured .plan__btn { background: #fff; box-shadow: var(--sh-sm); }
-  .plan--featured .plan__btn:hover { background: var(--ink-800); color: #fff; }
-
-  /* add-ons */
-  .pr__addons { margin-top: 64px; display: flex; flex-direction: column; gap: 32px; align-items: center; }
-  .pr__addonshead { text-align: center; }
-  .pr__addonshead h3 { font-size: 36px; line-height: 1.35; color: var(--ink-800); }
-  .pr__addonshead p { margin-top: 8px; font-size: 15px; line-height: 24px; color: var(--muted-2); }
-
-  .pr__addongrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; }
-  .addon {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 16px 20px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: var(--r-12);
-    transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+  .plan__btn:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--sh-btn);
   }
-  .addon:hover { transform: translateY(-3px); border-color: var(--border-violet); box-shadow: var(--sh-md); }
-  .addon span { font-size: 14px; font-weight: 600; color: var(--ink-800); }
-  .addon b { font-size: 14px; font-weight: 700; color: var(--primary); white-space: nowrap; }
+  .plan--featured .plan__btn {
+    background: #fff;
+    color: var(--primary);
+    box-shadow: var(--sh-sm);
+  }
+  .plan--featured .plan__btn:hover {
+    background: #f8f7ff;
+    color: var(--primary-deep);
+    transform: translateY(-2px);
+  }
 
   @media (max-width: 1100px) {
-    .pr__cards { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
-    .pr__addongrid { grid-template-columns: repeat(2, 1fr); }
+    .pr__cards {
+      grid-template-columns: 1fr;
+      max-width: 480px;
+      margin-inline: auto;
+    }
   }
   @media (max-width: 760px) {
-    .pr .sec-head { margin-bottom: 40px; }
-    .plan { padding: 26px; gap: 22px; }
-    .plan__price b { font-size: 48px; line-height: 48px; }
-    .pr__addons { margin-top: 40px; gap: 24px; }
-    .pr__addonshead h3 { font-size: 26px; }
-    .pr__addongrid { grid-template-columns: 1fr; }
+    .pr .sec-head { margin-bottom: 36px; }
+    .plan { padding: 26px; gap: 18px; }
+    .plan__price-num { font-size: 44px; }
+    .billing-btn { padding: 7px 18px !important; font-size: 13px !important; }
   }
 </style>
