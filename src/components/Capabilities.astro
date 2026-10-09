@@ -33,33 +33,6 @@ const caps = [
     d: 'Run daily summaries, till breakdowns, sales reports, and inventory snapshots. Generate police reports for local compliance requirements ready when you need them.',
   },
 ];
-
-const faqs = [
-  {
-    q: 'Does PawnDesk support pawn shop compliance workflows?',
-    a: 'PawnDesk supports workflows such as customer identification, transaction record-keeping and police reporting. Specific regulatory requirements vary by location.',
-  },
-  {
-    q: 'Can I manage multiple locations?',
-    a: 'Yes. The Additional Location add-on allows you to expand PawnDesk across multiple locations.',
-  },
-  {
-    q: 'How does the till reconciliation work?',
-    a: 'PawnDesk tracks every cash and card movement throughout the day. At shift end, you count your drawer, and PawnDesk compares your count against the system total, flagging any variance.',
-  },
-  {
-    q: 'Can I migrate my existing data?',
-    a: 'Yes. Free migration is included with the PawnDesk base plan.',
-  },
-  {
-    q: 'How is my data backed up?',
-    a: 'PawnDesk supports cloud hosting with local offline sync, plus one-click backup and restore.',
-  },
-  {
-    q: 'Are all features included in every plan?',
-    a: 'Yes. PawnDesk has no feature gates. Monthly, quarterly and annual plans all include the same core platform. You only choose your billing cycle.',
-  },
-];
 ---
 
 <section class="section caps" id="features">
@@ -83,26 +56,6 @@ const faqs = [
           </article>
         ))
       }
-    </div>
-
-    <div class="faq" id="resources" data-reveal>
-      <div class="faq__head">
-        <h3 class="display">Frequently Asked Questions</h3>
-        <p>Everything you need to know about PawnDesk.</p>
-      </div>
-      <div class="faq__list" data-accordion="single">
-        {
-          faqs.map((f, i) => (
-            <div class="faq__item" data-acc-item class:list={[i === 0 && 'is-open']}>
-              <button class="faq__q" data-acc-trigger aria-expanded={i === 0 ? 'true' : 'false'}>
-                <span>{f.q}</span>
-                <i><Icon name="chevron-down" size={16} /></i>
-              </button>
-              <div class="faq__panel"><p>{f.a}</p></div>
-            </div>
-          ))
-        }
-      </div>
     </div>
   </div>
 </section>
@@ -143,57 +96,12 @@ const faqs = [
   .cap h3 { font-size: 16px; font-weight: 700; color: var(--ink-800); }
   .cap p { font-size: 14px; line-height: 22px; color: var(--muted-2); }
 
-  /* ---------- FAQ ---------- */
-  .faq {
-    margin-top: 64px;
-    padding: 40px 60px;
-    background: var(--surface);
-    border-radius: var(--r-20);
-  }
-  .faq__head { text-align: center; padding-bottom: 28px; }
-  .faq__head h3 { font-size: 40px; line-height: 1.2; color: var(--ink-900); }
-  .faq__head p { margin-top: 8px; font-size: 16px; color: var(--muted-2); }
-
-  .faq__list { border-top: 1px solid var(--grey-200); }
-  .faq__item { border-bottom: 1px solid var(--grey-200); }
-  .faq__q {
-    display: flex; align-items: center; justify-content: space-between; gap: 24px;
-    width: 100%; padding: 20px 0;
-    text-align: left;
-    font-size: 16px; font-weight: 700; color: var(--ink-900);
-    transition: color .2s var(--ease);
-  }
-  .faq__q:hover { color: var(--primary); }
-  .faq__q i {
-    display: grid; place-items: center; flex: none;
-    width: 32px; height: 32px; border-radius: 16px;
-    background: var(--lilac-alt); color: var(--violet-600);
-    transition: transform .35s var(--ease), background-color .25s var(--ease);
-  }
-  .faq__item.is-open .faq__q i { transform: rotate(180deg); background: var(--primary); color: #fff; }
-  .faq__panel {
-    display: grid; grid-template-rows: 0fr;
-    transition: grid-template-rows .38s var(--ease);
-  }
-  .faq__item.is-open .faq__panel { grid-template-rows: 1fr; }
-  .faq__panel p {
-    overflow: hidden; min-height: 0;
-    font-size: 15px; line-height: 24px; color: var(--muted-2);
-  }
-  .faq__item.is-open .faq__panel p { padding-bottom: 20px; }
-
   @media (max-width: 1000px) {
     .caps__grid { grid-template-columns: repeat(2, 1fr); }
-    .faq { padding: 32px 28px; }
-    .faq__head h3 { font-size: 32px; }
   }
   @media (max-width: 700px) {
     .caps .sec-head { margin-bottom: 40px; }
     .caps__grid { grid-template-columns: 1fr; }
     .cap { padding: 22px; }
-    .faq { margin-top: 40px; padding: 24px 18px; border-radius: var(--r-16); }
-    .faq__head h3 { font-size: 26px; }
-    .faq__head p { font-size: 14px; }
-    .faq__q { font-size: 15px; gap: 12px; }
   }
 </style>
