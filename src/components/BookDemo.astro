@@ -1,0 +1,611 @@
+---
+import Icon from './Icon.astro';
+import { calendly } from '../config/calendly';
+
+const steps = [
+  {
+    icon: 'calendar',
+    title: 'Pick a time that suits your counter',
+    body: 'Select a slot when your store is quiet. We work around your busy rush, not ours.',
+  },
+  {
+    icon: 'users',
+    title: 'A 30-minute walkthrough on your terms',
+    body: 'A specialist shows you active loans, inventory lookups, layaway payments, and till reconciliations.',
+  },
+  {
+    icon: 'file-text',
+    title: 'Get a clear transition outline',
+    body: 'We explain how your current paper tickets or spreadsheets map into PawnDesk with zero downtime.',
+  },
+];
+
+const assurances = [
+  'No credit card required',
+  'Free migration guidance',
+  'Answered by pawn specialists',
+];
+
+const details = [
+  { icon: 'calendar', label: '30 minutes', note: 'Live interactive screen share' },
+  { icon: 'users', label: '1-on-1 session', note: 'Questions tailored to your exact store setup' },
+  { icon: 'shield', label: 'Zero commitment', note: 'No credit card needed, no pushy sales scripts' },
+];
+---
+
+<section class="section demo" id="book-demo" aria-labelledby="book-demo-title" data-calendly-url={calendly.url}>
+  <div class="demo__wash" aria-hidden="true"></div>
+
+  <div class="container demo__inner">
+    <!-- Left Column: Context & Steps -->
+    <div class="demo__copy" data-reveal-group="90">
+      <span class="eyebrow eyebrow--bordered demo__eyebrow" data-reveal>
+        <i class="dot"></i>Schedule a Demo
+      </span>
+
+      <h2 class="h-section demo__h" id="book-demo-title" data-reveal>See PawnDesk running your shop.</h2>
+
+      <p class="lede demo__lede" data-reveal>
+        Thirty minutes, screen to screen. Bring your messiest loan, your custom layaway scenario, or the
+        report your accountant keeps asking for — we will show you how PawnDesk handles it live.
+      </p>
+
+      <ol class="demo__steps" data-reveal>
+        {
+          steps.map((s, i) => (
+            <li class="demo__step">
+              <span class="demo__step-ico">
+                <Icon name={s.icon} size={20} />
+              </span>
+              <div class="demo__step-txt">
+                <span class="demo__step-num">Step {String(i + 1).padStart(2, '0')}</span>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <ul class="demo__assure" data-reveal>
+        {
+          assurances.map((a) => (
+            <li>
+              <span class="demo__assure-tick">
+                <Icon name="check" size={12} stroke={3} />
+              </span>
+              {a}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Right Column: Calendly Trigger Card -->
+    <div class="demo__action-col" data-reveal>
+      <div class="demo__card">
+        <span class="demo__card-accent" aria-hidden="true"></span>
+
+        <div class="demo__card-badge">
+          <span class="pulse-dot"></span>
+          <span>Instant scheduling</span>
+        </div>
+
+        <div class="demo__card-head">
+          <h3>Book your 1-on-1 walkthrough</h3>
+          <p>
+            Choose a date and time on our live calendar. Calendly sends the invite and video
+            conference details straight to your inbox.
+          </p>
+        </div>
+
+        <dl class="demo__details">
+          {
+            details.map((d) => (
+              <div class="demo__detail">
+                <span class="demo__detail-ico">
+                  <Icon name={d.icon} size={17} />
+                </span>
+                <div class="demo__detail-txt">
+                  <dt>{d.label}</dt>
+                  <dd>{d.note}</dd>
+                </div>
+              </div>
+            ))
+          }
+        </dl>
+
+        <div class="demo__cta-box">
+          <button type="button" class="btn demo__book-btn" data-calendly-trigger>
+            <span>Book a demo</span>
+            <Icon name="arrow-right" size={18} />
+          </button>
+
+          <p class="demo__direct-fallback">
+            Prefer email? Write to{' '}
+            <a href={`mailto:${calendly.salesEmail}?subject=PawnDesk%20Demo%20Enquiry`}>
+              {calendly.salesEmail}
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <p class="demo__trust">
+        <Icon name="shield" size={15} />
+        <span>Your shop data stays private and secure with PawnDesk.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ========================================================================
+     Section shell — keeps the global .section gutter, adds a soft violet wash
+     ======================================================================== */
+  .demo {
+    position: relative;
+    isolation: isolate;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 84px;
+  }
+
+  .demo__wash {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(60% 55% at 12% 0%, rgb(124 58 237 / 0.1) 0%, transparent 62%),
+      radial-gradient(52% 60% at 92% 96%, rgb(96 93 236 / 0.09) 0%, transparent 60%),
+      linear-gradient(170deg, #faf9ff 0%, #f3f0ff 52%, #f8f7ff 100%);
+  }
+
+  .demo__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 452px);
+    gap: 72px;
+    align-items: start;
+  }
+
+  /* ------------------------------- Left column ------------------------------ */
+  .demo__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .demo__eyebrow {
+    background: rgb(255 255 255 / 0.72);
+    color: var(--primary-700);
+    backdrop-filter: blur(4px);
+  }
+
+  .demo__h {
+    margin-top: 22px;
+    max-width: 540px;
+    font-size: 46px;
+    line-height: 1.14;
+    letter-spacing: -0.5px;
+  }
+
+  .demo__lede {
+    margin-top: 18px;
+    max-width: 52ch;
+    color: var(--body);
+  }
+
+  /* Timeline list -------------------------------------------------------- */
+  .demo__steps {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 44px;
+    max-width: 540px;
+    width: 100%;
+  }
+
+  .demo__step {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* Connector drawn per step so it stops at the last icon instead of dangling */
+  .demo__step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: 55px;
+    bottom: -28px;
+    left: 23px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--border-violet-2), rgb(196 181 253 / 0.35));
+  }
+
+  .demo__step-ico {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 47px;
+    height: 47px;
+    border-radius: var(--r-pill);
+    background: #fff;
+    border: 1px solid var(--border-violet);
+    box-shadow: 0 2px 6px rgb(76 29 149 / 0.07);
+    color: var(--primary);
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease),
+      border-color 0.35s var(--ease);
+  }
+
+  .demo__step:hover .demo__step-ico {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 20px -10px rgb(96 93 236 / 0.8);
+  }
+
+  .demo__step-txt {
+    padding-top: 2px;
+  }
+
+  .demo__step-num {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--primary);
+    opacity: 0.75;
+  }
+
+  .demo__step-txt h3 {
+    margin-top: 5px;
+    font-size: 16.5px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--ink-800);
+  }
+
+  .demo__step-txt p {
+    margin-top: 6px;
+    max-width: 46ch;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* Assurance chips ------------------------------------------------------ */
+  .demo__assure {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    max-width: 540px;
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border-violet);
+  }
+
+  .demo__assure li {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 14px 8px 10px;
+    border-radius: var(--r-pill);
+    background: rgb(255 255 255 / 0.75);
+    border: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-700);
+  }
+
+  .demo__assure-tick {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 18px;
+    height: 18px;
+    border-radius: var(--r-pill);
+    background: var(--green-bg);
+    color: var(--green-fg);
+  }
+
+  /* ------------------------------ Right column ------------------------------ */
+  .demo__action-col {
+    position: sticky;
+    top: 104px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .demo__card {
+    position: relative;
+    padding: 34px 32px 32px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-20);
+    box-shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 24px 48px -24px rgb(76 29 149 / 0.26);
+    overflow: hidden;
+  }
+
+  .demo__card-accent {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--violet-600) 55%, #a78bfa 100%);
+  }
+
+  .demo__card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 6px 13px;
+    background: var(--lilac-100);
+    border: 1px solid var(--border-violet);
+    border-radius: var(--r-pill);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--primary-700);
+  }
+
+  .pulse-dot {
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: var(--r-pill);
+    background: var(--primary);
+    animation: pulse 2.4s var(--ease) infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgb(96 93 236 / 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 6px rgb(96 93 236 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgb(96 93 236 / 0);
+    }
+  }
+
+  .demo__card-head h3 {
+    font-family: var(--serif);
+    font-size: 27px;
+    line-height: 1.22;
+    letter-spacing: -0.2px;
+    color: var(--ink-800);
+  }
+
+  .demo__card-head p {
+    margin-top: 10px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* Detail rows, separated by hairlines instead of a nested grey box */
+  .demo__details {
+    margin: 26px 0 28px;
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .demo__detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 15px 0;
+  }
+
+  .demo__detail + .demo__detail {
+    border-top: 1px solid var(--border-soft);
+  }
+
+  .demo__detail-ico {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--r-10);
+    background: var(--surface-3);
+    border: 1px solid var(--border-violet);
+    color: var(--primary);
+  }
+
+  .demo__detail-txt {
+    min-width: 0;
+    padding-top: 1px;
+  }
+
+  .demo__detail-txt dt {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-800);
+  }
+
+  .demo__detail-txt dd {
+    margin: 2px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  /* CTA ------------------------------------------------------------------ */
+  .demo__cta-box {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .demo__book-btn {
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 15.5px;
+    font-weight: 700;
+    border-radius: var(--r-12);
+    box-shadow: 0 6px 16px -6px rgb(96 93 236 / 0.6);
+  }
+
+  .demo__book-btn:hover {
+    background: var(--primary-deep);
+    box-shadow: 0 12px 26px -8px rgb(96 93 236 / 0.7);
+  }
+
+  .demo__direct-fallback {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--muted-2);
+  }
+
+  .demo__direct-fallback a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    overflow-wrap: anywhere;
+  }
+
+  .demo__direct-fallback a:hover {
+    color: var(--primary-deep);
+  }
+
+  .demo__trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 8px;
+    font-size: 12.5px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .demo__trust :global(svg) {
+    color: var(--muted-3);
+  }
+
+  /* -------------------------------- Responsive ------------------------------- */
+  @media (max-width: 1100px) {
+    .demo__inner {
+      gap: 52px;
+    }
+    .demo__h {
+      font-size: 38px;
+    }
+    .demo__action-col {
+      top: 92px;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .demo__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 48px;
+      justify-items: stretch;
+    }
+    .demo__copy,
+    .demo__steps,
+    .demo__assure {
+      max-width: none;
+    }
+    .demo__action-col {
+      position: static;
+      max-width: 520px;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .demo__h {
+      font-size: 31px;
+      line-height: 1.18;
+      max-width: none;
+    }
+    .demo__steps {
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .demo__step {
+      gap: 16px;
+    }
+    .demo__step-ico {
+      width: 42px;
+      height: 42px;
+    }
+    .demo__step:not(:last-child)::before {
+      top: 50px;
+      bottom: -24px;
+      left: 20.5px;
+    }
+    .demo__assure {
+      margin-top: 32px;
+      padding-top: 24px;
+    }
+    .demo__card {
+      padding: 28px 22px 26px;
+    }
+    .demo__card-head h3 {
+      font-size: 23px;
+    }
+    .demo__book-btn {
+      font-size: 15px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function launchCalendly(e) {
+      if (e) e.preventDefault();
+      var section = document.getElementById('book-demo');
+      var url =
+        (section && section.getAttribute('data-calendly-url')) ||
+        'https://calendly.com/pawndesk/demo';
+
+      if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+        window.Calendly.initPopupWidget({ url: url });
+      } else {
+        // Direct fallback if the widget script is blocked or still loading
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    }
+
+    function setupCalendlyTriggers() {
+      var triggers = document.querySelectorAll('[data-calendly-trigger]');
+      for (var i = 0; i < triggers.length; i++) {
+        var el = triggers[i];
+        // Guard against double-binding on repeated DOMContentLoaded/astro:page-load
+        if (el.dataset.calendlyBound === '1') continue;
+        el.dataset.calendlyBound = '1';
+        el.addEventListener('click', launchCalendly);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupCalendlyTriggers);
+    } else {
+      setupCalendlyTriggers();
+    }
+    document.addEventListener('astro:page-load', setupCalendlyTriggers);
+  })();
+</script>

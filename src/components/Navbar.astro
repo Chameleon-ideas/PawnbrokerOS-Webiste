@@ -20,7 +20,7 @@ const links = [
 
   <div class="nav__actions">
     <a class="nav__signin" href="#">Sign In</a>
-    <a class="nav__cta" href="#">Get Started</a>
+    <a class="nav__cta" href="#book-demo" data-demo-cta="Navbar — Get Started">Get Started</a>
     <button class="nav__burger" data-nav-toggle aria-expanded="false" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -30,6 +30,9 @@ const links = [
     <nav aria-label="Mobile">
       {links.map((l) => <a href={l.href}>{l.label}<Icon name="chevron-right" size={16} /></a>)}
       <a href="#">Sign In<Icon name="chevron-right" size={16} /></a>
+      <a class="nav__drawer-cta" href="#book-demo" data-demo-cta="Navbar — Book a Demo (mobile)">
+        Book a Demo<Icon name="arrow-right" size={16} />
+      </a>
     </nav>
   </div>
 </header>
@@ -150,6 +153,19 @@ const links = [
   }
   .nav__drawer a:last-child { border-bottom: 0; }
   .nav__drawer a:hover { color: var(--primary); }
+
+  .nav__drawer .nav__drawer-cta {
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0 20px;
+    padding: 14px 20px;
+    border: 0;
+    border-radius: var(--r-10);
+    background: var(--primary);
+    color: #fff;
+    box-shadow: var(--sh-md);
+  }
+  .nav__drawer .nav__drawer-cta:hover { color: #fff; background: var(--primary-deep); }
 
   @media (max-width: 1000px) {
     .nav__links { display: none; }
