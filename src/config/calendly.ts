@@ -12,8 +12,8 @@ export const calendly = {
    * The live Calendly event link.
    * Placeholder until provided by client.
    */
-  url: import.meta.env.PUBLIC_CALENDLY_URL || 'https://calendly.com/pawndesk/demo',
+  url: import.meta.env.PUBLIC_CALENDLY_URL || 'https://calendly.com/pawnbrokeros-info/30min',
 
   /** Fallback contact email */
-  salesEmail: import.meta.env.PUBLIC_SALES_EMAIL || 'sales@pawndesk.app',
+  salesEmail: import.meta.env.PUBLIC_SALES_EMAIL || 'info@pawnbrokeros.com',
 };

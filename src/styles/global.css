@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PawnDesk — design tokens extracted from Untitled.fig
+   PawnBrokerOS — design tokens
    ========================================================================== */
 
 :root {
@@ -126,6 +126,13 @@ ul, ol { list-style: none; padding: 0; }
    -------------------------------------------------------------------------- */
 .section {
   padding: 120px var(--gutter);
+}
+
+/* Anchor targets land on the section's content, not on its top gutter: this
+   cancels the global scroll-padding-top so the first row of copy sits just
+   below the sticky navbar instead of a screen of empty padding. */
+.section[id] {
+  scroll-margin-top: -84px;
 }
 
 .container {
@@ -462,6 +469,8 @@ h1, h2, h3 { font-weight: 400; }
 @media (max-width: 760px) {
   :root { --gutter: 20px; }
   .section { padding: 60px var(--gutter); }
+  /* Smaller gutter here — keep part of the offset so copy clears the navbar. */
+  .section[id] { scroll-margin-top: -24px; }
   .h-section { font-size: 32px; line-height: 38px; letter-spacing: -.5px; }
   .h-step { font-size: 27px; line-height: 34px; }
   .lede { font-size: 15px; line-height: 24px; }
