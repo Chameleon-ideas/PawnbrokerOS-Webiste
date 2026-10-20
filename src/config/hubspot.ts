@@ -28,4 +28,4 @@ export const hubspot = {
 export const hubspotConfigured = Boolean(hubspot.portalId && hubspot.formId);
 
 /** Fallback address shown if the HubSpot script is blocked or unconfigured. */
-export const salesEmail = import.meta.env.PUBLIC_SALES_EMAIL ?? 'sales@pawndesk.app';
+export const salesEmail = import.meta.env.PUBLIC_SALES_EMAIL ?? 'sales@pawnbrokeros.com';

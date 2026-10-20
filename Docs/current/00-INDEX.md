@@ -1,4 +1,4 @@
-# Docs Index — PawnDesk marketing site
+# Docs Index — PawnbrokerOS marketing site
 
 Trust these in order.
 
