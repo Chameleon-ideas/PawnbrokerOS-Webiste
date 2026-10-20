@@ -19,7 +19,7 @@ const links = [
   </nav>
 
   <div class="nav__actions">
-    <a class="nav__signin" href="#">Sign In</a>
+    <a class="nav__signin" href="https://dashboard.pawnbrokeros.com/login">Sign In</a>
     <a class="nav__cta" href="#book-demo" data-demo-cta="Navbar — Get Started">Get Started</a>
     <button class="nav__burger" data-nav-toggle aria-expanded="false" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -29,7 +29,7 @@ const links = [
   <div class="nav__drawer" data-nav-drawer>
     <nav aria-label="Mobile">
       {links.map((l) => <a href={l.href}>{l.label}<Icon name="chevron-right" size={16} /></a>)}
-      <a href="#">Sign In<Icon name="chevron-right" size={16} /></a>
+      <a href="https://dashboard.pawnbrokeros.com/login">Sign In<Icon name="chevron-right" size={16} /></a>
       <a class="nav__drawer-cta" href="#book-demo" data-demo-cta="Navbar — Book a Demo (mobile)">
         Book a Demo<Icon name="arrow-right" size={16} />
       </a>
