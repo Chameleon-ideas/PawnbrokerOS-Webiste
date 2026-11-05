@@ -19,7 +19,14 @@ const columns = [
   },
 ];
 
-const socials = ["twitter", "facebook", "linkedin", "github"];
+// Paste a URL in to publish that network — entries with an empty href are not
+// rendered. LinkedIn is pending a link from the client.
+const socials = [
+  { name: "tiktok", label: "PawnbrokerOS on TikTok", href: "https://www.tiktok.com/@pawn.broker.os" },
+  { name: "facebook", label: "PawnbrokerOS on Facebook", href: "https://facebook.com/pawnbrokeros" },
+  { name: "instagram", label: "PawnbrokerOS on Instagram", href: "https://www.instagram.com/pawnbrokeros" },
+  { name: "linkedin", label: "PawnbrokerOS on LinkedIn", href: "" },
+].filter((s) => s.href);
 ---
 
 <footer class="ft">
@@ -65,8 +72,13 @@ const socials = ["twitter", "facebook", "linkedin", "github"];
       <div class="ft__social">
         {
           socials.map((s) => (
-            <a href="#" aria-label={s}>
-              <Icon name={s} size={18} stroke={1} />
+            <a
+              href={s.href}
+              aria-label={s.label}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name={s.name} size={18} stroke={1} />
             </a>
           ))
         }
