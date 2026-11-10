@@ -19,7 +19,6 @@ const links = [
   </nav>
 
   <div class="nav__actions">
-    <a class="nav__signin" href="https://dashboard.pawnbrokeros.com/login">Sign In</a>
     <a class="nav__cta" href="#book-demo" data-demo-cta="Navbar — Get Started">Get Started</a>
     <button class="nav__burger" data-nav-toggle aria-expanded="false" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -29,7 +28,6 @@ const links = [
   <div class="nav__drawer" data-nav-drawer>
     <nav aria-label="Mobile">
       {links.map((l) => <a href={l.href}>{l.label}<Icon name="chevron-right" size={16} /></a>)}
-      <a href="https://dashboard.pawnbrokeros.com/login">Sign In<Icon name="chevron-right" size={16} /></a>
       <a class="nav__drawer-cta" href="#book-demo" data-demo-cta="Navbar — Book a Demo (mobile)">
         Book a Demo<Icon name="arrow-right" size={16} />
       </a>
@@ -91,11 +89,6 @@ const links = [
   .nav__links a:hover::after { transform: scaleX(1); }
 
   .nav__actions { display: flex; align-items: center; gap: 20px; }
-  .nav__signin {
-    font-size: 14px; font-weight: 600; color: var(--ink-700);
-    transition: color .25s var(--ease);
-  }
-  .nav__signin:hover { color: var(--primary); }
 
   .nav__cta {
     display: inline-flex; align-items: center;
@@ -176,11 +169,7 @@ const links = [
     .nav__mark { width: 30px; height: 30px; border-radius: 8px; font-size: 12px; }
     .nav__word { font-size: 14px; letter-spacing: .5px; }
     .nav__actions { gap: 12px; }
-    .nav__signin { font-size: 13px; }
     .nav__cta { padding: 8px 16px; font-size: 13px; border-radius: var(--r-6); }
-  }
-  @media (max-width: 400px) {
-    .nav__signin { display: none; }
   }
 </style>
 

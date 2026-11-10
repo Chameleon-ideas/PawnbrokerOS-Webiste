@@ -4,8 +4,9 @@ Trust these in order.
 
 | # | Doc | What it covers |
 |---|---|---|
-| 1 | [`../SESSION_2026-10-20.md`](../SESSION_2026-10-20.md) | Latest session — Schedule a Demo redesign + UI bug fixes |
-| 2 | [`../SESSION_2026-10-17.md`](../SESSION_2026-10-17.md) | Book a Demo section, HubSpot embed, CTA wiring (lead capture since replaced by Calendly) |
+| 1 | [`../SESSION_2026-11-11.md`](../SESSION_2026-11-11.md) | Latest session — Sign In removed from navbar, US copy → Canada (SSN → SIN) |
+| 2 | [`../SESSION_2026-10-20.md`](../SESSION_2026-10-20.md) | Schedule a Demo redesign + UI bug fixes |
+| 3 | [`../SESSION_2026-10-17.md`](../SESSION_2026-10-17.md) | Book a Demo section, HubSpot embed, CTA wiring (lead capture since replaced by Calendly) |
 
 ## Project at a glance
 
@@ -20,6 +21,15 @@ Trust these in order.
   or still loading). Every "Get Started" CTA on the page is an anchor to `#book-demo` tagged with
   `data-demo-cta`. Trigger binding is idempotent via `data-calendly-bound` — do not re-add
   `removeEventListener` with a locally-created handler, it silently fails and double-fires the popup.
+- **A push to `master` auto-deploys the live public site.** Nothing in the repo shows this — there is
+  no `.github/workflows`, no `.vercel`, no `netlify.toml`, and no matching Vercel project on the
+  connected account; the host is still unidentified. Treat `git push origin master` as a production
+  deploy and confirm before running it. Local commits are safe.
+- **Canada-only market (for now).** All copy and mockup data must be Canadian: SIN not SSN, province
+  not state, postal code not ZIP, "licence" not "license", Canadian area codes (416/647/905),
+  ISO or unambiguous dates. Keep compliance copy jurisdiction-neutral.
+- **No Sign In / login link on this site.** It is a marketing page; the only CTA is the demo booking.
+  Do not re-add a link to `dashboard.pawnbrokeros.com/login`.
 - **No pricing is shown.** `Pricing.astro` exists but is intentionally not mounted — the page converts
   to a demo booking, not a price list. Confirm before rendering it.
 
