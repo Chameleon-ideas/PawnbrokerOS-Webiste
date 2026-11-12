@@ -33,7 +33,7 @@ const details = [
 ];
 ---
 
-<section class="section demo" id="book-demo" aria-labelledby="book-demo-title" data-calendly-url={calendly.url}>
+<section class="section demo" id="book-demo" aria-labelledby="book-demo-title">
   <div class="demo__wash" aria-hidden="true"></div>
 
   <div class="container demo__inner">
@@ -116,10 +116,16 @@ const details = [
         </dl>
 
         <div class="demo__cta-box">
-          <button type="button" class="btn demo__book-btn" data-calendly-trigger>
+          <a
+            class="btn demo__book-btn"
+            href={calendly.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-demo-cta="Book Demo — Calendly"
+          >
             <span>Book a demo</span>
             <Icon name="arrow-right" size={18} />
-          </button>
+          </a>
 
           <p class="demo__direct-fallback">
             Prefer email? Write to{' '}
@@ -571,40 +577,3 @@ const details = [
     }
   }
 </style>
-
-<script is:inline>
-  (function () {
-    function launchCalendly(e) {
-      if (e) e.preventDefault();
-      var section = document.getElementById('book-demo');
-      var url =
-        (section && section.getAttribute('data-calendly-url')) ||
-        'https://calendly.com/pawnbrokeros-info/30min';
-
-      if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
-        window.Calendly.initPopupWidget({ url: url });
-      } else {
-        // Direct fallback if the widget script is blocked or still loading
-        window.open(url, '_blank', 'noopener,noreferrer');
-      }
-    }
-
-    function setupCalendlyTriggers() {
-      var triggers = document.querySelectorAll('[data-calendly-trigger]');
-      for (var i = 0; i < triggers.length; i++) {
-        var el = triggers[i];
-        // Guard against double-binding on repeated DOMContentLoaded/astro:page-load
-        if (el.dataset.calendlyBound === '1') continue;
-        el.dataset.calendlyBound = '1';
-        el.addEventListener('click', launchCalendly);
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', setupCalendlyTriggers);
-    } else {
-      setupCalendlyTriggers();
-    }
-    document.addEventListener('astro:page-load', setupCalendlyTriggers);
-  })();
-</script>
