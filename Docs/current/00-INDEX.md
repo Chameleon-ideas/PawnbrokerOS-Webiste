@@ -4,14 +4,15 @@ Trust these in order.
 
 | # | Doc | What it covers |
 |---|---|---|
-| 1 | [`../SESSION_2026-11-13.md`](../SESSION_2026-11-13.md) | Latest session — Calendly popup widget removed, "Book a demo" is now a plain link |
-| 2 | [`../SESSION_2026-11-11.md`](../SESSION_2026-11-11.md) | Sign In removed from navbar, US copy → Canada (SSN → SIN) |
-| 3 | [`../SESSION_2026-10-20.md`](../SESSION_2026-10-20.md) | Schedule a Demo redesign + UI bug fixes |
-| 4 | [`../SESSION_2026-10-17.md`](../SESSION_2026-10-17.md) | Book a Demo section, HubSpot embed, CTA wiring (lead capture since replaced by Calendly) |
+| 1 | [`../SESSION_2026-11-22.md`](../SESSION_2026-11-22.md) | Latest session — Astro 5 → 7.3.8 security upgrade (branch `chore/astro-7`, not deployed) |
+| 2 | [`../SESSION_2026-11-13.md`](../SESSION_2026-11-13.md) | Calendly popup widget removed, "Book a demo" is now a plain link |
+| 3 | [`../SESSION_2026-11-11.md`](../SESSION_2026-11-11.md) | Sign In removed from navbar, US copy → Canada (SSN → SIN) |
+| 4 | [`../SESSION_2026-10-20.md`](../SESSION_2026-10-20.md) | Schedule a Demo redesign + UI bug fixes |
+| 5 | [`../SESSION_2026-10-17.md`](../SESSION_2026-10-17.md) | Book a Demo section, HubSpot embed, CTA wiring (lead capture since replaced by Calendly) |
 
 ## Project at a glance
 
-- **Stack:** Astro 5, static output (no adapter, no SSR). Single page: `src/pages/index.astro`.
+- **Stack:** Astro 7 (pinned `~7.3.8`; needs Node ≥ 22.12 — 7.4.x needs ≥ 22.23.4), static output (no adapter, no SSR). Single page: `src/pages/index.astro`.
 - **Styling:** hand-written CSS with Figma-derived tokens in `src/styles/global.css`. Components use
   Astro scoped `<style>`. Scoped selectors cannot reach `<Icon />`'s SVG — use `:global(svg)`.
 - **Config:** `src/config/calendly.ts` reads `PUBLIC_CALENDLY_URL` from `.env` (see `.env.example`).
