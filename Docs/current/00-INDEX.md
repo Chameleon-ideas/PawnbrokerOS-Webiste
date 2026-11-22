@@ -4,7 +4,7 @@ Trust these in order.
 
 | # | Doc | What it covers |
 |---|---|---|
-| 1 | [`../SESSION_2026-11-22.md`](../SESSION_2026-11-22.md) | Latest session — Astro 5 → 7.3.8 security upgrade (branch `chore/astro-7`, not deployed) |
+| 1 | [`../SESSION_2026-11-22.md`](../SESSION_2026-11-22.md) | Latest session — Astro 5 → 7.3.8 security upgrade (deployed 2026-11-22; host identified as Vercel) |
 | 2 | [`../SESSION_2026-11-13.md`](../SESSION_2026-11-13.md) | Calendly popup widget removed, "Book a demo" is now a plain link |
 | 3 | [`../SESSION_2026-11-11.md`](../SESSION_2026-11-11.md) | Sign In removed from navbar, US copy → Canada (SSN → SIN) |
 | 4 | [`../SESSION_2026-10-20.md`](../SESSION_2026-10-20.md) | Schedule a Demo redesign + UI bug fixes |
@@ -27,8 +27,8 @@ Trust these in order.
   the Calendly account profile, not this repo (`grep -i brocker` returns nothing here). It can only be
   fixed in Calendly → Account settings → Profile.
 - **A push to `master` auto-deploys the live public site.** Nothing in the repo shows this — there is
-  no `.github/workflows`, no `.vercel`, no `netlify.toml`, and no matching Vercel project on the
-  connected account; the host is still unidentified. Treat `git push origin master` as a production
+  no `.github/workflows`, no `.vercel`, no `netlify.toml`. The host is **Vercel** (identified
+  2026-11-22 from response headers); apex redirects to `www.pawnbrokeros.com`. Treat `git push origin master` as a production
   deploy and confirm before running it. Local commits are safe.
 - **Canada-only market (for now).** All copy and mockup data must be Canadian: SIN not SSN, province
   not state, postal code not ZIP, "licence" not "license", Canadian area codes (416/647/905),
