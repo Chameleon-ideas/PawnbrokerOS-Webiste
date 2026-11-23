@@ -10,17 +10,20 @@
   --primary-800: #3730a3;
   --violet-600: #7c3aed;
 
-  /* Ink */
+  /* Ink — re-based on the brand book's Navy Ink #1E1B4B (2026-11-22, readability).
+     The old greys put most body copy at 4.5–4.8:1 on white, which tires the eye over a long
+     page. Contrast on white now: muted 8.0:1 · body 10.1:1 · muted-3 5.0:1 · grey-700 13.7:1.
+     Same values as the app's tokens, so site and product read alike. */
   --ink-900: #0f0f2d;
   --ink-800: #1e1b4b;
-  --ink-700: #1a1a2e;
-  --slate-900: #0f172a;
-  --body: #4b5563;
-  --body-alt: #475569;
-  --muted: #64748b;
-  --muted-2: #6b7280;
-  --muted-3: #9ca3af;
-  --grey-700: #374151;
+  --ink-700: #1e1b4b;
+  --slate-900: #1e1b4b;
+  --body: #3b3862;
+  --body-alt: #3b3862;
+  --muted: #4f4d6e;
+  --muted-2: #4f4d6e;
+  --muted-3: #6e6c8f;
+  --grey-700: #2b2950;
 
   /* Surfaces */
   --white: #ffffff;
@@ -157,8 +160,9 @@ ul, ol { list-style: none; padding: 0; }
   padding: 6px 16px;
   border-radius: var(--r-pill);
   background: var(--lilac-50);
-  color: var(--primary);
-  font-size: 11px;
+  /* --primary-deep, not --primary: Hyacinth at 11–12px on the lilac pill was 4.1:1. */
+  color: var(--primary-deep);
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
