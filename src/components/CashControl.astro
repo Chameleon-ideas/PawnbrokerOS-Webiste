@@ -196,7 +196,9 @@ const till = [
   .cash .sec-head { margin-bottom: 64px; }
   .cash__row { display: flex; gap: 40px; align-items: flex-start; }
   .cash__steps { width: 460px; flex: none; display: flex; flex-direction: column; gap: 16px; }
-  .cash__visual { flex: 1; min-width: 0; }
+  /* The preview stays put while the step cards scroll past it (owner, 2026-11-24). Sticky
+     works because .cash__row aligns items to the top; top clears the fixed site navbar. */
+  .cash__visual { flex: 1; min-width: 0; position: sticky; top: 104px; }
 
   /* --- step cards --- */
   .ccard {
@@ -327,6 +329,7 @@ const till = [
   @media (max-width: 1100px) {
     .cash__row { flex-direction: column; align-items: stretch; }
     .cash__steps { width: 100%; }
+    .cash__visual { position: static; }
   }
   @media (max-width: 760px) {
     .cash .sec-head { margin-bottom: 40px; }
