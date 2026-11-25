@@ -1,17 +1,72 @@
 ---
 /**
- * The owner's mobile app, Today screen (owner, 2026-11-24), shown beside the web preview in
- * the hero. Rebuilt in HTML from the app's real layout — net-cash card, the book, inventory,
- * bottom tabs — with sample figures (no real account data). The date and greeting follow the
- * visitor's clock.
+ * The owner's mobile app (owner, 2026-11-24), shown beside the web preview in the hero.
+ * All four tabs are rebuilt in HTML from the app's real screens — Today, Transactions,
+ * Customers, More — with sample figures (no real account data). Tapping a bottom tab
+ * switches screens and each screen scrolls inside the phone, as in the app. The date,
+ * greeting and status-bar clock follow the visitor's clock.
  */
 const today = [
   ['Loans written', '3', '$835.00'],
   ['Payments taken', '6', '$412.00'],
   ['Sales', '2', '$1,131.13'],
 ];
+const tills = [
+  ['Till 1', true, '$1,240.00'],
+  ['Till 2', true, '$386.50'],
+  ['Till 3', false, '$0.00'],
+];
+const txns = [
+  ['Pawn', '#41883 · Daniels, Frank', '−$185.00', '9:12 AM'],
+  ['Payment', '#41851 · Gagnon, Luc', '+$65.00', '9:40 AM'],
+  ['Sale', 'S-10422 · Walk-in', '+$389.00', '10:05 AM'],
+  ['Buy', 'P-2291 · Khalil, Omar', '−$410.00', '10:31 AM'],
+  ['Redeem', '#41820 · Liu, Grace', '+$784.00', '11:47 AM'],
+  ['Payment', '#41866 · Jameson, Priya', '+$120.00', '12:15 PM'],
+];
+const custs = [
+  ['AM', 'Acevedo, Maria', '(416) 555-8142', '3 active pawns · 1 buy · Last visit Nov 23', 'VIP'],
+  ['BT', 'Brennan, Tom', '(416) 555-8271', '3 active pawns · 0 buys · Last visit Nov 22', ''],
+  ['CJ', 'Caldwell, Jasmine', '(647) 555-3398', '1 active pawn · 2 buys · Last visit Nov 23', ''],
+  ['DF', 'Daniels, Frank', '(416) 555-1289', '4 active pawns · 1 buy · Last visit Nov 24', 'Repeat'],
+  ['JP', 'Jameson, Priya', '(519) 555-6504', '1 active pawn · 1 buy · Last visit Nov 23', ''],
+  ['GL', 'Gagnon, Luc', '(519) 555-4421', '2 active pawns · 0 buys · Last visit Nov 21', ''],
+];
+const more = [
+  ['The ledger', [
+    ['phone', 'Call list', 'Who to phone today'],
+    ['ticket', 'Pawns & Buys', 'The book — every ticket, by status'],
+    ['box', 'Inventory', 'Stock on hand, pricing and bins'],
+    ['tray', 'Unassigned bins', 'Items waiting to be put away'],
+    ['clip', 'Layaways', 'Goods held against instalments'],
+    ['gavel', 'Forfeiture review', 'Decide what happens to expired pawns'],
+    ['bars', 'Reports', 'Daily, sales, inventory and till'],
+  ]],
+  ['Administration', [
+    ['badge', 'Staff & invites', ''],
+    ['gear', 'Settings', ''],
+    ['till', 'Tills', 'Read-only — the count happens at the drawer'],
+    ['pct', 'Rate codes', 'Interest and fee schedules'],
+  ]],
+  ['Compliance', [['shield', 'Police reporting', 'Goods taken in, by period']]],
+] as const;
+const ICON: Record<string, string> = {
+  phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
+  ticket: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/>',
+  box: '<rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4"/>',
+  tray: '<path d="M4 4h16v16H4z"/><path d="M4 14h4l1 2h6l1-2h4"/>',
+  clip: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 13l2 2 4-4"/>',
+  gavel: '<path d="m14 4 6 6M11 7l6 6M8 10l4-4 6 6-4 4zM4 20h9M9 15l-5 5"/>',
+  bars: '<path d="M6 20V11M12 20V5M18 20v-7"/>',
+  badge: '<rect x="4" y="6" width="16" height="14" rx="2"/><path d="M9 3h6v3H9zM9 12h.01M13 12h3M8 16h8"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  till: '<rect x="4" y="10" width="16" height="10" rx="1"/><path d="M7 10V6h10v4M8 14h8M8 17h8"/>',
+  pct: '<path d="M19 5 5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>',
+  shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m12 8 1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/>',
+};
+const chev = '<i class="ph__chev">›</i>';
 ---
-<div class="ph" aria-label="PawnbrokerOS owner app on a phone">
+<div class="ph" aria-label="PawnbrokerOS owner app on a phone" data-ph>
   <div class="ph__screen">
     <div class="ph__status">
       <b data-ph-time>10:02</b>
@@ -23,7 +78,8 @@ const today = [
       </span>
     </div>
 
-    <div class="ph__body">
+    <!-- ===================== Today ===================== -->
+    <section class="ph__body" data-ph-screen="today">
       <p class="ph__date" data-ph-date>Tuesday 24 November</p>
       <h4 class="ph__hello" data-ph-hello>Good evening</h4>
       <p class="ph__who">Your shop · Owner</p>
@@ -37,9 +93,7 @@ const today = [
           <small>Up $212.40 on yesterday</small>
         </div>
         <div class="ph__rows">
-          {today.map(([k, n, v]) => (
-            <div><span>{k}</span><b>{n}</b><em>{v}</em></div>
-          ))}
+          {today.map(([k, n, v]) => <div><span>{k}</span><b>{n}</b><em>{v}</em></div>)}
         </div>
       </div>
 
@@ -48,17 +102,87 @@ const today = [
         <div class="ph__tile"><span>Active pawns</span><b>938</b><em>$214,560.00</em></div>
         <div class="ph__tile"><span>Overdue</span><b class="red">41</b><em>$9,870.00</em></div>
       </div>
-      <div class="ph__line"><span>Buys outright</span><b>12</b><em>$4,431.00</em><i>›</i></div>
+      <div class="ph__line"><span>Buys outright</span><b>12</b><em>$4,431.00</em><Fragment set:html={chev} /></div>
 
       <h5 class="ph__sec">Inventory</h5>
-      <div class="ph__line ph__line--inv"><div><span>On hand</span><b>1,842</b></div><div><span>Retail value</span><b>$386,240</b></div><i>›</i></div>
-    </div>
+      <div class="ph__line ph__line--two"><div><span>On hand</span><b>1,842</b></div><div><span>Retail value</span><b>$386,240</b></div><Fragment set:html={chev} /></div>
 
-    <nav class="ph__tabs" aria-hidden="true">
-      <span class="is-on"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="10" rx="1"/><rect x="13" y="3" width="8" height="6" rx="1"/><rect x="13" y="11" width="8" height="10" rx="1"/><rect x="3" y="15" width="8" height="6" rx="1"/></svg>Today</span>
-      <span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/></svg>Transactions</span>
-      <span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5M13.5 14.2c.8-.2 1.6-.2 2.5-.2 3 0 5 2 5 5"/></svg>Customers</span>
-      <span><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>More</span>
+      <h5 class="ph__sec">Customers</h5>
+      <div class="ph__line ph__line--two"><div><span>Customers</span><b>4,288</b></div><div><span>With a pawn</span><b>938</b></div><Fragment set:html={chev} /></div>
+
+      <h5 class="ph__sec">Tills</h5>
+      <div class="ph__tills">
+        {tills.map(([n, open, amt]) => (
+          <div class="ph__till"><div><b>{n}</b><em class:list={[open ? 'open' : 'closed']}>{open ? 'Open' : 'Closed'}</em></div><strong>{amt}</strong></div>
+        ))}
+      </div>
+
+      <h5 class="ph__sec">Needs attention</h5>
+      <div class="ph__list">
+        <div class="ph__item"><span class="ph__ico ph__ico--gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>6 pawns due within 7 days</span><Fragment set:html={chev} /></div>
+        <div class="ph__item"><span class="ph__ico"><svg viewBox="0 0 24 24" set:html={ICON.tray} /></span><span>3 items without a storage bin</span><Fragment set:html={chev} /></div>
+      </div>
+      <div class="ph__pad"></div>
+    </section>
+
+    <!-- ===================== Transactions ===================== -->
+    <section class="ph__body" data-ph-screen="transactions" hidden>
+      <h4 class="ph__title">Transactions</h4>
+      <div class="ph__search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Ticket, receipt or customer</div>
+      <div class="ph__range"><span class="ph__select">Today<svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span><span class="ph__cal"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span data-ph-short>24 Nov 2026</span></span></div>
+      <div class="ph__chips" data-ph-chips>
+        {['All', 'Pawns', 'Buys', 'Payments', 'Redeems', 'Sales'].map((c, i) => <button type="button" class:list={[i === 0 && 'is-on']}>{c}</button>)}
+      </div>
+      <div class="ph__sum"><div><b>6</b><span>Transactions</span></div><div><b>1</b><span>Pawns</span></div><div><b>2</b><span>Payments</span></div><div><b>1</b><span>Sales</span></div></div>
+      <div class="ph__list">
+        {txns.map(([type, ref, amt, t]) => (
+          <div class="ph__txn"><div><b>{type}</b><span>{ref}</span></div><div class="ph__txn-r"><b class:list={[amt.startsWith('−') ? 'out' : 'in']}>{amt}</b><span>{t}</span></div></div>
+        ))}
+      </div>
+      <div class="ph__pad"></div>
+    </section>
+
+    <!-- ===================== Customers ===================== -->
+    <section class="ph__body" data-ph-screen="customers" hidden>
+      <h4 class="ph__title">Customers</h4>
+      <div class="ph__search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Name, phone or email</div>
+      <div class="ph__seg" data-ph-seg><button type="button" class="is-on">Any</button><button type="button">Has a pawn</button><button type="button">No pawn</button></div>
+      <div class="ph__meta"><span class="ph__pill">Banned only</span><span>4,288 matches</span></div>
+      <div class="ph__sum ph__sum--3"><div><b>4,288</b><span>Customers</span></div><div><b>938</b><span>With a pawn</span></div><div><b>77</b><span>Banned</span></div></div>
+      <div class="ph__list">
+        {custs.map(([ini, name, phone, meta, flag]) => (
+          <div class="ph__cust"><span class="ph__av">{ini}</span><div><b>{name}</b><span>{phone}</span><small>{meta}</small>{flag && <em>{flag}</em>}</div><Fragment set:html={chev} /></div>
+        ))}
+      </div>
+      <div class="ph__pad"></div>
+    </section>
+
+    <!-- ===================== More ===================== -->
+    <section class="ph__body" data-ph-screen="more" hidden>
+      <h4 class="ph__title">More</h4>
+      {more.map(([group, items]) => (
+        <>
+          <h6 class="ph__grp">{group}</h6>
+          <div class="ph__list">
+            {items.map(([ic, t, d]) => (
+              <div class="ph__item ph__item--menu"><span class="ph__ico"><svg viewBox="0 0 24 24" set:html={ICON[ic]} /></span><span class="ph__menu-txt"><b>{t}</b>{d && <small>{d}</small>}</span><Fragment set:html={chev} /></div>
+            ))}
+          </div>
+        </>
+      ))}
+      <h6 class="ph__grp">Security</h6>
+      <div class="ph__list">
+        <div class="ph__item ph__item--menu"><span class="ph__ico"><svg viewBox="0 0 24 24"><path d="M12 11v4M8.5 8.5a5 5 0 0 1 8.5 3.5c0 2-.5 4-1.5 6M7 12c0 3 .7 5 2 7M12 3a9 9 0 0 1 9 9"/></svg></span><span class="ph__menu-txt"><b>Unlock with biometrics</b><small>Face or fingerprint instead of your password</small></span><span class="ph__toggle"><i></i></span></div>
+      </div>
+      <div class="ph__signout">Sign out</div>
+      <div class="ph__pad"></div>
+    </section>
+
+    <nav class="ph__tabs" data-ph-tabs>
+      <button type="button" class="is-on" data-ph-tab="today"><svg viewBox="0 0 24 24" class="fill"><rect x="3" y="3" width="8" height="10" rx="1"/><rect x="13" y="3" width="8" height="6" rx="1"/><rect x="13" y="11" width="8" height="10" rx="1"/><rect x="3" y="15" width="8" height="6" rx="1"/></svg>Today</button>
+      <button type="button" data-ph-tab="transactions"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/></svg>Transactions</button>
+      <button type="button" data-ph-tab="customers"><svg viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5M13.5 14.2c.8-.2 1.6-.2 2.5-.2 3 0 5 2 5 5"/></svg>Customers</button>
+      <button type="button" data-ph-tab="more"><svg viewBox="0 0 24 24" class="fill"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>More</button>
     </nav>
   </div>
 </div>
@@ -68,15 +192,36 @@ const today = [
   const setPhone = () => {
     const now = new Date();
     const h = now.getHours();
-    const date = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    const date = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }).replace(',', '');
+    const short = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).replace(/\s?[AP]M/, '');
     const hello = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
-    document.querySelectorAll('[data-ph-date]').forEach((e) => (e.textContent = date.replace(',', '')));
+    document.querySelectorAll('[data-ph-date]').forEach((e) => (e.textContent = date));
+    document.querySelectorAll('[data-ph-short]').forEach((e) => (e.textContent = short));
     document.querySelectorAll('[data-ph-time]').forEach((e) => (e.textContent = time));
     document.querySelectorAll('[data-ph-hello]').forEach((e) => (e.textContent = hello));
   };
   setPhone();
   setInterval(setPhone, 30000);
+
+  // Bottom tabs switch screens; chips and the segmented control just move their highlight.
+  document.querySelectorAll<HTMLElement>('[data-ph]').forEach((ph) => {
+    ph.querySelectorAll<HTMLButtonElement>('[data-ph-tab]').forEach((tab) =>
+      tab.addEventListener('click', () => {
+        ph.querySelectorAll('[data-ph-tab]').forEach((t) => t.classList.toggle('is-on', t === tab));
+        ph.querySelectorAll<HTMLElement>('[data-ph-screen]').forEach((s) => {
+          s.hidden = s.dataset.phScreen !== tab.dataset.phTab;
+          if (!s.hidden) s.scrollTop = 0;
+        });
+      }),
+    );
+    ph.querySelectorAll<HTMLElement>('[data-ph-chips], [data-ph-seg]').forEach((group) =>
+      group.addEventListener('click', (e) => {
+        const b = (e.target as HTMLElement).closest('button');
+        if (b) group.querySelectorAll('button').forEach((x) => x.classList.toggle('is-on', x === b));
+      }),
+    );
+  });
 </script>
 
 <style>
@@ -98,21 +243,32 @@ const today = [
     display: flex;
     flex-direction: column;
   }
-  .ph__status { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px 6px; font-size: 13px; }
+  .ph svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .ph svg.fill { fill: currentColor; stroke: none; }
+  .ph button { font: inherit; border: 0; background: none; cursor: pointer; padding: 0; color: inherit; }
+
+  .ph__status { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px 6px; font-size: 13px; flex: none; }
   .ph__status b { font-weight: 700; }
+  .ph__status svg { width: auto; height: auto; stroke: none; }
   .ph__island { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); width: 92px; height: 26px; border-radius: 99px; background: #0b0b14; }
   .ph__icons { display: flex; align-items: center; gap: 5px; }
   .ph__batt { position: relative; width: 23px; height: 11px; border: 1.5px solid currentColor; border-radius: 3.5px; opacity: .9; }
   .ph__batt i { position: absolute; inset: 1.5px; right: 5px; border-radius: 1.5px; background: currentColor; }
 
-  .ph__body { flex: 1; overflow: hidden; padding: 10px 16px 0; }
+  .ph__body { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 16px 0; scrollbar-width: none; overscroll-behavior: contain; }
+  .ph__body::-webkit-scrollbar { display: none; }
+  .ph__body[hidden] { display: none; }
+  .ph__pad { height: 14px; }
   .ph__date { margin: 4px 0 0; font-size: 12.5px; color: #6b6f85; }
   .ph__hello { margin: 2px 0 0; font-family: var(--sans); font-size: 28px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.15; color: #0f1222; }
   .ph__who { margin: 4px 0 0; font-size: 11.5px; color: #9a9db0; }
+  .ph__title { margin: 6px 0 12px; text-align: center; font-family: var(--sans); font-size: 16px; font-weight: 700; color: #0f1222; }
   .ph__sec { display: flex; align-items: center; gap: 8px; margin: 16px 0 8px; font-family: var(--sans); font-size: 11.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #0f1222; }
   .ph__sec::before { content: ''; width: 3px; height: 13px; border-radius: 2px; background: #b88a3e; }
+  .ph__grp { margin: 14px 2px 6px; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #6b6f85; }
 
-  .ph__card { border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 6px 16px -10px rgb(15 18 34 / 0.25); }
+  .ph__card, .ph__tile, .ph__line, .ph__list, .ph__sum, .ph__till { border-radius: 16px; background: #fff; box-shadow: 0 6px 16px -10px rgb(15 18 34 / 0.25); }
+  .ph__card { overflow: hidden; border-radius: 18px; }
   .ph__net { padding: 14px 16px 12px; background: linear-gradient(160deg, #262a45, #14162a); color: #fff; }
   .ph__net-top { display: flex; align-items: center; justify-content: space-between; }
   .ph__net-top span { font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #c9a25c; }
@@ -126,7 +282,6 @@ const today = [
   .ph__rows em { font-style: normal; text-align: right; color: #6b6f85; }
 
   .ph__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .ph__tile, .ph__line { border-radius: 16px; background: #fff; box-shadow: 0 6px 16px -10px rgb(15 18 34 / 0.25); }
   .ph__tile { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; }
   .ph__tile span { font-size: 10px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: #6b6f85; }
   .ph__tile b { font-size: 22px; font-weight: 800; }
@@ -136,13 +291,79 @@ const today = [
   .ph__line > span { flex: 1; }
   .ph__line b { font-weight: 700; }
   .ph__line em { font-style: normal; color: #6b6f85; }
-  .ph__line i { font-style: normal; font-size: 18px; color: #b5b8c8; }
-  .ph__line--inv { margin-top: 0; }
-  .ph__line--inv div { flex: 1; display: flex; flex-direction: column; }
-  .ph__line--inv div span { font-size: 11.5px; color: #6b6f85; }
-  .ph__line--inv div b { font-size: 18px; font-weight: 800; }
+  .ph__chev { font-style: normal; font-size: 18px; line-height: 1; color: #b5b8c8; }
+  .ph__line--two { margin-top: 0; }
+  .ph__line--two div { flex: 1; display: flex; flex-direction: column; }
+  .ph__line--two div span { font-size: 11.5px; color: #6b6f85; }
+  .ph__line--two div b { font-size: 18px; font-weight: 800; }
 
-  .ph__tabs { display: grid; grid-template-columns: repeat(4, 1fr); padding: 8px 6px 20px; border-top: 1px solid #e4e6ee; background: rgb(255 255 255 / 0.92); }
-  .ph__tabs span { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; color: #9a9db0; }
-  .ph__tabs span.is-on { color: #14162a; }
+  .ph__tills { display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 8px; scrollbar-width: none; }
+  .ph__tills::-webkit-scrollbar { display: none; }
+  .ph__till { flex: none; width: 150px; display: flex; flex-direction: column; justify-content: space-between; gap: 22px; padding: 12px 14px; }
+  .ph__till div { display: flex; align-items: center; justify-content: space-between; }
+  .ph__till b { font-size: 14px; font-weight: 600; }
+  .ph__till em { font-style: normal; font-size: 9.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; }
+  .ph__till em.open { background: #d1fae5; color: #065f46; }
+  .ph__till em.closed { background: #eceef4; color: #6b6f85; }
+  .ph__till strong { font-size: 20px; font-weight: 800; }
+
+  .ph__list { overflow: hidden; }
+  .ph__item { display: flex; align-items: center; gap: 10px; padding: 11px 14px; font-size: 13px; }
+  .ph__item + .ph__item { border-top: 1px solid #eef0f5; }
+  .ph__item > span:not(.ph__ico):not(.ph__toggle) { flex: 1; }
+  .ph__ico { display: grid; place-items: center; color: #1b1e33; }
+  .ph__ico--gold { color: #9a7330; }
+  .ph__item--menu { align-items: center; }
+  .ph__menu-txt { display: flex; flex-direction: column; gap: 1px; }
+  .ph__menu-txt b { font-size: 13.5px; font-weight: 500; }
+  .ph__menu-txt small { font-size: 11px; color: #6b6f85; }
+  .ph__toggle { position: relative; flex: none; width: 38px; height: 22px; border-radius: 99px; background: #1b1e33; }
+  .ph__toggle i { position: absolute; right: 2px; top: 2px; width: 18px; height: 18px; border-radius: 99px; background: #fff; }
+  .ph__signout { margin-top: 14px; padding: 11px; border-radius: 14px; background: #e9ebf2; text-align: center; font-size: 14px; font-weight: 600; }
+
+  .ph__search { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #eceef4; font-size: 13px; color: #9a9db0; }
+  .ph__search svg { width: 15px; height: 15px; }
+  .ph__range { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .ph__select { flex: 1; display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-radius: 12px; background: #eceef4; font-size: 13px; color: #3b3f55; }
+  .ph__select svg { width: 14px; height: 14px; }
+  .ph__cal { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: #3b3f55; }
+  .ph__cal svg { width: 15px; height: 15px; }
+  .ph__chips { display: flex; gap: 6px; overflow-x: auto; margin: 10px -16px 0; padding: 0 16px 2px; scrollbar-width: none; }
+  .ph__chips::-webkit-scrollbar { display: none; }
+  .ph__chips button { flex: none; padding: 6px 12px; border-radius: 99px; background: #eceef4; font-size: 12px; color: #3b3f55; }
+  .ph__chips button.is-on { background: #1b1e33; color: #fff; }
+  .ph__sum { display: grid; grid-template-columns: repeat(4, 1fr); margin: 12px 0 10px; padding: 10px 0; }
+  .ph__sum--3 { grid-template-columns: repeat(3, 1fr); }
+  .ph__sum div { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  .ph__sum div + div { border-left: 1px solid #eceef4; }
+  .ph__sum b { font-size: 15px; font-weight: 700; }
+  .ph__sum span { font-size: 9.5px; color: #6b6f85; }
+  .ph__txn { display: flex; justify-content: space-between; gap: 8px; padding: 10px 14px; }
+  .ph__txn + .ph__txn { border-top: 1px solid #eef0f5; }
+  .ph__txn div { display: flex; flex-direction: column; gap: 1px; }
+  .ph__txn b { font-size: 13px; font-weight: 600; }
+  .ph__txn span { font-size: 11px; color: #6b6f85; }
+  .ph__txn-r { align-items: flex-end; }
+  .ph__txn-r b.in { color: #047857; }
+  .ph__txn-r b.out { color: #0f1222; }
+
+  .ph__seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 8px; padding: 3px; border-radius: 12px; background: #e6e8ef; }
+  .ph__seg button { padding: 7px 0; border-radius: 9px; font-size: 12px; color: #3b3f55; }
+  .ph__seg button.is-on { background: #fff; color: #0f1222; box-shadow: 0 1px 3px rgb(15 18 34 / .12); }
+  .ph__meta { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; font-size: 11.5px; color: #6b6f85; }
+  .ph__pill { padding: 5px 11px; border-radius: 99px; background: #eceef4; color: #3b3f55; }
+  .ph__cust { display: flex; align-items: center; gap: 10px; padding: 11px 14px; }
+  .ph__cust + .ph__cust { border-top: 1px solid #eef0f5; }
+  .ph__av { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 99px; background: #eceef4; font-size: 12px; font-weight: 700; }
+  .ph__cust > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .ph__cust b { font-size: 13.5px; font-weight: 600; }
+  .ph__cust span { font-size: 11.5px; color: #6b6f85; }
+  .ph__cust small { font-size: 10.5px; color: #6b6f85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ph__cust em { align-self: flex-start; margin-top: 3px; font-style: normal; font-size: 9.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; background: #eceef4; color: #1b1e33; }
+
+  .ph__tabs { flex: none; display: grid; grid-template-columns: repeat(4, 1fr); padding: 8px 6px 20px; border-top: 1px solid #e4e6ee; background: rgb(255 255 255 / 0.92); }
+  .ph__tabs button { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; color: #9a9db0; transition: color .15s; }
+  .ph__tabs button svg { width: 20px; height: 20px; }
+  .ph__tabs button:hover { color: #3b3f55; }
+  .ph__tabs button.is-on { color: #14162a; }
 </style>
