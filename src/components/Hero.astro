@@ -221,8 +221,30 @@ const rows = [
 
   /* --- visual --- */
   /* "See How It Works" lands here; with the global scroll-padding (84px) this clears the navbar. */
-  .hero__visual { width: 100%; max-width: var(--content); scroll-margin-top: 36px; }
-  .hero__stage { position: relative; width: 1280px; }
+  /* Sized from the viewport height so the whole preview — browser window and phone — fits on
+     screen at once (owner, 2026-11-24). The stage is ~1280×880, i.e. width ≈ 1.45 × height. */
+  .hero__visual {
+    width: 100%;
+    max-width: min(var(--content), calc((100vh - 150px) * 1.45));
+    scroll-margin-top: 36px;
+  }
+  /* 3D: the browser window and the phone turn slightly in towards each other. */
+  .hero__stage { position: relative; width: 1280px; perspective: 2400px; }
+  .hero__win {
+    transform: rotateY(9deg) rotateX(2deg);
+    transform-origin: left center;
+    transition: transform .6s var(--ease);
+  }
+  .hero__phone :global(.ph) {
+    transform: rotateY(-16deg) rotateX(3deg);
+    transform-origin: right center;
+    transition: transform .6s var(--ease);
+  }
+  .hero__stage:hover .hero__win { transform: rotateY(6deg) rotateX(1deg); }
+  .hero__stage:hover .hero__phone :global(.ph) { transform: rotateY(-11deg) rotateX(2deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__win, .hero__phone :global(.ph) { transition: none; }
+  }
   .hero__win { border-color: #e2dcf7; }
 
   /* page header */
