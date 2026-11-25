@@ -61,8 +61,8 @@ const rows = [
             <!-- Header card, as in the dashboard: action on top, figures below with dividers -->
             <div class="kc">
               <div class="kc__bar">
-                <span class="kc__btn"><Icon name="scan" size={13} />Scan ID</span>
-                <span class="kc__btn kc__btn--solid"><Icon name="plus" size={13} />Add new customer</span>
+                <button type="button" class="kc__btn"><Icon name="scan" size={13} />Scan ID</button>
+                <button type="button" class="kc__btn kc__btn--solid"><Icon name="plus" size={13} />Add new customer</button>
               </div>
               <div class="kc__figs">
                 <div><span>Customers</span><b data-count="4288">4,288</b></div>
@@ -74,9 +74,9 @@ const rows = [
             <div class="lc">
             <div class="tb">
               <div class="seg">
-                <span class="seg__t is-on">All <i>4,288</i></span>
-                <span class="seg__t">Active <i>938</i></span>
-                <span class="seg__t">Inactive <i>3,350</i></span>
+                <button type="button" class="seg__t is-on" data-seg="all">All <i>4,288</i></button>
+                <button type="button" class="seg__t" data-seg="active">Active <i>938</i></button>
+                <button type="button" class="seg__t" data-seg="inactive">Inactive <i>3,350</i></button>
               </div>
               <span class="tb__sp"></span>
               <span class="tb__sel">All flags<Icon name="chevron-down" size={13} /></span>
@@ -86,7 +86,7 @@ const rows = [
               <table class="tbl">
                 <thead>
                   <tr>
-                    <th style="width:44px"><span class="cbx"></span></th>
+                    <th style="width:44px"><span class="cbx" data-cbx-all></span></th>
                     <th style="width:120px">CUSTOMER #</th>
                     <th>NAME</th>
                     <th style="width:160px">PHONE</th>
@@ -98,8 +98,8 @@ const rows = [
                 </thead>
                 <tbody>
                   {rows.map((r) => (
-                    <tr>
-                      <td><span class="cbx"></span></td>
+                    <tr data-active={r.loans !== '-' ? '1' : '0'}>
+                      <td><span class="cbx" data-cbx></span></td>
                       <td class="dim">{r.id}</td>
                       <td class="name">{r.name}</td>
                       <td>{r.phone}</td>
@@ -112,7 +112,7 @@ const rows = [
                 </tbody>
               </table>
               <div class="pager">
-                <span>Showing 7 of 4,288 records</span>
+                <span data-showing>Showing 7 of 4,288 records</span>
                 <span>Page 1 of 12</span>
                 <span class="pager__btns"><span>Prev</span><span>Next</span></span>
               </div>
@@ -142,6 +142,54 @@ const rows = [
     </Scaler>
   </div>
 </section>
+
+<script>
+  // Light interaction on the hero preview: the All / Active / Inactive tabs filter the sample
+  // rows, and the row checkboxes tick. Nothing else changes screens.
+  const win = document.querySelector('.hero__win');
+  if (win) {
+    // Keep the window the same height when a tab shows fewer rows, so the page never jumps.
+    const tableWrap = win.querySelector<HTMLElement>('.hc__table');
+    if (tableWrap) {
+      tableWrap.style.minHeight = `${tableWrap.offsetHeight}px`;
+      tableWrap.style.display = 'flex';
+      tableWrap.style.flexDirection = 'column';
+      const pager = tableWrap.querySelector<HTMLElement>('.pager');
+      if (pager) pager.style.marginTop = 'auto';
+    }
+    const rows = Array.from(win.querySelectorAll<HTMLTableRowElement>('tbody tr'));
+    const showing = win.querySelector('[data-showing]');
+    const totals: Record<string, string> = { all: '4,288', active: '938', inactive: '3,350' };
+    win.querySelectorAll<HTMLButtonElement>('[data-seg]').forEach((b) =>
+      b.addEventListener('click', () => {
+        win.querySelectorAll('[data-seg]').forEach((x) => x.classList.toggle('is-on', x === b));
+        const v = b.dataset.seg!;
+        let n = 0;
+        rows.forEach((r) => {
+          const show = v === 'all' || (v === 'active') === (r.dataset.active === '1');
+          r.hidden = !show;
+          if (show) n++;
+        });
+        if (showing) showing.textContent = `Showing ${n} of ${totals[v]} records`;
+      }),
+    );
+    rows.forEach((r) =>
+      r.addEventListener('click', () => {
+        r.classList.toggle('is-sel');
+        r.querySelector('[data-cbx]')?.classList.toggle('is-on', r.classList.contains('is-sel'));
+      }),
+    );
+    win.querySelector('[data-cbx-all]')?.addEventListener('click', (e) => {
+      const el = e.currentTarget as HTMLElement;
+      const on = !el.classList.contains('is-on');
+      el.classList.toggle('is-on', on);
+      rows.filter((r) => !r.hidden).forEach((r) => {
+        r.classList.toggle('is-sel', on);
+        r.querySelector('[data-cbx]')?.classList.toggle('is-on', on);
+      });
+    });
+  }
+</script>
 
 <style>
   .hero {
@@ -196,7 +244,16 @@ const rows = [
   .kc { border: 1px solid var(--border); border-radius: 14px; background: #fff; box-shadow: var(--sh-sm); overflow: hidden; }
   .kc__bar { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 18px; background: var(--surface); border-bottom: 1px solid var(--border); }
   .kc__btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border: 1px solid var(--border-violet); border-radius: 99px; background: #fff; font-size: 12px; font-weight: 600; color: var(--ink-700); }
+  .kc__btn { font-family: inherit; cursor: pointer; transition: border-color .15s, background-color .15s, transform .1s; }
+  .kc__btn:hover { border-color: var(--primary); }
+  .kc__btn:active { transform: translateY(1px); }
   .kc__btn--solid { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .kc__btn--solid:hover { background: var(--primary-deep); }
+  .hc__table tbody tr { cursor: pointer; }
+  .hc__table tbody tr.is-sel { background: var(--lilac-100, #ede9fe); }
+  .hc__table tbody tr[hidden] { display: none; }
+  .cbx { cursor: pointer; }
+  .cbx.is-on { background: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 2px #fff; }
   .kc__figs { display: grid; grid-template-columns: repeat(3, 1fr); padding: 16px 0; }
   .kc__figs div { display: flex; flex-direction: column; gap: 6px; padding: 0 22px; }
   .kc__figs div + div { border-left: 1px solid var(--border); }
@@ -210,6 +267,8 @@ const rows = [
   .seg { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--border-violet); border-radius: 99px; background: #fff; }
   .seg__t { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 99px; font-size: 12px; font-weight: 600; color: var(--muted); }
   .seg__t i { font-style: normal; font-size: 10px; padding: 1px 7px; border-radius: 99px; background: var(--surface-3); color: var(--muted); }
+  .seg__t { border: 0; background: none; font-family: inherit; cursor: pointer; transition: background-color .15s, color .15s; }
+  .seg__t:hover:not(.is-on) { background: var(--surface); color: var(--ink-800); }
   .seg__t.is-on { background: var(--primary); color: #fff; }
   .seg__t.is-on i { background: rgb(255 255 255 / .22); color: #fff; }
   .tb__sel { display: inline-flex; align-items: center; justify-content: space-between; gap: 30px; width: 150px; padding: 7px 12px; border: 1px solid var(--border-violet); border-radius: 99px; background: #fff; font-size: 12px; color: var(--ink-700); }
@@ -247,9 +306,10 @@ const rows = [
     transition: box-shadow .35s var(--ease);
   }
   .flt:hover { box-shadow: 0 22px 40px -18px rgb(76 29 149 / .45); }
+  .flt { pointer-events: none; } /* decorative; never block clicks on the preview */
   .flt--a { left: -40px; top: 220px; animation: bob 7s ease-in-out infinite; }
-  .flt--b { left: 1100px; top: 222px; animation: bob 8s ease-in-out .8s infinite; }
-  .flt--c { left: 1090px; top: 440px; animation: bob 6.5s ease-in-out .4s infinite; }
+  .flt--b { left: 1100px; top: 296px; animation: bob 8s ease-in-out .8s infinite; }
+  .flt--c { left: 1090px; top: 520px; animation: bob 6.5s ease-in-out .4s infinite; }
 
   .flt__k {
     display: flex; align-items: center; gap: 6px;
