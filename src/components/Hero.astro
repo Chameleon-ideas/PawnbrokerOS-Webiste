@@ -36,7 +36,7 @@ const rows = [
     </p>
 
     <div class="hero__actions" data-reveal>
-      <a class="btn btn--secondary" href="#how-it-works">See How It Works</a>
+      <a class="btn btn--secondary" href="#hero-preview">See How It Works</a>
     </div>
   </div>
 
@@ -45,7 +45,7 @@ const rows = [
   </div>
   </div>
 
-  <div class="hero__visual" data-reveal>
+  <div class="hero__visual" id="hero-preview" data-reveal>
     <Scaler width={1280} class="hero__scaler">
       <div class="hero__stage">
         <!-- ---------------- app window ---------------- -->
@@ -227,7 +227,8 @@ const rows = [
   .hero__actions { display: flex; gap: 14px; }
 
   /* --- visual --- */
-  .hero__visual { width: 100%; max-width: var(--content); }
+  /* "See How It Works" lands here; the margin clears the sticky site navbar. */
+  .hero__visual { width: 100%; max-width: var(--content); scroll-margin-top: 96px; }
   .hero__stage { position: relative; width: 1280px; }
   .hero__win { border-color: #e2dcf7; }
 
