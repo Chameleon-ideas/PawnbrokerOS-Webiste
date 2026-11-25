@@ -1,12 +1,21 @@
 ---
 import Icon from './Icon.astro';
 import DemoCard from './DemoCard.astro';
-import LiveDemo from './mockups/LiveDemo.astro';
+import AppFooter from './mockups/AppFooter.astro';
 import Scaler from './mockups/Scaler.astro';
 import BrowserBar from './mockups/BrowserBar.astro';
 import AppNav from './mockups/AppNav.astro';
 
 
+const rows = [
+  { id: '08104372', name: 'Acevedo, Maria',   phone: '(416) 555-8142', loans: '3', visit: '02/14/24', flag: { t: 'VIP', c: 'amber' } },
+  { id: '08104221', name: 'Brennan, Tom',     phone: '(416) 555-8271', loans: '3', visit: '02/14/24', flag: null },
+  { id: '08102999', name: 'Caldwell, Jasmine',phone: '(647) 555-3398', loans: '-', visit: '02/14/24', flag: null },
+  { id: '08103031', name: 'Daniels, Frank',   phone: '(416) 555-1289', loans: '4', visit: '02/23/24', flag: { t: 'Active', c: 'green' } },
+  { id: '08103762', name: 'Esposito, Rosa',   phone: '(416) 555-9965', loans: '-', visit: '02/14/24', flag: null },
+  { id: '08102545', name: 'Fairchild, Henry', phone: '(905) 555-8181', loans: '-', visit: '02/14/24', flag: null },
+  { id: '08103379', name: 'Hatfield, Beverly',phone: '(416) 555-7962', loans: '-', visit: '12/04/18', flag: { t: 'DO NOT LOAN', c: 'red' } },
+];
 ---
 
 <section class="hero" id="top">
@@ -40,11 +49,78 @@ import AppNav from './mockups/AppNav.astro';
   </div>
 
   <div class="hero__visual" data-reveal>
-    <p class="hero__try"><span class="pulse-dot"></span>It works — click the tabs, search a customer, or ring up a sale.</p>
     <Scaler width={1280} class="hero__scaler">
       <div class="hero__stage">
         <!-- ---------------- app window ---------------- -->
-        <LiveDemo />
+        <div class="mock hero__win">
+          <BrowserBar url="dashboard.pawnbrokeros.com / customers" padding="12px 16px" dot={11} urlWidth={440} font={12} bg="var(--surface-3)" />
+
+          <AppNav active="Customer" height={64} padding="0 20px" markSize={26} wordSize={15} tabSize={12} />
+
+          <div class="hc">
+            <!-- Header card, as in the dashboard: action on top, figures below with dividers -->
+            <div class="kc">
+              <div class="kc__bar">
+                <span class="kc__btn"><Icon name="scan" size={13} />Scan ID</span>
+                <span class="kc__btn kc__btn--solid"><Icon name="plus" size={13} />Add new customer</span>
+              </div>
+              <div class="kc__figs">
+                <div><span>Customers</span><b data-count="4288">4,288</b></div>
+                <div><span>With an active pawn</span><b data-count="938">938</b></div>
+                <div><span>Flagged</span><b data-count="77">77</b></div>
+              </div>
+            </div>
+
+            <div class="lc">
+            <div class="tb">
+              <div class="seg">
+                <span class="seg__t is-on">All <i>4,288</i></span>
+                <span class="seg__t">Active <i>938</i></span>
+                <span class="seg__t">Inactive <i>3,350</i></span>
+              </div>
+              <span class="tb__sp"></span>
+              <span class="tb__sel">All flags<Icon name="chevron-down" size={13} /></span>
+              <span class="tb__search"><Icon name="search" size={14} />Name, phone, email, last 4 SIN</span>
+            </div>
+            <div class="hc__table">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th style="width:44px"><span class="cbx"></span></th>
+                    <th style="width:120px">CUSTOMER #</th>
+                    <th>NAME</th>
+                    <th style="width:160px">PHONE</th>
+                    <th style="width:120px" class="num">ACTIVE LOANS</th>
+                    <th style="width:110px">LAST VISIT</th>
+                    <th style="width:160px">FLAGS</th>
+                    <th style="width:90px" class="num">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r) => (
+                    <tr>
+                      <td><span class="cbx"></span></td>
+                      <td class="dim">{r.id}</td>
+                      <td class="name">{r.name}</td>
+                      <td>{r.phone}</td>
+                      <td class="num"><b>{r.loans}</b></td>
+                      <td>{r.visit}</td>
+                      <td>{r.flag ? <span class={`chip chip--${r.flag.c}`}>{r.flag.t}</span> : <span class="dim">-</span>}</td>
+                      <td class="num"><span class="open">Open<Icon name="chevron-right" size={11} /></span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div class="pager">
+                <span>Showing 7 of 4,288 records</span>
+                <span>Page 1 of 12</span>
+                <span class="pager__btns"><span>Prev</span><span>Next</span></span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <AppFooter font={12} height={40} />
+        </div>
 
         <!-- ---------------- floating stat cards ---------------- -->
         <div class="flt flt--a" data-float="0.045">
@@ -66,12 +142,6 @@ import AppNav from './mockups/AppNav.astro';
     </Scaler>
   </div>
 </section>
-
-<script>
-  // Hide the floating stat cards once someone starts using the demo.
-  const stage = document.querySelector('.hero__stage');
-  stage?.addEventListener('pointerdown', () => stage.classList.add('is-used'), { once: true });
-</script>
 
 <style>
   .hero {
@@ -114,6 +184,54 @@ import AppNav from './mockups/AppNav.astro';
   /* --- visual --- */
   .hero__visual { width: 100%; max-width: var(--content); }
   .hero__stage { position: relative; width: 1280px; }
+  .hero__win { border-color: #e2dcf7; }
+
+  /* page header */
+
+  /* content */
+  .hc { display: flex; flex-direction: column; gap: 22px; padding: 22px; background: #fff; border-top: 1px solid var(--border); }
+  .hc__table { overflow: hidden; }
+
+  /* header card: action bar on top, figures with dividers below */
+  .kc { border: 1px solid var(--border); border-radius: 14px; background: #fff; box-shadow: var(--sh-sm); overflow: hidden; }
+  .kc__bar { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 18px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .kc__btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border: 1px solid var(--border-violet); border-radius: 99px; background: #fff; font-size: 12px; font-weight: 600; color: var(--ink-700); }
+  .kc__btn--solid { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .kc__figs { display: grid; grid-template-columns: repeat(3, 1fr); padding: 16px 0; }
+  .kc__figs div { display: flex; flex-direction: column; gap: 6px; padding: 0 22px; }
+  .kc__figs div + div { border-left: 1px solid var(--border); }
+  .kc__figs span { font-size: 12px; color: var(--muted); }
+  .kc__figs b { font-size: 22px; font-weight: 800; color: var(--ink-800); }
+
+  /* list card: segmented tabs, filter and search on top of the table */
+  .lc { border: 1px solid var(--border); border-radius: 14px; background: #fff; box-shadow: var(--sh-sm); overflow: hidden; }
+  .tb { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .tb__sp { flex: 1; }
+  .seg { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--border-violet); border-radius: 99px; background: #fff; }
+  .seg__t { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 99px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .seg__t i { font-style: normal; font-size: 10px; padding: 1px 7px; border-radius: 99px; background: var(--surface-3); color: var(--muted); }
+  .seg__t.is-on { background: var(--primary); color: #fff; }
+  .seg__t.is-on i { background: rgb(255 255 255 / .22); color: #fff; }
+  .tb__sel { display: inline-flex; align-items: center; justify-content: space-between; gap: 30px; width: 150px; padding: 7px 12px; border: 1px solid var(--border-violet); border-radius: 99px; background: #fff; font-size: 12px; color: var(--ink-700); }
+  .tb__search { display: inline-flex; align-items: center; gap: 8px; width: 270px; padding: 7px 12px; border: 1px solid var(--border-violet); border-radius: 99px; background: #fff; font-size: 12px; color: var(--muted-3); }
+  .hc__table :global(.tbl th) { padding: 10px 14px; }
+  .hc__table :global(.tbl td) { padding: 11px 14px; font-size: 12px; }
+  .hc__table :global(.tbl thead th:first-child) { padding: 10px; }
+  .hc__table :global(.tbl tbody td:first-child) { padding: 11px 10px; }
+
+  .cbx {
+    display: inline-block;
+    width: 14px; height: 14px;
+    background: #fff;
+    border: 1px solid var(--border-violet);
+    border-radius: 3px;
+  }
+  .open {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 700; color: var(--grey-700);
+    transition: color .2s var(--ease), gap .2s var(--ease);
+  }
+  tr:hover .open { color: var(--primary); gap: 7px; }
 
   /* floaters */
   .flt {
@@ -129,18 +247,9 @@ import AppNav from './mockups/AppNav.astro';
     transition: box-shadow .35s var(--ease);
   }
   .flt:hover { box-shadow: 0 22px 40px -18px rgb(76 29 149 / .45); }
-  /* Decorative only: they never block the live demo, and they step aside once it's used. */
-  .flt { pointer-events: none; transition: opacity .4s ease; }
-  .hero__stage.is-used .flt { opacity: 0; }
-  .hero__try {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    margin: 0 0 14px; font-size: 14px; font-weight: 600; color: var(--primary-700);
-  }
-  .hero__try .pulse-dot { width: 7px; height: 7px; border-radius: 99px; background: var(--primary); animation: trypulse 2.4s ease infinite; }
-  @keyframes trypulse { 0% { box-shadow: 0 0 0 0 rgb(96 93 236 / .6); } 70% { box-shadow: 0 0 0 7px rgb(96 93 236 / 0); } 100% { box-shadow: 0 0 0 0 rgb(96 93 236 / 0); } }
   .flt--a { left: -40px; top: 220px; animation: bob 7s ease-in-out infinite; }
-  .flt--b { left: 1100px; top: 296px; animation: bob 8s ease-in-out .8s infinite; }
-  .flt--c { left: 1090px; top: 520px; animation: bob 6.5s ease-in-out .4s infinite; }
+  .flt--b { left: 1100px; top: 222px; animation: bob 8s ease-in-out .8s infinite; }
+  .flt--c { left: 1090px; top: 440px; animation: bob 6.5s ease-in-out .4s infinite; }
 
   .flt__k {
     display: flex; align-items: center; gap: 6px;
@@ -169,7 +278,6 @@ import AppNav from './mockups/AppNav.astro';
     .hero__book { width: 100%; max-width: 520px; }
   }
   @media (max-width: 760px) {
-    .hero__try { display: none; }
     .hero { gap: 40px; padding: 96px var(--gutter) 60px; }
     .hero__text { gap: 24px; }
     .hero__h1 { font-size: 38px; line-height: 42px; letter-spacing: -1px; }
