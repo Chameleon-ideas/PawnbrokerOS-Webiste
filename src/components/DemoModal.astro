@@ -1,0 +1,70 @@
+---
+/**
+ * The booking card in a popup (owner, 2026-11-24). Any element with `data-demo-modal` opens
+ * it instead of scrolling to #book-demo; the link's href stays as the no-JS fallback.
+ * Uses <dialog>, so Esc, focus trapping and the backdrop come from the browser.
+ */
+import DemoCard from './DemoCard.astro';
+---
+<dialog class="dmodal" data-demo-dialog aria-label="Book a free demo">
+  <button type="button" class="dmodal__close" data-demo-close aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+  </button>
+  <DemoCard cta="Navbar popup — Book a Free Demo" />
+</dialog>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('[data-demo-dialog]');
+  if (dlg && typeof dlg.showModal === 'function') {
+    document.querySelectorAll<HTMLElement>('[data-demo-modal]').forEach((el) =>
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        dlg.showModal();
+        document.body.style.overflow = 'hidden';
+      }),
+    );
+    dlg.querySelector('[data-demo-close]')?.addEventListener('click', () => dlg.close());
+    // A click on the backdrop lands on the <dialog> itself, not its content.
+    dlg.addEventListener('click', (e) => e.target === dlg && dlg.close());
+    dlg.addEventListener('close', () => (document.body.style.overflow = ''));
+  }
+</script>
+
+<style>
+  .dmodal {
+    /* the site's reset zeroes margins, which would pin a <dialog> to the top-left */
+    margin: auto;
+    width: min(460px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  .dmodal::backdrop {
+    background: rgb(30 27 75 / 0.45);
+    backdrop-filter: blur(2px);
+  }
+  .dmodal[open] { animation: dmodal-in 0.2s ease; }
+  @keyframes dmodal-in { from { opacity: 0; transform: translateY(10px); } }
+  .dmodal__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 99px;
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .dmodal__close:hover { background: var(--lilac-100, #ede9fe); color: var(--ink-800); }
+  /* the shared card's trust line sits on the dark backdrop here */
+  .dmodal :global(.demo__trust) { color: #fff; }
+  .dmodal :global(.demo__trust svg) { color: #fff; }
+  @media (prefers-reduced-motion: reduce) { .dmodal[open] { animation: none; } }
+</style>
