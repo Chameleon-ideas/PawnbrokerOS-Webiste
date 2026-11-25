@@ -36,18 +36,13 @@ const stats = [
   <div class="container pls__row">
     <div class="pls__text" data-reveal>
       <span class="eyebrow">Where Every Loan Lives</span>
-      <h2 class="h-section" style="max-width:460px">See Every Pawn Ticket Open, Overdue, and Redeemed.</h2>
+      <h2 class="h-section" style="max-width:760px">See Every Pawn Ticket Open, Overdue, and Redeemed.</h2>
       <p class="pls__body">
         Open new loans, record what was pledged, set the amount and terms, and track every payment
         that follows. Active, overdue, and redeemed every loan is searchable, sortable, and one click
         from the full ticket detail.
       </p>
 
-      <ul class="pls__bullets">
-        {bullets.map((b) => (
-          <li><span class="tick"><Icon name="check" size={14} /></span>{b}</li>
-        ))}
-      </ul>
 
     </div>
 
@@ -123,17 +118,25 @@ const stats = [
         </div>
       </Scaler>
     </div>
+
+    <ul class="pls__bullets" data-reveal>
+        {bullets.map((b) => (
+          <li><span class="tick"><Icon name="check" size={14} /></span>{b}</li>
+        ))}
+      </ul>
+
   </div>
 </section>
 
 <style>
   .pls { background: var(--surface); }
-  .pls__row { display: flex; align-items: center; gap: 72px; }
+  /* Centered column (owner, 2026-11-24): heading, paragraph, screen, then the bullets. */
+  .pls__row { display: flex; flex-direction: column; align-items: center; gap: 48px; }
 
-  .pls__text { width: 460px; flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
+  .pls__text { max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
   .pls__body { font-size: 16px; line-height: 27px; color: var(--body); }
 
-  .pls__bullets { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+  .pls__bullets { width: 100%; max-width: 900px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 32px; }
   .pls__bullets li {
     display: flex; align-items: center; gap: 12px;
     font-size: 15px; font-weight: 500; color: var(--ink-800);
@@ -147,7 +150,7 @@ const stats = [
   .pls__bullets li:hover .tick { background: var(--primary); color: #fff; transform: scale(1.1); }
 
 
-  .pls__visual { flex: 1; min-width: 0; }
+  .pls__visual { width: 100%; max-width: 900px; }
   .pls__win { border-radius: var(--r-16); }
 
   /* page header */
@@ -176,13 +179,14 @@ const stats = [
   }
 
   @media (max-width: 1100px) {
-    .pls__row { flex-direction: column; align-items: stretch; gap: 40px; }
-    .pls__text { width: 100%; }
+    .pls__row { gap: 40px; }
+    .pls__bullets { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 760px) {
     .pls__row { gap: 32px; }
     .pls__text { gap: 20px; }
     .pls__body { font-size: 15px; line-height: 25px; }
     .pls__bullets li { font-size: 14px; }
+    .pls__bullets { grid-template-columns: 1fr; }
   }
 </style>
