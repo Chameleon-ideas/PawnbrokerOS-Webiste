@@ -136,7 +136,7 @@ const rows = [
         </div>
 
         <!-- owner's mobile app, overlapping the web preview (2026-11-24) -->
-        <div class="hero__phone" data-float="0.05"><PhoneOwner /></div>
+        <div class="hero__phone"><PhoneOwner /></div>
       </div>
     </Scaler>
   </div>
@@ -351,7 +351,7 @@ const rows = [
   .flt:hover { box-shadow: 0 22px 40px -18px rgb(76 29 149 / .45); }
   .flt { pointer-events: none; } /* decorative; never block clicks on the preview */
   /* ~18px gap after the web window (1280 × .8 = 1024) */
-  .hero__phone { position: absolute; left: 1044px; top: 20px; z-index: 3; }
+  .hero__phone { position: absolute; left: 1044px; top: 57px; z-index: 3; } /* bottom level with the web window */
   .flt--a { left: -40px; top: 220px; animation: bob 7s ease-in-out infinite; }
 
   .flt__k {
