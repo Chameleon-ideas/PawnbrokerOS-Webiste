@@ -120,12 +120,6 @@ const rows = [
           <AppFooter font={12} height={40} />
         </div>
 
-        <!-- ---------------- floating stat cards ---------------- -->
-        <div class="flt flt--a" data-float="0.045">
-          <span class="flt__k"><i style="background:var(--primary)"></i>Customers</span>
-          <b class="flt__v" style="color:var(--ink-700)">4,288</b>
-          <span class="flt__u">total records</span>
-        </div>
         <!-- owner's mobile app, overlapping the web preview (2026-11-24) -->
         <div class="hero__phone" data-float="0.05"><PhoneOwner /></div>
       </div>
@@ -221,29 +215,32 @@ const rows = [
 
   /* --- visual --- */
   /* "See How It Works" lands here; with the global scroll-padding (84px) this clears the navbar. */
-  /* Sized from the viewport height so the whole preview — browser window and phone — fits on
-     screen at once (owner, 2026-11-24). The stage is ~1280×880, i.e. width ≈ 1.45 × height. */
+  /* Sized from the viewport height so the whole preview fits on screen (owner, 2026-11-24).
+     The stage is 1280×720, so width = 1.78 × height. */
   .hero__visual {
     width: 100%;
-    max-width: min(var(--content), calc((100vh - 150px) * 1.45));
+    max-width: min(var(--content), calc((100vh - 150px) * 1.78));
     scroll-margin-top: 36px;
   }
-  /* 3D: the browser window and the phone turn slightly in towards each other. */
-  .hero__stage { position: relative; width: 1280px; perspective: 2400px; }
+  /* Web window at 75% on the left, phone beside it on the right, just touching the
+     window's edge so nothing in either is hidden, both flat, with a soft glow behind tying them together. */
+  .hero__stage { position: relative; width: 1280px; height: 720px; }
+  .hero__stage::before {
+    content: '';
+    position: absolute;
+    inset: 40px 60px 0 120px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(96 93 236 / .22), rgb(96 93 236 / 0));
+    filter: blur(30px);
+    pointer-events: none;
+  }
   .hero__win {
-    transform: rotateY(9deg) rotateX(2deg);
-    transform-origin: left center;
-    transition: transform .6s var(--ease);
-  }
-  .hero__phone :global(.ph) {
-    transform: rotateY(-16deg) rotateX(3deg);
-    transform-origin: right center;
-    transition: transform .6s var(--ease);
-  }
-  .hero__stage:hover .hero__win { transform: rotateY(6deg) rotateX(1deg); }
-  .hero__stage:hover .hero__phone :global(.ph) { transform: rotateY(-11deg) rotateX(2deg); }
-  @media (prefers-reduced-motion: reduce) {
-    .hero__win, .hero__phone :global(.ph) { transition: none; }
+    position: absolute;
+    left: 0;
+    top: 56px;
+    width: 1280px;
+    transform: scale(.75);
+    transform-origin: top left;
   }
   .hero__win { border-color: #e2dcf7; }
 
@@ -320,7 +317,7 @@ const rows = [
   }
   .flt:hover { box-shadow: 0 22px 40px -18px rgb(76 29 149 / .45); }
   .flt { pointer-events: none; } /* decorative; never block clicks on the preview */
-  .hero__phone { position: absolute; left: 958px; top: 214px; z-index: 3; }
+  .hero__phone { position: absolute; left: 948px; top: 40px; z-index: 3; }
   .flt--a { left: -40px; top: 220px; animation: bob 7s ease-in-out infinite; }
 
   .flt__k {
