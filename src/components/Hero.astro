@@ -46,11 +46,15 @@ const rows = [
   </div>
   </div>
 
+</section>
+
+<!-- The web + Owner app preview in its own dark band, set apart from the hero (owner, 2026-11-24) -->
+<section class="showcase" aria-labelledby="showcase-title">
   <!-- Heading for the web + phone preview (owner, 2026-11-24) -->
   <div class="sec-head hero__prev-head" id="hero-preview-head" data-reveal>
     <span class="eyebrow">At the Counter and On the Go</span>
-    <h2 class="h-section" style="max-width:760px">Run the Counter in the Shop. Watch the Shop From Anywhere.</h2>
-    <p class="lede" style="max-width:620px;color:var(--muted-2)">
+    <h2 class="h-section" id="showcase-title" style="max-width:760px">Run the Counter in the Shop. Watch the Shop From Anywhere.</h2>
+    <p class="lede" style="max-width:620px">
       Staff serve customers, write loans and ring up sales on the PawnbrokerOS web app. Owners
       get the PawnbrokerOS Owner app on their phone: today's cash, loans written, overdue
       pawns, every till and what needs attention, live from the shop wherever they are.
@@ -228,7 +232,24 @@ const rows = [
   /* "See How It Works" lands here; with the global scroll-padding (84px) this clears the navbar. */
   /* Sized from the viewport height so the whole preview fits on screen (owner, 2026-11-24).
      The stage is 1280×720, so width = 1.78 × height. */
-  .hero__prev-head { margin-bottom: -64px; }
+  @media (max-width: 760px) { .showcase { padding: 72px var(--gutter) 80px; } }
+  .showcase {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    padding: 110px var(--gutter) 120px;
+    overflow: hidden;
+    background:
+      radial-gradient(60% 50% at 50% 100%, rgb(96 93 236 / .45), rgb(96 93 236 / 0)),
+      linear-gradient(180deg, #17153a 0%, #1e1b4b 55%, #262262 100%);
+  }
+  .hero__prev-head :global(.eyebrow) { background: rgb(255 255 255 / .1); color: #c7c4ff; }
+  .hero__prev-head :global(.h-section) { color: #fff; }
+  .hero__prev-head :global(.lede) { color: #c9c7e8; }
+  /* the hero no longer holds the preview, so it needs less bottom space */
+  .hero { padding-bottom: 110px; }
   .hero__visual {
     width: 100%;
     max-width: min(var(--content), calc((100vh - 150px) * 1.78));
