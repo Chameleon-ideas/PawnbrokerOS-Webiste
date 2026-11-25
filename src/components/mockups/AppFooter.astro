@@ -11,7 +11,7 @@ interface Props {
 const { font = 11, height = 34 } = Astro.props;
 ---
 <div class="afoot" style={`height:${height}px;font-size:${font}px`}>
-  <span class="afoot__l"><b>Nov 24</b> 09:23:40 AM <i class="afoot__live">Live</i></span>
+  <span class="afoot__l"><b data-date>Nov 24</b> <span data-clock>09:23:40 AM</span> <i class="afoot__live">Live</i></span>
   <span class="afoot__c">
     <span><b>USD → CAD</b> <em>(per US$1)</em> 1.3962</span>
     <span class="afoot__sep"></span>
@@ -19,12 +19,12 @@ const { font = 11, height = 34 } = Astro.props;
     <span class="afoot__sep"></span>
     <span><b>SILVER</b> <em>(per oz)</em> $43.18</span>
   </span>
-  <span class="afoot__till">
+  <span class="afoot__till" data-till>
     <i class="afoot__dot"></i>
     <b>TILL 1</b>
-    <strong>$1,240.00</strong>
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6" /></svg>
+    <strong data-till-amt>$1,240.00</strong>
+    <svg data-till-eye width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
+    <svg data-till-menu width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6" /></svg>
   </span>
 </div>
 
@@ -58,3 +58,27 @@ const { font = 11, height = 34 } = Astro.props;
   .afoot__till strong { color: var(--ink-800); font-weight: 800; }
   .afoot__dot { width: 6px; height: 6px; border-radius: 99px; background: var(--green); }
 </style>
+
+<script>
+  // Live clock on every preview footer, and the till's eye button hides/shows the drawer
+  // amount, as on the real dashboard. One timer for the whole page.
+  const tick = () => {
+    const now = new Date();
+    const date = now.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+    const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.querySelectorAll<HTMLElement>('[data-clock]').forEach((el) => (el.textContent = time));
+    document.querySelectorAll<HTMLElement>('[data-date]').forEach((el) => (el.textContent = date));
+  };
+  tick();
+  setInterval(tick, 1000);
+
+  document.querySelectorAll<SVGElement>('[data-till-eye]').forEach((eye) => {
+    eye.style.cursor = 'pointer';
+    eye.addEventListener('click', () => {
+      const amt = eye.closest('[data-till]')?.querySelector<HTMLElement>('[data-till-amt]');
+      if (!amt) return;
+      if (!amt.dataset.real) amt.dataset.real = amt.textContent ?? '';
+      amt.textContent = amt.textContent === '••••' ? amt.dataset.real : '••••';
+    });
+  });
+</script>

@@ -65,7 +65,7 @@ const font = Math.max(8, tabSize - 1);
   <div class="appnav__tabs" style={`height:${tileH}px`}>
     {
       TABS.map(([t, svg]) => (
-        <span class:list={['appnav__tab', t === current && 'is-active']} style={`font-size:${font}px`}>
+        <span class:list={['appnav__tab', t === current && 'is-active']} style={`font-size:${font}px`} data-tab={t}>
           <svg
             width={icon}
             height={icon}
@@ -85,7 +85,7 @@ const font = Math.max(8, tabSize - 1);
   </div>
   {
     showUser && (
-      <div class="appnav__shop" style={`height:${tileH - 4}px;font-size:${font + 1}px`}>
+      <div class="appnav__shop" data-shop style={`height:${tileH - 4}px;font-size:${font + 1}px`}>
         <span class="appnav__avatar">YS</span>
         <span>Your shop</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
