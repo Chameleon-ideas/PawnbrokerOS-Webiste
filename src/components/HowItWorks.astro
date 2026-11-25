@@ -98,12 +98,12 @@ const step3Feats = [
       <!-- ============================ STEP 01 ============================ -->
       <div class="step">
         <div class="step__visual" data-reveal>
-          <Scaler width={640}>
-            <div class="stage" style="width:640px;height:460px">
-              <div class="accent" style="left:0;top:20px;width:620px;height:420px;background:var(--lilac-50);opacity:.55"></div>
-              <div class="mock m1" style="left:0;top:0;width:620px">
-                <BrowserBar url="dashboard.pawnbrokeros.com / customers" padding="10px 14px" dot={9} urlWidth={360} font={10} />
-                <AppNav active="Customer" height={40} padding="0 12px" markSize={18} wordSize={10} tabSize={8} />
+          <Scaler width={860}>
+            <div class="stage" style="width:860px;height:620px">
+              <div class="accent" style="left:0;top:26px;width:840px;height:570px;background:var(--lilac-50);opacity:.55"></div>
+              <div class="mock m1" style="left:0;top:0;width:840px">
+                <BrowserBar url="dashboard.pawnbrokeros.com / customers" padding="12px 16px" dot={11} urlWidth={420} font={12} />
+                <AppNav active="Customer" height={58} padding="0 14px" markSize={22} wordSize={13} tabSize={10} />
                 <!-- The Customers screen, dimmed behind the Add-customer wizard (2026-11-24) -->
                 <div class="wzbg">
                   <div class="wzbg__card"><i></i><i></i><i></i></div>
@@ -118,7 +118,7 @@ const step3Feats = [
                       <span><i>4</i>Review</span>
                     </div>
                     <div class="wz__scan">
-                      <span class="wz__ico"><Icon name="scan" size={16} /></span>
+                      <span class="wz__ico"><Icon name="scan" size={20} /></span>
                       <div>
                         <b>Scan the customer's ID</b>
                         <em>Scan the large barcode on the back of the licence. The details fill in on their own.</em>
@@ -281,36 +281,36 @@ const step3Feats = [
 
 <style>
   /* Step 1: Customers screen dimmed behind the Add-customer wizard (matches the dashboard) */
-  .wzbg { position: relative; height: 372px; padding: 14px; background: var(--surface); display: flex; flex-direction: column; gap: 10px; }
+  .wzbg { position: relative; height: 500px; padding: 18px; background: var(--surface); display: flex; flex-direction: column; gap: 10px; }
   .wzbg__card, .wzbg__list { border: 1px solid var(--border); border-radius: 10px; background: #fff; display: flex; gap: 10px; padding: 12px; }
-  .wzbg__card { height: 64px; }
+  .wzbg__card { height: 84px; }
   .wzbg__card i { flex: 1; border-radius: 6px; background: var(--surface-3); }
   .wzbg__list { flex: 1; flex-direction: column; }
-  .wzbg__list i { height: 22px; border-radius: 5px; background: var(--surface-3); }
+  .wzbg__list i { height: 30px; border-radius: 5px; background: var(--surface-3); }
   .wz__veil { position: absolute; inset: 0; background: rgb(30 27 75 / .35); }
   .wz {
-    position: absolute; left: 50%; top: 22px; transform: translateX(-50%);
-    width: 400px; padding: 16px 18px; border-radius: 14px; background: #fff;
+    position: absolute; left: 50%; top: 40px; transform: translateX(-50%);
+    width: 540px; padding: 22px 24px; border-radius: 14px; background: #fff;
     box-shadow: 0 20px 40px -12px rgb(30 27 75 / .45);
     display: flex; flex-direction: column; gap: 12px;
   }
   .wz__hd { display: flex; justify-content: space-between; align-items: center; }
-  .wz__hd b { font-size: 14px; font-weight: 800; color: var(--ink-800); }
-  .wz__hd span { color: var(--muted-3); font-size: 16px; line-height: 1; }
+  .wz__hd b { font-size: 19px; font-weight: 800; color: var(--ink-800); }
+  .wz__hd span { color: var(--muted-3); font-size: 22px; line-height: 1; }
   .wz__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .wz__steps span { display: flex; align-items: center; gap: 5px; padding-top: 6px; border-top: 3px solid var(--border); font-size: 9.5px; font-weight: 600; color: var(--muted-3); white-space: nowrap; }
-  .wz__steps i { display: grid; place-items: center; width: 14px; height: 14px; border-radius: 99px; background: var(--surface-3); font-style: normal; font-size: 8px; }
+  .wz__steps span { display: flex; align-items: center; gap: 5px; padding-top: 6px; border-top: 3px solid var(--border); font-size: 12.5px; font-weight: 600; color: var(--muted-3); white-space: nowrap; }
+  .wz__steps i { display: grid; place-items: center; width: 19px; height: 19px; border-radius: 99px; background: var(--surface-3); font-style: normal; font-size: 10.5px; }
   .wz__steps .is-on { border-top-color: var(--primary); color: var(--primary-700, #4338ca); }
   .wz__steps .is-on i { background: var(--primary); color: #fff; }
-  .wz__scan { display: flex; gap: 10px; align-items: flex-start; padding: 12px; border-radius: 10px; background: var(--lilac-50, #f5f3ff); border: 1px solid var(--border-violet); }
-  .wz__ico { display: grid; place-items: center; flex: none; width: 32px; height: 32px; border-radius: 8px; background: var(--primary); color: #fff; }
-  .wz__scan b { display: block; font-size: 12px; color: var(--ink-800); }
-  .wz__scan em { display: block; margin-top: 2px; font-style: normal; font-size: 10.5px; line-height: 1.45; color: var(--muted); }
-  .wz__input { position: relative; padding: 9px 11px; border: 1.5px solid var(--primary); border-radius: 8px; font-size: 10.5px; color: var(--muted-3); box-shadow: 0 0 0 3px rgb(96 93 236 / .15); }
-  .wz__input i { position: absolute; left: 11px; top: 8px; width: 1px; height: 14px; background: var(--ink-800); animation: wzblink 1s steps(1) infinite; }
+  .wz__scan { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 10px; background: var(--lilac-50, #f5f3ff); border: 1px solid var(--border-violet); }
+  .wz__ico { display: grid; place-items: center; flex: none; width: 42px; height: 42px; border-radius: 8px; background: var(--primary); color: #fff; }
+  .wz__scan b { display: block; font-size: 15.5px; color: var(--ink-800); }
+  .wz__scan em { display: block; margin-top: 2px; font-style: normal; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+  .wz__input { position: relative; padding: 12px 14px; border: 1.5px solid var(--primary); border-radius: 10px; font-size: 13.5px; color: var(--muted-3); box-shadow: 0 0 0 3px rgb(96 93 236 / .15); }
+  .wz__input i { position: absolute; left: 14px; top: 12px; width: 1px; height: 18px; background: var(--ink-800); animation: wzblink 1s steps(1) infinite; }
   @keyframes wzblink { 50% { opacity: 0; } }
   .wz__ft { display: flex; justify-content: flex-end; gap: 8px; padding-top: 4px; }
-  .wz__btn { padding: 6px 12px; border: 1px solid var(--border-violet); border-radius: 99px; font-size: 10.5px; font-weight: 600; color: var(--ink-700); }
+  .wz__btn { padding: 9px 16px; border: 1px solid var(--border-violet); border-radius: 99px; font-size: 13.5px; font-weight: 600; color: var(--ink-700); }
   .wz__btn.is-solid { background: var(--primary); border-color: var(--primary); color: #fff; }
 
   .hiw { background: var(--surface); }

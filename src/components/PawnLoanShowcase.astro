@@ -57,16 +57,16 @@ const stats = [
     </div>
 
     <div class="pls__visual" data-reveal>
-      <Scaler width={740}>
-        <div class="mock pls__win" style="width:740px">
-          <BrowserBar url="dashboard.pawnbrokeros.com / pawns" padding="12px 16px" dot={10} urlWidth={360} font={11} />
+      <Scaler width={900}>
+        <div class="mock pls__win" style="width:900px">
+          <BrowserBar url="dashboard.pawnbrokeros.com / pawns" padding="12px 16px" dot={11} urlWidth={380} font={12} />
           <AppNav
             tabs={['Customer', 'Pawn/Loan', 'Purchase', 'Sale', 'Reports']}
-            active="Pawn/Loan" height={44} padding="0 16px" gap={16}
+            active="Pawn/Loan" height={60} padding="0 16px" markSize={22} wordSize={14} tabSize={11}
           />
 
           <div class="pc">
-            <KpiCard size="sm" seg={['All time','Day','Week','Month','Custom']}
+            <KpiCard size="md" seg={['All time','Day','Week','Month','Custom']}
               actions={[{ label: 'Forfeiture review' }, { label: 'New pawn', solid: true }]}
               figs={[{k:'Active pawns',v:'8'},{k:'Principal out',v:'$4,250'},{k:'Overdue',v:'2',red:true},{k:'Redeemed',v:'45'}]} />
 
@@ -74,19 +74,19 @@ const stats = [
             <div class="pc__filters">
               <div class="fld" style="flex:1">
                 <span class="fld__l">Search Pawns</span>
-                <span class="fld__c" style="height:28px;font-size:11px"><Icon name="search" size={12} /><span class="ph">Ticket #, customer name...</span></span>
+                <span class="fld__c" style="height:34px;font-size:13px"><Icon name="search" size={12} /><span class="ph">Ticket #, customer name...</span></span>
               </div>
-              <div class="fld" style="width:150px">
+              <div class="fld" style="width:200px">
                 <span class="fld__l">Status</span>
-                <span class="fld__c" style="height:28px;font-size:11px">Open (active + overdue)<Icon name="chevron-down" size={10} class="sp" /></span>
+                <span class="fld__c" style="height:34px;font-size:13px">Open (active + overdue)<Icon name="chevron-down" size={10} class="sp" /></span>
               </div>
-              <div class="fld" style="width:90px">
+              <div class="fld" style="width:120px">
                 <span class="fld__l">Category</span>
-                <span class="fld__c" style="height:28px;font-size:11px">All<Icon name="chevron-down" size={10} class="sp" /></span>
+                <span class="fld__c" style="height:34px;font-size:13px">All<Icon name="chevron-down" size={10} class="sp" /></span>
               </div>
-              <div class="fld" style="width:90px">
+              <div class="fld" style="width:120px">
                 <span class="fld__l">Sort</span>
-                <span class="fld__c" style="height:28px;font-size:11px">Newest<Icon name="chevron-down" size={10} class="sp" /></span>
+                <span class="fld__c" style="height:34px;font-size:13px">Newest<Icon name="chevron-down" size={10} class="sp" /></span>
               </div>
             </div>
 
@@ -124,7 +124,7 @@ const stats = [
             </div>
             </div>
           </div>
-          <AppFooter font={9} height={28} />
+          <AppFooter font={12} height={36} />
         </div>
       </Scaler>
     </div>
@@ -188,8 +188,8 @@ const stats = [
     box-shadow: var(--sh-sm);
     overflow: hidden;
   }
-  .pc__table :global(.tbl th) { padding: 8px 10px; }
-  .pc__table :global(.tbl td) { padding: 8px 10px; }
+  .pc__table :global(.tbl th) { padding: 11px 12px; font-size: 11px; }
+  .pc__table :global(.tbl td) { padding: 11px 12px; font-size: 13px; }
   .cbx {
     display: inline-block; width: 12px; height: 12px;
     background: #fff; border: 1px solid var(--border-violet); border-radius: 3px;
