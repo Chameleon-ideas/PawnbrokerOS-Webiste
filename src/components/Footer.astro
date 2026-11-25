@@ -1,6 +1,8 @@
 ---
 import Icon from "./Icon.astro";
 
+const home = Astro.url.pathname === "/" ? "" : "/";
+
 const columns = [
   { t: "Product", links: ["Features", "How It Works", "Barcoding"] },
   { t: "Company", links: ["About Us", "Contact", "Press Kit", "Affiliates"] },
@@ -33,7 +35,7 @@ const socials = [
   <div class="container">
     <div class="ft__top">
       <div class="ft__brand">
-        <a class="ft__logo" href="#top" aria-label="PawnbrokerOS home">
+        <a class="ft__logo" href={home ? "/" : "#top"} aria-label="PawnbrokerOS home">
           <img
             src="/images/PawnbrokerOS.png"
             alt="PawnbrokerOS"
@@ -47,7 +49,7 @@ const socials = [
           shops. Track everything, reconcile in seconds, and trade with absolute
           confidence.
         </p>
-        <a class="ft__doc" href="#faq">
+        <a class="ft__doc" href={`${home}#faq`}>
           Read the Documentation
           <i><Icon name="arrow-right" size={11} /></i>
         </a>

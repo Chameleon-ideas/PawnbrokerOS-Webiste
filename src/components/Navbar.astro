@@ -1,16 +1,18 @@
 ---
 import Icon from './Icon.astro';
 
+// On any page but the home page, the section anchors live on the home page.
+const home = Astro.url.pathname === '/' ? '' : '/';
 const links = [
-  { label: 'Product', href: '#product' },
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: "FAQ's", href: '#faq' },
+  { label: 'Product', href: `${home}#product` },
+  { label: 'Features', href: `${home}#features` },
+  { label: 'How It Works', href: `${home}#how-it-works` },
+  { label: "FAQ's", href: `${home}#faq` },
 ];
 ---
 
 <header class="nav" data-navbar>
-  <a class="nav__logo" href="#top" aria-label="PawnbrokerOS home">
+  <a class="nav__logo" href={home ? "/" : "#top"} aria-label="PawnbrokerOS home">
     <img src="/images/PawnbrokerOS.png" alt="PawnbrokerOS" class="nav__logo-img" width="168" height="36" />
   </a>
 
@@ -19,7 +21,7 @@ const links = [
   </nav>
 
   <div class="nav__actions">
-    <a class="nav__cta" href="#book-demo" data-demo-modal data-demo-cta="Navbar — Get Started">Get Started</a>
+    <a class="nav__cta" href={`${home}#book-demo`} data-demo-modal data-demo-cta="Navbar — Get Started">Get Started</a>
     <button class="nav__burger" data-nav-toggle aria-expanded="false" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -28,7 +30,7 @@ const links = [
   <div class="nav__drawer" data-nav-drawer>
     <nav aria-label="Mobile">
       {links.map((l) => <a href={l.href}>{l.label}<Icon name="chevron-right" size={16} /></a>)}
-      <a class="nav__drawer-cta" href="#book-demo" data-demo-modal data-demo-cta="Navbar — Book a Demo (mobile)">
+      <a class="nav__drawer-cta" href={`${home}#book-demo`} data-demo-modal data-demo-cta="Navbar — Book a Demo (mobile)">
         Book a Demo<Icon name="arrow-right" size={16} />
       </a>
     </nav>

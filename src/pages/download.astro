@@ -1,0 +1,147 @@
+---
+/**
+ * Download PawnbrokerOS (2026-11-25). The installers are the latest GitHub release of the
+ * public Chameleon-ideas/pawnbrokeros-releases repo, under stable file names, so these links
+ * never go stale. The desktop app's welcome email and the web app link here.
+ */
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import DemoModal from '../components/DemoModal.astro';
+
+const R = 'https://github.com/Chameleon-ideas/pawnbrokeros-releases/releases/latest/download';
+const files = {
+  windows: `${R}/PawnbrokerOS-Setup.exe`,
+  macArm: `${R}/PawnbrokerOS-mac-arm64.dmg`,
+  macIntel: `${R}/PawnbrokerOS-mac-x64.dmg`,
+};
+---
+
+<Layout
+  title="Download PawnbrokerOS"
+  description="Download the PawnbrokerOS counter app for Windows or Mac, then activate it with your shop's licence key."
+>
+  <Navbar />
+  <main>
+    <section class="section dl">
+      <div class="container dl__wrap">
+        <div class="sec-head">
+          <span class="eyebrow eyebrow--bordered"><span class="dot"></span>Download</span>
+          <h1 class="h-section">Install PawnbrokerOS on your counter computers</h1>
+          <p class="lede">
+            One install per computer. Activate each one with your shop's licence key — every
+            computer you activate uses one of your plan's workstations.
+          </p>
+        </div>
+
+        <div class="dl__cards">
+          <article class="dl__card" data-os="windows">
+            <h2 class="dl__title">Windows</h2>
+            <p class="dl__meta">Windows 10 or 11 · 64-bit</p>
+            <a class="btn btn--primary dl__btn" href={files.windows} data-dl="windows">
+              Download for Windows
+            </a>
+          </article>
+          <article class="dl__card" data-os="mac">
+            <h2 class="dl__title">Mac</h2>
+            <p class="dl__meta">macOS 11 or later</p>
+            <a class="btn btn--primary dl__btn" href={files.macArm} data-dl="mac-arm">
+              Mac with Apple chip
+            </a>
+            <a class="btn btn--secondary dl__btn" href={files.macIntel} data-dl="mac-intel">
+              Mac with Intel
+            </a>
+            <p class="dl__hint">
+              Not sure? Apple menu → About This Mac. “Chip: Apple M…” is Apple chip;
+              “Processor: Intel” is Intel.
+            </p>
+          </article>
+        </div>
+
+        <div class="dl__steps">
+          <h2 class="h-step">After it downloads</h2>
+          <ol>
+            <li>
+              <strong>Windows:</strong> run <code>PawnbrokerOS-Setup.exe</code>. If Windows shows
+              “Windows protected your PC”, choose <em>More info</em> → <em>Run anyway</em>.
+            </li>
+            <li>
+              <strong>Mac:</strong> open the downloaded file and drag PawnbrokerOS into Applications.
+              If the Mac says it can't check the developer, open <em>System Settings → Privacy &amp;
+              Security</em> and choose <em>Open Anyway</em>.
+            </li>
+            <li>
+              Open PawnbrokerOS and activate it with your <strong>licence key</strong> — it is in
+              the welcome email we sent when your shop was set up — and the owner's email and
+              password.
+            </li>
+          </ol>
+          <p class="dl__foot">
+            PawnbrokerOS updates itself. Lost your licence key?
+            <a href="mailto:support@pawnbrokeros.com?subject=Licence%20key">Contact support</a>.
+            Already set up? <a href="https://dashboard.pawnbrokeros.com">Sign in to PawnbrokerOS</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <DemoModal />
+</Layout>
+
+<script>
+  // Put the visitor's own system first.
+  const ua = navigator.userAgent;
+  const os = /Windows/i.test(ua) ? 'windows' : /Macintosh|Mac OS X/i.test(ua) ? 'mac' : null;
+  const cards = document.querySelector('.dl__cards');
+  const mine = os && document.querySelector(`.dl__card[data-os="${os}"]`);
+  if (cards && mine) {
+    cards.prepend(mine);
+    mine.classList.add('dl__card--mine');
+  }
+</script>
+
+<style>
+  .dl { padding-top: 160px; background: var(--surface); }
+  .dl__wrap { display: flex; flex-direction: column; gap: 56px; align-items: center; }
+  .dl__cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+    max-width: 880px;
+  }
+  .dl__card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 32px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--sh-card-violet);
+  }
+  .dl__card--mine { border-color: var(--primary); box-shadow: var(--sh-violet); }
+  .dl__title { font-family: var(--serif); font-size: 32px; line-height: 40px; color: var(--ink-800); }
+  .dl__meta { color: var(--muted); font-size: 15px; margin-top: -8px; }
+  .dl__btn { width: 100%; }
+  .dl__hint { color: var(--muted); font-size: 13px; line-height: 20px; }
+  .dl__steps {
+    width: 100%;
+    max-width: 880px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: var(--body);
+  }
+  .dl__steps ol { padding-left: 22px; display: flex; flex-direction: column; gap: 10px; line-height: 26px; }
+  .dl__steps ol { list-style: decimal; }
+  .dl__steps code { font-size: 14px; background: var(--lilac-alt); padding: 1px 6px; border-radius: 6px; }
+  .dl__foot { color: var(--muted); font-size: 15px; }
+  .dl__foot a { color: var(--primary-deep); font-weight: 600; }
+  @media (max-width: 760px) {
+    .dl { padding: 120px 16px 72px; }
+    .dl__cards { grid-template-columns: 1fr; }
+    .h-section { font-size: 36px; line-height: 44px; }
+  }
+</style>
