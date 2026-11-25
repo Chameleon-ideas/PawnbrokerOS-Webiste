@@ -60,6 +60,7 @@ const details = [
             target="_blank"
             rel="noopener noreferrer"
             data-demo-cta={cta}
+            data-calendly
           >
             <span>Book a Free Demo</span>
             <Icon name="arrow-right" size={18} />
@@ -281,3 +282,54 @@ const details = [
     }
   }
 </style>
+
+<script>
+  // "Book a Free Demo" opens Calendly's booking calendar in an overlay on this page instead of
+  // a new tab (owner, 2026-11-24). Calendly's widget is loaded on the first click only, so it
+  // costs nothing until someone books. If it can't load (offline, blocked), the link's own
+  // href/target opens Calendly in a new tab as before.
+  const WIDGET_JS = 'https://assets.calendly.com/assets/external/widget.js';
+  const WIDGET_CSS = 'https://assets.calendly.com/assets/external/widget.css';
+  type CalendlyApi = { initPopupWidget: (o: { url: string }) => void };
+  let loading: Promise<CalendlyApi> | null = null;
+  const loadCalendly = () =>
+    (loading ??= new Promise<CalendlyApi>((resolve, reject) => {
+      const w = window as unknown as { Calendly?: CalendlyApi };
+      if (w.Calendly) return resolve(w.Calendly);
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = WIDGET_CSS;
+      document.head.appendChild(css);
+      const js = document.createElement('script');
+      js.src = WIDGET_JS;
+      js.async = true;
+      js.onload = () => (w.Calendly ? resolve(w.Calendly) : reject(new Error('no Calendly')));
+      js.onerror = () => {
+        loading = null;
+        reject(new Error('Calendly failed to load'));
+      };
+      document.head.appendChild(js);
+    }));
+
+  document.querySelectorAll<HTMLAnchorElement>('a[data-calendly]').forEach((a) =>
+    a.addEventListener('click', async (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return; // let "open in new tab" work
+      e.preventDefault();
+      // The booking popup (<dialog>) sits in the browser's top layer, above Calendly's
+      // overlay, so close it first.
+      a.closest('dialog')?.close();
+      try {
+        const api = await Promise.race([
+          loadCalendly(),
+          new Promise<never>((_, r) => setTimeout(() => r(new Error('timeout')), 6000)),
+        ]);
+        // hide_gdpr_banner: Calendly's own cookie notice otherwise covers the calendar.
+        const url = new URL(a.href);
+        url.searchParams.set('hide_gdpr_banner', '1');
+        api.initPopupWidget({ url: url.toString() });
+      } catch {
+        window.open(a.href, '_blank', 'noopener');
+      }
+    }),
+  );
+</script>
