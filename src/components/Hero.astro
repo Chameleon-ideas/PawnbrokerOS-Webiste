@@ -46,6 +46,17 @@ const rows = [
   </div>
   </div>
 
+  <!-- Heading for the web + phone preview (owner, 2026-11-24) -->
+  <div class="sec-head hero__prev-head" id="hero-preview-head" data-reveal>
+    <span class="eyebrow">At the Counter and On the Go</span>
+    <h2 class="h-section" style="max-width:760px">Run the Counter in the Shop. Watch the Shop From Anywhere.</h2>
+    <p class="lede" style="max-width:620px;color:var(--muted-2)">
+      Staff serve customers, write loans and ring up sales on the PawnbrokerOS web app. Owners
+      get the PawnbrokerOS Owner app on their phone: today's cash, loans written, overdue
+      pawns, every till and what needs attention, live from the shop wherever they are.
+    </p>
+  </div>
+
   <div class="hero__visual" id="hero-preview" data-reveal>
     <Scaler width={1280} class="hero__scaler">
       <div class="hero__stage">
@@ -217,6 +228,7 @@ const rows = [
   /* "See How It Works" lands here; with the global scroll-padding (84px) this clears the navbar. */
   /* Sized from the viewport height so the whole preview fits on screen (owner, 2026-11-24).
      The stage is 1280×720, so width = 1.78 × height. */
+  .hero__prev-head { margin-bottom: -64px; }
   .hero__visual {
     width: 100%;
     max-width: min(var(--content), calc((100vh - 150px) * 1.78));
