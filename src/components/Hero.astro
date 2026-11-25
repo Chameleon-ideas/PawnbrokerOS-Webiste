@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import PhoneOwner from './mockups/PhoneOwner.astro';
 import DemoCard from './DemoCard.astro';
 import AppFooter from './mockups/AppFooter.astro';
 import Scaler from './mockups/Scaler.astro';
@@ -125,16 +126,8 @@ const rows = [
           <b class="flt__v" style="color:var(--ink-700)">4,288</b>
           <span class="flt__u">total records</span>
         </div>
-        <div class="flt flt--b" data-float="0.07">
-          <span class="flt__k"><i style="background:var(--green)"></i>Active Loans</span>
-          <b class="flt__v" style="color:var(--green-fg)">938</b>
-          <span class="flt__u">active pawn tickets</span>
-        </div>
-        <div class="flt flt--c" data-float="0.03">
-          <span class="flt__k"><i style="background:var(--red)"></i>Banned / Locked</span>
-          <b class="flt__v" style="color:var(--red)">77</b>
-          <span class="flt__u">do-not-loan flags</span>
-        </div>
+        <!-- owner's mobile app, overlapping the web preview (2026-11-24) -->
+        <div class="hero__phone" data-float="0.05"><PhoneOwner /></div>
       </div>
     </Scaler>
   </div>
@@ -305,9 +298,8 @@ const rows = [
   }
   .flt:hover { box-shadow: 0 22px 40px -18px rgb(76 29 149 / .45); }
   .flt { pointer-events: none; } /* decorative; never block clicks on the preview */
+  .hero__phone { position: absolute; left: 958px; top: 214px; z-index: 3; }
   .flt--a { left: -40px; top: 220px; animation: bob 7s ease-in-out infinite; }
-  .flt--b { left: 1100px; top: 296px; animation: bob 8s ease-in-out .8s infinite; }
-  .flt--c { left: 1090px; top: 520px; animation: bob 6.5s ease-in-out .4s infinite; }
 
   .flt__k {
     display: flex; align-items: center; gap: 6px;
