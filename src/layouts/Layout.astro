@@ -198,6 +198,38 @@ const {
       });
 
       /* ---------------------------------------------------------------
+         4b. Slow, eased scrolling for same-page links (owner, 2026-11-24).
+             The browser's own smooth scroll can't be slowed, so animate it.
+             Honours scroll-margin-top and reduced motion.
+         --------------------------------------------------------------- */
+      const SCROLL_MS = 1100;
+      const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+      const slowScrollTo = (target: HTMLElement) => {
+        const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+        const margin = (parseFloat(getComputedStyle(target).scrollMarginTop) || 0) + pad;
+        const to = Math.max(0, target.getBoundingClientRect().top + window.scrollY - margin);
+        const from = window.scrollY;
+        if (reduce || Math.abs(to - from) < 2) return window.scrollTo({ top: to, behavior: 'instant' as ScrollBehavior });
+        const start = performance.now();
+        const step = (now: number) => {
+          const t = Math.min(1, (now - start) / SCROLL_MS);
+          window.scrollTo({ top: from + (to - from) * ease(t), behavior: 'instant' as ScrollBehavior });
+          if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+      document.addEventListener('click', (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+        if (!a || a.hasAttribute('data-demo-modal') || e.metaKey || e.ctrlKey || e.shiftKey) return;
+        const id = decodeURIComponent(a.getAttribute('href')!.slice(1));
+        const target = id ? document.getElementById(id) : null;
+        if (!target) return;
+        e.preventDefault();
+        slowScrollTo(target);
+        history.pushState(null, '', '#' + id);
+      });
+
+      /* ---------------------------------------------------------------
          5. Mobile nav
          --------------------------------------------------------------- */
       const navToggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');

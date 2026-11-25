@@ -49,11 +49,6 @@ const stats = [
         ))}
       </ul>
 
-      <div class="pls__stats">
-        <div class="pls__stat"><b>8</b><span>active loans</span></div>
-        <div class="pls__stat"><b>$4,250</b><span>principal out</span></div>
-        <div class="pls__stat"><b class="red">2</b><span>overdue</span></div>
-      </div>
     </div>
 
     <div class="pls__visual" data-reveal>
@@ -151,21 +146,6 @@ const stats = [
   }
   .pls__bullets li:hover .tick { background: var(--primary); color: #fff; transform: scale(1.1); }
 
-  .pls__stats { width: 100%; display: flex; gap: 12px; }
-  .pls__stat {
-    flex: 1;
-    display: flex; flex-direction: column; gap: 6px;
-    padding: 20px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: var(--r-12);
-    box-shadow: var(--sh-sm);
-    transition: transform .3s var(--ease), box-shadow .3s var(--ease);
-  }
-  .pls__stat:hover { transform: translateY(-4px); box-shadow: var(--sh-lg); }
-  .pls__stat b { font-size: 28px; font-weight: 700; color: var(--primary); line-height: 1.2; }
-  .pls__stat b.red { color: var(--red); }
-  .pls__stat span { font-size: 13px; line-height: 19px; color: var(--muted-2); }
 
   .pls__visual { flex: 1; min-width: 0; }
   .pls__win { border-radius: var(--r-16); }
@@ -204,8 +184,5 @@ const stats = [
     .pls__text { gap: 20px; }
     .pls__body { font-size: 15px; line-height: 25px; }
     .pls__bullets li { font-size: 14px; }
-    .pls__stats { flex-wrap: wrap; }
-    .pls__stat { padding: 16px; min-width: 30%; }
-    .pls__stat b { font-size: 22px; }
   }
 </style>
