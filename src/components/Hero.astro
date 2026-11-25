@@ -50,10 +50,6 @@ const rows = [
     <Scaler width={1280} class="hero__scaler">
       <div class="hero__stage">
         <!-- ---------------- app window ---------------- -->
-        <!-- the web app on a desktop all-in-one monitor (owner, 2026-11-24); generic, no brand marks -->
-        <div class="imac" aria-hidden="false">
-          <div class="imac__display">
-            <div class="imac__bezel">
         <div class="mock hero__win">
           <BrowserBar url="dashboard.pawnbrokeros.com / customers" padding="12px 16px" dot={11} urlWidth={440} font={12} bg="var(--surface-3)" />
 
@@ -122,12 +118,6 @@ const rows = [
             </div>
           </div>
           <AppFooter font={12} height={40} />
-        </div>
-            </div>
-            <div class="imac__chin"></div>
-          </div>
-          <div class="imac__neck"></div>
-          <div class="imac__foot"></div>
         </div>
 
         <!-- owner's mobile app, overlapping the web preview (2026-11-24) -->
@@ -229,12 +219,12 @@ const rows = [
      The stage is 1280×720, so width = 1.78 × height. */
   .hero__visual {
     width: 100%;
-    max-width: min(var(--content), calc((100vh - 150px) * 1.73));
+    max-width: min(var(--content), calc((100vh - 150px) * 1.78));
     scroll-margin-top: 36px;
   }
   /* Web window at 75% on the left, phone beside it on the right, just touching the
      window's edge so nothing in either is hidden, both flat, with a soft glow behind tying them together. */
-  .hero__stage { position: relative; width: 1280px; height: 740px; }
+  .hero__stage { position: relative; width: 1280px; height: 720px; }
   .hero__stage::before {
     content: '';
     position: absolute;
@@ -244,30 +234,14 @@ const rows = [
     filter: blur(30px);
     pointer-events: none;
   }
-  /* Desktop monitor: black glass bezel, silver chin, angled neck and foot. Drawn at full size
-     around the 1280px web window, then scaled down as one piece. */
-  .imac {
+  .hero__win {
     position: absolute;
-    left: 10px;
-    top: 0;
-    width: 1340px;
-    transform: scale(.64);
+    left: 0;
+    top: 56px;
+    width: 1280px;
+    transform: scale(.75);
     transform-origin: top left;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    filter: drop-shadow(0 40px 50px rgb(30 27 75 / .22));
   }
-  .imac__display { width: 100%; border-radius: 26px; overflow: hidden; background: linear-gradient(180deg, #e9eaee, #d4d6dc); box-shadow: 0 0 0 1px #c9cbd2; }
-  .imac__bezel { padding: 22px 30px 26px; background: #0d0e12; }
-  .imac__bezel .hero__win { border: 0; border-radius: 4px; box-shadow: none; }
-  .imac__chin { height: 86px; background: linear-gradient(180deg, #eceef2 0%, #d9dbe1 100%); }
-  .imac__neck {
-    width: 280px; height: 150px;
-    background: linear-gradient(90deg, #c4c7ce, #eef0f3 45%, #d5d8de 100%);
-    clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
-  }
-  .imac__foot { width: 420px; height: 18px; border-radius: 4px 4px 10px 10px; background: linear-gradient(180deg, #e3e5ea, #c3c6cd); box-shadow: 0 10px 18px -8px rgb(30 27 75 / .35); }
   .hero__win { border-color: #e2dcf7; }
 
   /* page header */
@@ -343,9 +317,7 @@ const rows = [
   }
   .flt:hover { box-shadow: 0 22px 40px -18px rgb(76 29 149 / .45); }
   .flt { pointer-events: none; } /* decorative; never block clicks on the preview */
-  /* Phone stands beside the monitor, a little smaller, its base level with the monitor's foot. */
-  .hero__phone { position: absolute; left: 892px; top: 184px; z-index: 3; }
-  .hero__phone :global(.ph) { transform: scale(.84); transform-origin: top left; }
+  .hero__phone { position: absolute; left: 948px; top: 40px; z-index: 3; }
   .flt--a { left: -40px; top: 220px; animation: bob 7s ease-in-out infinite; }
 
   .flt__k {
