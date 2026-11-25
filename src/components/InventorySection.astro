@@ -3,6 +3,8 @@ import Icon from './Icon.astro';
 import Scaler from './mockups/Scaler.astro';
 import BrowserBar from './mockups/BrowserBar.astro';
 import AppNav from './mockups/AppNav.astro';
+import KpiCard from './mockups/KpiCard.astro';
+import AppFooter from './mockups/AppFooter.astro';
 
 const stats = [
   { k: 'TOTAL ITEMS',     v: '1,842', u: 'in stock' },
@@ -53,29 +55,11 @@ const details = [
             active="Inventory" height={52} padding="0 24px" gap={28} markSize={26} wordSize={13} tabSize={12} userName
           />
 
-          <div class="inv__ph">
-            <div>
-              <h3>Inventory</h3>
-              <p>All items · 1,842 records</p>
-            </div>
-            <div class="inv__pha">
-              <span class="pill-btn">Export</span>
-              <span class="pill-btn">Bulk Edit</span>
-              <span class="pill-btn pill-btn--solid"><Icon name="plus" size={13} />Add Item</span>
-            </div>
-          </div>
-
           <div class="inv__body">
-            <div class="inv__stats">
-              {stats.map((s) => (
-                <div class="stat" style="padding:14px;gap:6px">
-                  <span class="stat__k">{s.k}</span>
-                  <b class="stat__v" style="font-size:24px">{s.v}</b>
-                  <span class="stat__u" style="font-size:11px">{s.u}</span>
-                </div>
-              ))}
-            </div>
-
+            <KpiCard
+              actions={[{ label: 'Export' }, { label: 'Bulk edit' }, { label: '+ Add item', solid: true }]}
+              figs={[{k:'Total items',v:'1,842'},{k:'Forfeited pawns',v:'623'},{k:'Purchased',v:'891'},{k:'Direct stock',v:'328'}]} />
+            <div class="mlist">
             <div class="inv__filters">
               <div class="fld" style="flex:1">
                 <span class="fld__l">Search Inventory</span>
@@ -132,7 +116,9 @@ const details = [
                 <span class="pager__btns"><span>Prev</span><span style="opacity:1">Next</span></span>
               </div>
             </div>
+            </div>
           </div>
+          <AppFooter font={11} height={36} />
         </div>
       </Scaler>
     </div>
@@ -181,16 +167,8 @@ const details = [
   .inv__visual { margin-bottom: 48px; }
   .inv__win { border-color: var(--border-violet); box-shadow: var(--sh-violet); }
 
-  .inv__ph {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 24px; background: #fff; border-bottom: 1px solid var(--border);
-  }
-  .inv__ph h3 { font-size: 22px; font-weight: 700; color: var(--ink-700); }
-  .inv__ph p { font-size: 13px; color: var(--muted-2); margin-top: 3px; }
-  .inv__pha { display: flex; align-items: center; gap: 8px; }
 
   .inv__body { display: flex; flex-direction: column; gap: 16px; padding: 22px; background: #fff; }
-  .inv__stats { display: flex; gap: 14px; }
   .inv__filters {
     display: flex; align-items: flex-end; gap: 10px;
     padding: 14px 20px;

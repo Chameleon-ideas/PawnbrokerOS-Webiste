@@ -4,7 +4,8 @@ Trust these in order.
 
 | # | Doc | What it covers |
 |---|---|---|
-| 1 | [`../SESSION_2026-11-22.md`](../SESSION_2026-11-22.md) | Latest session — Astro 5 → 7.3.8 security upgrade (deployed 2026-11-22; host identified as Vercel) |
+| 1 | [`../SESSION_2026-11-24.md`](../SESSION_2026-11-24.md) | Latest session — hero + booking card, previews matched to the dashboard UI (committed, not pushed) |
+| 1b | [`../SESSION_2026-11-22.md`](../SESSION_2026-11-22.md) | Previous session — Astro 5 → 7.3.8 security upgrade (deployed 2026-11-22; host identified as Vercel) |
 | 2 | [`../SESSION_2026-11-13.md`](../SESSION_2026-11-13.md) | Calendly popup widget removed, "Book a demo" is now a plain link |
 | 3 | [`../SESSION_2026-11-11.md`](../SESSION_2026-11-11.md) | Sign In removed from navbar, US copy → Canada (SSN → SIN) |
 | 4 | [`../SESSION_2026-10-20.md`](../SESSION_2026-10-20.md) | Schedule a Demo redesign + UI bug fixes |

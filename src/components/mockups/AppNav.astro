@@ -1,6 +1,15 @@
 ---
+/**
+ * The dashboard's top bar, as it looks today (updated 2026-11-24 to match the web app):
+ * logo + wordmark, a row of equal-width boxed tabs with the icon above the label, and the
+ * shop pill on the right. Till, Reports and Settings no longer have tabs — the till lives
+ * in the footer bar (AppFooter) and Reports/Settings sit in the shop menu.
+ *
+ * `tabs` is accepted for backwards compatibility but ignored: every mockup shows the same
+ * real navigation. Old tab names passed as `active` are mapped to the current ones.
+ */
 interface Props {
-  tabs: string[];
+  tabs?: string[];
   active: string;
   height?: number;
   padding?: string;
@@ -12,49 +21,139 @@ interface Props {
   tabSize?: number;
 }
 const {
-  tabs,
   active,
   height = 44,
   padding = '0 20px',
-  gap = 24,
   showUser = true,
-  userName = false,
   markSize = 20,
   wordSize = 11,
   tabSize = 11,
 } = Astro.props;
+
+// Lucide-style 24px glyphs, matching the dashboard's tab icons.
+const TABS: [string, string][] = [
+  ['Home', '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>'],
+  ['Customer', '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/>'],
+  ['Pawn', '<path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.2"/>'],
+  ['Purchases', '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>'],
+  ['Layaways', '<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z"/>'],
+  ['POS', '<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2 2h3l2.7 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>'],
+  ['Inventory', '<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/>'],
+  ['Transactions', '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>'],
+];
+const ALIAS: Record<string, string> = {
+  'Pawn/Loan': 'Pawn',
+  Purchase: 'Purchases',
+  Sale: 'POS',
+  Layaway: 'Layaways',
+};
+const current = ALIAS[active] ?? active;
+
+const tileH = Math.max(30, height - 14);
+const icon = Math.round(tileH * 0.36);
+const font = Math.max(8, tabSize - 1);
 ---
 <div class="appnav" style={`height:${height}px;padding:${padding}`}>
-  <div style={`display:flex;align-items:center;gap:${gap}px`}>
-    <div class="appnav__brand">
-      <span
-        class="appnav__mark"
-        style={`width:${markSize}px;height:${markSize}px;font-size:${Math.round(markSize * 0.45)}px;border-radius:${markSize > 22 ? 6 : 4}px`}
-        >PB</span
-      >
-      <span class="appnav__word" style={`font-size:${wordSize}px`}>PAWNBROKER OS</span>
-    </div>
-    <div class="appnav__tabs">
-      {
-        tabs.map((t) => (
-          <span class:list={['appnav__tab', t === active && 'is-active']} style={`font-size:${tabSize}px`}>
-            {t}
-          </span>
-        ))
-      }
-    </div>
+  <div class="appnav__brand">
+    <span
+      class="appnav__mark"
+      style={`width:${markSize}px;height:${markSize}px;font-size:${Math.round(markSize * 0.45)}px;border-radius:${markSize > 22 ? 6 : 4}px`}
+      >PB</span
+    >
+    <span class="appnav__word" style={`font-size:${wordSize}px`}>Pawnbroker<b>OS</b></span>
+  </div>
+  <div class="appnav__tabs" style={`height:${tileH}px`}>
+    {
+      TABS.map(([t, svg]) => (
+        <span class:list={['appnav__tab', t === current && 'is-active']} style={`font-size:${font}px`}>
+          <svg
+            width={icon}
+            height={icon}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            set:html={svg}
+          />
+          <em>{t}</em>
+        </span>
+      ))
+    }
   </div>
   {
     showUser && (
-      <div class="appnav__user">
-        <span class="appnav__avatar" style={userName ? 'width:30px;height:30px;font-size:10px' : ''}>RI</span>
-        {userName && (
-          <span style="display:flex;flex-direction:column;gap:1px;line-height:1.25">
-            <b style="font-size:12px;font-weight:600;color:var(--ink-700)">Rod Id</b>
-            <em style="font-size:10px;font-style:normal;color:var(--muted-2)">Manager</em>
-          </span>
-        )}
+      <div class="appnav__shop" style={`height:${tileH - 4}px;font-size:${font + 1}px`}>
+        <span class="appnav__avatar">YS</span>
+        <span>Your shop</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
       </div>
     )
   }
 </div>
+
+<style>
+  .appnav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .appnav__brand { display: flex; align-items: center; gap: 6px; flex: none; }
+  .appnav__mark {
+    display: grid; place-items: center;
+    background: var(--primary); color: #fff; font-weight: 800;
+  }
+  .appnav__word { font-weight: 800; color: var(--ink-800); letter-spacing: -0.2px; white-space: nowrap; }
+  .appnav__word b { color: var(--primary); font-weight: 800; }
+  .appnav__tabs {
+    flex: 1 1 auto;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 5px;
+    min-width: 0;
+  }
+  .appnav__tab {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--muted);
+    font-weight: 600;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .appnav__tab em { font-style: normal; max-width: 100%; overflow: hidden; text-overflow: ellipsis; padding: 0 2px; }
+  .appnav__tab.is-active {
+    background: var(--lilac-100, #ede9fe);
+    border-color: var(--primary);
+    color: var(--primary-700, #4338ca);
+    font-weight: 700;
+  }
+  .appnav__shop {
+    display: flex; align-items: center; gap: 6px;
+    flex: none;
+    padding: 0 10px 0 4px;
+    border: 1px solid var(--border-violet);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-800);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .appnav__shop svg { color: var(--primary); }
+  .appnav__avatar {
+    display: grid; place-items: center;
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    background: var(--primary); color: #fff;
+    font-size: 8px; font-weight: 700;
+  }
+</style>

@@ -2,6 +2,7 @@
 import Icon from './Icon.astro';
 import Scaler from './mockups/Scaler.astro';
 import BrowserBar from './mockups/BrowserBar.astro';
+import AppNav from './mockups/AppNav.astro';
 
 const step1Links = [
   {
@@ -101,43 +102,32 @@ const step3Feats = [
             <div class="stage" style="width:640px;height:460px">
               <div class="accent" style="left:0;top:20px;width:620px;height:420px;background:var(--lilac-50);opacity:.55"></div>
               <div class="mock m1" style="left:0;top:0;width:620px">
-                <BrowserBar url="dashboard.pawnbrokeros.com / new-customer" padding="10px 14px" dot={9} urlWidth={360} font={10} />
-                <div class="m1__top">
-                  <span class="m1__brand"><i>PB</i>PAWNBROKER OS</span>
-                  <span class="m1__tabs">
-                    <b>Customer</b><em>Pawn/Loan</em><em>Sale</em><em>Inventory</em>
-                  </span>
-                  <span class="m1__av">RI</span>
-                </div>
-                <div class="m1__sub">
-                  <span class="m1__l"><i class="tag">&lt; Back</i><b>New customer</b></span>
-                  <span class="m1__l"><i class="tag">Cancel</i><i class="tag tag--solid">Save &amp; continue to pawn</i></span>
-                </div>
-                <div class="m1__body">
-                  <div class="m1__card">
-                    <h4>CUSTOMER DETAILS</h4>
-                    <div class="m1__row">
-                      <span class="mf"><i>LEGAL FIRST NAME</i><b class="ph">First Name</b></span>
-                      <span class="mf"><i>MIDDLE</i><b class="ph">Middle Name (Optional)</b></span>
+                <BrowserBar url="dashboard.pawnbrokeros.com / customers" padding="10px 14px" dot={9} urlWidth={360} font={10} />
+                <AppNav active="Customer" height={40} padding="0 12px" markSize={18} wordSize={10} tabSize={8} />
+                <!-- The Customers screen, dimmed behind the Add-customer wizard (2026-11-24) -->
+                <div class="wzbg">
+                  <div class="wzbg__card"><i></i><i></i><i></i></div>
+                  <div class="wzbg__list"><i></i><i></i><i></i><i></i><i></i></div>
+                  <div class="wz__veil"></div>
+                  <div class="wz">
+                    <div class="wz__hd"><b>Add new customer</b><span>×</span></div>
+                    <div class="wz__steps">
+                      <span class="is-on"><i>1</i>Scan ID</span>
+                      <span><i>2</i>Name &amp; ID</span>
+                      <span><i>3</i>Contact</span>
+                      <span><i>4</i>Review</span>
                     </div>
-                    <div class="m1__row">
-                      <span class="mf"><i>LAST NAME</i><b class="ph">Last Name</b></span>
-                      <span class="mf"><i>DATE OF BIRTH</i><b>1988-05-20</b></span>
+                    <div class="wz__scan">
+                      <span class="wz__ico"><Icon name="scan" size={16} /></span>
+                      <div>
+                        <b>Scan the customer's ID</b>
+                        <em>Scan the large barcode on the back of the licence. The details fill in on their own.</em>
+                      </div>
                     </div>
-                  </div>
-                  <div class="m1__card">
-                    <div class="m1__hd"><h4>ID DOCUMENT</h4><i>NOT STORED - INFORMATIONAL</i></div>
-                    <div class="m1__row">
-                      <span class="mf"><i>ID TYPE</i><b>Driver's licence</b></span>
-                      <span class="mf"><i>ID NUMBER</i><b class="ph">D0000-00000-00000</b></span>
-                      <span class="mf"><i>PROVINCE</i><b>ON</b></span>
-                    </div>
-                  </div>
-                  <div class="m1__card">
-                    <h4>CONTACT &amp; ADDRESS</h4>
-                    <div class="m1__row">
-                      <span class="mf"><i>PHONE</i><b class="ph">(___) ___-____</b></span>
-                      <span class="mf"><i>EMAIL (OPTIONAL)</i><b class="ph">email@example.com</b></span>
+                    <div class="wz__input">Waiting for scan… (or paste barcode data)<i></i></div>
+                    <div class="wz__ft">
+                      <span class="wz__btn">Cancel</span>
+                      <span class="wz__btn is-solid">Enter manually instead</span>
                     </div>
                   </div>
                 </div>
@@ -254,7 +244,7 @@ const step3Feats = [
                 <div class="poswin__bar">
                   <i style="background:#f04545"></i><i style="background:#f59e0a"></i><i style="background:#0fba82"></i>
                 </div>
-                <img src="/images/pos-sale.png" width="600" height="420" alt="PawnbrokerOS point-of-sale screen showing a new sale with cart, tender options and totals" loading="lazy" decoding="async" />
+                <img src="/images/pos-sale.png" width="600" height="420" alt="PawnbrokerOS point-of-sale screen: scan box and Complete sale on top, cart, tender options and totals, with the rates and till bar along the bottom" loading="lazy" decoding="async" />
               </div>
             </div>
           </Scaler>
@@ -290,6 +280,39 @@ const step3Feats = [
 </section>
 
 <style>
+  /* Step 1: Customers screen dimmed behind the Add-customer wizard (matches the dashboard) */
+  .wzbg { position: relative; height: 372px; padding: 14px; background: var(--surface); display: flex; flex-direction: column; gap: 10px; }
+  .wzbg__card, .wzbg__list { border: 1px solid var(--border); border-radius: 10px; background: #fff; display: flex; gap: 10px; padding: 12px; }
+  .wzbg__card { height: 64px; }
+  .wzbg__card i { flex: 1; border-radius: 6px; background: var(--surface-3); }
+  .wzbg__list { flex: 1; flex-direction: column; }
+  .wzbg__list i { height: 22px; border-radius: 5px; background: var(--surface-3); }
+  .wz__veil { position: absolute; inset: 0; background: rgb(30 27 75 / .35); }
+  .wz {
+    position: absolute; left: 50%; top: 22px; transform: translateX(-50%);
+    width: 400px; padding: 16px 18px; border-radius: 14px; background: #fff;
+    box-shadow: 0 20px 40px -12px rgb(30 27 75 / .45);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .wz__hd { display: flex; justify-content: space-between; align-items: center; }
+  .wz__hd b { font-size: 14px; font-weight: 800; color: var(--ink-800); }
+  .wz__hd span { color: var(--muted-3); font-size: 16px; line-height: 1; }
+  .wz__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .wz__steps span { display: flex; align-items: center; gap: 5px; padding-top: 6px; border-top: 3px solid var(--border); font-size: 9.5px; font-weight: 600; color: var(--muted-3); white-space: nowrap; }
+  .wz__steps i { display: grid; place-items: center; width: 14px; height: 14px; border-radius: 99px; background: var(--surface-3); font-style: normal; font-size: 8px; }
+  .wz__steps .is-on { border-top-color: var(--primary); color: var(--primary-700, #4338ca); }
+  .wz__steps .is-on i { background: var(--primary); color: #fff; }
+  .wz__scan { display: flex; gap: 10px; align-items: flex-start; padding: 12px; border-radius: 10px; background: var(--lilac-50, #f5f3ff); border: 1px solid var(--border-violet); }
+  .wz__ico { display: grid; place-items: center; flex: none; width: 32px; height: 32px; border-radius: 8px; background: var(--primary); color: #fff; }
+  .wz__scan b { display: block; font-size: 12px; color: var(--ink-800); }
+  .wz__scan em { display: block; margin-top: 2px; font-style: normal; font-size: 10.5px; line-height: 1.45; color: var(--muted); }
+  .wz__input { position: relative; padding: 9px 11px; border: 1.5px solid var(--primary); border-radius: 8px; font-size: 10.5px; color: var(--muted-3); box-shadow: 0 0 0 3px rgb(96 93 236 / .15); }
+  .wz__input i { position: absolute; left: 11px; top: 8px; width: 1px; height: 14px; background: var(--ink-800); animation: wzblink 1s steps(1) infinite; }
+  @keyframes wzblink { 50% { opacity: 0; } }
+  .wz__ft { display: flex; justify-content: flex-end; gap: 8px; padding-top: 4px; }
+  .wz__btn { padding: 6px 12px; border: 1px solid var(--border-violet); border-radius: 99px; font-size: 10.5px; font-weight: 600; color: var(--ink-700); }
+  .wz__btn.is-solid { background: var(--primary); border-color: var(--primary); color: #fff; }
+
   .hiw { background: var(--surface); }
   .hiw .sec-head { margin-bottom: 64px; }
 
@@ -327,36 +350,7 @@ const step3Feats = [
 
   /* ---------- step 1 mockup ---------- */
   .m1 { border-radius: var(--r-14); box-shadow: var(--sh-lg); }
-  .m1__top {
-    display: flex; align-items: center; justify-content: space-between;
-    height: 40px; padding: 0 16px;
-    background: var(--surface-2); border-bottom: 1px solid var(--border);
-  }
-  .m1__brand { display: flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 800; letter-spacing: .5px; color: var(--ink-700); }
-  .m1__brand i {
-    display: grid; place-items: center; width: 20px; height: 20px;
-    border-radius: 4px; background: var(--primary); color: #fff;
-    font-size: 9px; font-weight: 700; font-style: normal;
-  }
-  .m1__tabs { display: flex; align-items: center; gap: 4px; }
-  .m1__tabs b, .m1__tabs em {
-    padding: 4px 8px; border-radius: 4px;
-    font-size: 9px; font-style: normal;
-  }
-  .m1__tabs b { background: var(--lilac-50); border-bottom: 2px solid #dfdff3; color: var(--primary); font-weight: 700; }
-  .m1__tabs em { color: var(--muted-2); font-weight: 500; }
-  .m1__av {
-    display: grid; place-items: center; width: 22px; height: 22px;
-    border-radius: 11px; background: var(--primary); color: #fff; font-size: 8px; font-weight: 700;
-  }
 
-  .m1__sub {
-    display: flex; align-items: center; justify-content: space-between;
-    height: 40px; padding: 0 16px;
-    background: #fff; border-bottom: 1px solid var(--border);
-  }
-  .m1__l { display: flex; align-items: center; gap: 10px; }
-  .m1__l b { font-size: 13px; font-weight: 700; color: var(--ink-700); }
   .tag {
     padding: 4px 8px; border-radius: 4px;
     background: #fff; border: 1px solid var(--border);
@@ -364,26 +358,6 @@ const step3Feats = [
   }
   .tag--solid { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
 
-  .m1__body { display: flex; flex-direction: column; gap: 10px; padding: 16px; background: #f7f7f7; }
-  .m1__card {
-    display: flex; flex-direction: column; gap: 12px;
-    padding: 16px; background: #fff;
-    border: 1px solid var(--border); border-radius: var(--r-10);
-    box-shadow: var(--sh-card-violet);
-  }
-  .m1__card h4 { font-size: 11px; font-weight: 700; color: var(--ink-700); }
-  .m1__hd { display: flex; align-items: center; justify-content: space-between; }
-  .m1__hd i { font-size: 8px; font-weight: 600; font-style: normal; color: var(--muted-2); }
-  .m1__row { display: flex; gap: 10px; }
-  .mf { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-  .mf i { font-size: 8px; font-weight: 600; font-style: normal; color: var(--muted-2); }
-  .mf b {
-    height: 24px; padding: 5px 8px;
-    background: #fff; border: 1px solid var(--border-violet); border-radius: 4px;
-    font-size: 10px; font-weight: 400; color: var(--ink-700);
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .mf b.ph { color: var(--muted-3); }
 
   /* ---------- step 2 cards ---------- */
   .pcard {

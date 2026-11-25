@@ -1,0 +1,78 @@
+---
+/**
+ * The dashboard's header card (2026-11-24): a top bar with an optional segmented range /
+ * filter on the left and the screen's actions on the right, then the screen's figures in a
+ * row separated by hairlines. Replaces the old page title + separate stat boxes.
+ */
+interface Props {
+  seg?: string[];
+  actions?: { label: string; solid?: boolean }[];
+  figs: { k: string; v: string; red?: boolean }[];
+  size?: 'sm' | 'md';
+}
+const { seg = [], actions = [], figs, size = 'md' } = Astro.props;
+---
+<div class:list={['kpic', `kpic--${size}`]}>
+  <div class="kpic__bar">
+    {
+      seg.length > 0 && (
+        <span class="kpic__seg">
+          {seg.map((s, i) => (
+            <span class:list={['kpic__segt', i === 0 && 'is-on']}>{s}</span>
+          ))}
+        </span>
+      )
+    }
+    <span class="kpic__sp"></span>
+    {actions.map((a) => <span class:list={['kpic__btn', a.solid && 'is-solid']}>{a.label}</span>)}
+  </div>
+  <div class="kpic__figs" style={`grid-template-columns:repeat(${figs.length},1fr)`}>
+    {
+      figs.map((f) => (
+        <div>
+          <span>{f.k}</span>
+          <b class:list={[f.red && 'red']}>{f.v}</b>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .kpic {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: var(--sh-sm);
+    overflow: hidden;
+  }
+  .kpic__bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .kpic__sp { flex: 1; }
+  .kpic__seg {
+    display: flex; gap: 2px; padding: 3px;
+    border: 1px solid var(--border-violet); border-radius: 99px; background: #fff;
+  }
+  .kpic__segt { padding: 4px 10px; border-radius: 99px; font-weight: 600; color: var(--muted); }
+  .kpic__segt.is-on { background: var(--primary); color: #fff; }
+  .kpic__btn {
+    padding: 5px 12px; border: 1px solid var(--border-violet); border-radius: 99px;
+    background: #fff; font-weight: 600; color: var(--ink-700); white-space: nowrap;
+  }
+  .kpic__btn.is-solid { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .kpic__figs { display: grid; padding: 14px 0; }
+  .kpic__figs div { display: flex; flex-direction: column; gap: 4px; padding: 0 16px; min-width: 0; }
+  .kpic__figs div + div { border-left: 1px solid var(--border); }
+  .kpic__figs span { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kpic__figs b { font-weight: 800; color: var(--ink-800); }
+  .kpic__figs b.red { color: var(--red); }
+
+  .kpic--sm { font-size: 11px; }
+  .kpic--sm .kpic__figs b { font-size: 18px; }
+  .kpic--md { font-size: 12px; }
+  .kpic--md .kpic__figs b { font-size: 22px; }
+</style>

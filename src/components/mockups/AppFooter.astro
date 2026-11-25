@@ -1,0 +1,60 @@
+---
+/**
+ * The dashboard's footer bar (added 2026-11-24 to match the web app): date and clock on the
+ * left, USD→CAD / gold / silver in the middle, and the till pill on the right with the
+ * view and options buttons. Sample figures only.
+ */
+interface Props {
+  font?: number;
+  height?: number;
+}
+const { font = 11, height = 34 } = Astro.props;
+---
+<div class="afoot" style={`height:${height}px;font-size:${font}px`}>
+  <span class="afoot__l"><b>Nov 24</b> 09:23:40 AM <i class="afoot__live">Live</i></span>
+  <span class="afoot__c">
+    <span><b>USD → CAD</b> <em>(per US$1)</em> 1.3962</span>
+    <span class="afoot__sep"></span>
+    <span><b>GOLD</b> <em>(per oz)</em> $3,684.20</span>
+    <span class="afoot__sep"></span>
+    <span><b>SILVER</b> <em>(per oz)</em> $43.18</span>
+  </span>
+  <span class="afoot__till">
+    <i class="afoot__dot"></i>
+    <b>TILL 1</b>
+    <strong>$1,240.00</strong>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6" /></svg>
+  </span>
+</div>
+
+<style>
+  .afoot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 16px;
+    background: var(--primary-deep);
+    color: #fff;
+    white-space: nowrap;
+  }
+  .afoot b { font-weight: 700; }
+  .afoot em { font-style: normal; opacity: 0.75; }
+  .afoot__l { display: flex; align-items: center; gap: 6px; }
+  .afoot__live {
+    font-style: normal; font-size: 0.8em; font-weight: 700;
+    padding: 1px 6px; border-radius: 99px; background: rgb(255 255 255 / 0.18);
+  }
+  .afoot__c { display: flex; align-items: center; gap: 12px; }
+  .afoot__sep { width: 1px; height: 12px; background: rgb(255 255 255 / 0.35); }
+  .afoot__till {
+    display: flex; align-items: center; gap: 6px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    background: #fff;
+    color: var(--primary-deep);
+  }
+  .afoot__till strong { color: var(--ink-800); font-weight: 800; }
+  .afoot__dot { width: 6px; height: 6px; border-radius: 99px; background: var(--green); }
+</style>

@@ -3,6 +3,8 @@ import Icon from './Icon.astro';
 import Scaler from './mockups/Scaler.astro';
 import BrowserBar from './mockups/BrowserBar.astro';
 import AppNav from './mockups/AppNav.astro';
+import KpiCard from './mockups/KpiCard.astro';
+import AppFooter from './mockups/AppFooter.astro';
 
 const rows = [
   { id: '08104372', n: 'Acevedo, Maria',   p: '(416) 555-8142', l: '3', v: '02/14/24', f: { t: 'VIP', c: 'amber' } },
@@ -52,34 +54,11 @@ const cards = [
             active="Customer" height={44} padding="0 20px" gap={24} userName
           />
 
-          <div class="cs__ph">
-            <div>
-              <h3>Customers</h3>
-              <p>All customers · 4,288 records</p>
-            </div>
-            <div class="cs__pha">
-              <span class="pill-btn" style="padding:6px 10px;font-size:11px">Import</span>
-              <span class="pill-btn" style="padding:6px 10px;font-size:11px">Export</span>
-              <span class="pill-btn pill-btn--solid" style="padding:6px 12px;font-size:11px">New Customer</span>
-            </div>
-          </div>
-
           <div class="cs__body">
-            <div class="cs__stats">
-              <div class="stat" style="padding:14px">
-                <span class="stat__k">Customers</span>
-                <div><div class="stat__v" style="font-size:22px">4,288</div><div class="stat__u" style="font-size:11px">total</div></div>
-              </div>
-              <div class="stat" style="padding:14px">
-                <span class="stat__k">With Active Loan</span>
-                <div><div class="stat__v" style="font-size:22px">938</div><div class="stat__u" style="font-size:11px">customers</div></div>
-              </div>
-              <div class="stat" style="padding:14px">
-                <span class="stat__k">Banned / Locked</span>
-                <div><div class="stat__v" style="font-size:22px">77</div><div class="stat__u" style="font-size:11px">do-not-loan flag</div></div>
-              </div>
-            </div>
-
+            <KpiCard size="sm"
+              actions={[{ label: 'Scan ID' }, { label: 'Add new customer', solid: true }]}
+              figs={[{k:'Customers',v:'4,288'},{k:'With an active pawn',v:'938'},{k:'Flagged',v:'77'}]} />
+            <div class="mlist">
             <div class="cs__filters">
               <div class="fld" style="flex:1">
                 <span class="fld__l">Search customers</span>
@@ -134,7 +113,9 @@ const cards = [
                 <span class="pager__btns"><span style="padding:4px 8px;font-size:10px">Prev</span><span style="padding:4px 8px;font-size:10px">Next</span></span>
               </div>
             </div>
+            </div>
           </div>
+          <AppFooter font={11} height={34} />
         </div>
       </Scaler>
     </div>
@@ -160,17 +141,8 @@ const cards = [
   .cs .sec-head { margin-bottom: 64px; }
   .cs__visual { margin-bottom: 28px; }
 
-  .cs__ph {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 20px; background: #fff; border-bottom: 1px solid var(--border);
-  }
-  .cs__ph h3 { font-size: 20px; font-weight: 700; color: var(--ink-700); }
-  .cs__ph p { font-size: 12px; color: var(--muted-2); margin-top: 3px; }
-  .cs__pha { display: flex; align-items: center; gap: 6px; }
 
   .cs__body { display: flex; flex-direction: column; gap: 16px; padding: 20px; background: #fff; }
-  .cs__stats { display: flex; gap: 12px; }
-  .cs__stats :global(.stat__k) { font-size: 9px; }
 
   .cs__filters {
     display: flex; align-items: flex-end; gap: 10px;
